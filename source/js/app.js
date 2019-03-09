@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     // var altura = $('.imgCard:first').outerHeight();
-    var altura = 285
+    var altura = false;
     let pj1 = cena.o.pj1,
         pj2 = cena.o.pj2,
         pj3 = cena.o.pj3,
@@ -120,21 +120,22 @@ $(document).ready(function() {
     c3.rellenar(pj3);
     c4.rellenar(pj4);
 
-    /**
-     * boton del chat
-     */
+    // boton del chat
     $(".btnChat").click(function() {
         let card = $(this).closest('.card');
+        
         card.find('.chat-panel').toggleClass('chat-panel-open');
         card.find('.imgCard').toggleClass('imgCardCircle');
         card.find('.card-header').toggleClass('cardHeaderCircle');
+        if (altura === false) {
+            altura = $('.imgCard:first').outerHeight();
+        }
+        console.log(altura);
         card.find('.hueco').css('height', altura);
     });
     
 
-    /**
-     * preguntas
-     */
+    // preguntas
     $(".preg").click(function() {
         let preg = this.dataset.preg;
         let card = $(this).closest('.card');
@@ -163,17 +164,14 @@ $(document).ready(function() {
         }
         card.rellenar(c[pj]);
     });
-          
+    
     // imagenes aleatorias
     (function ()  { 
 
         Array.prototype.rndRemove = function() {
             let rnd = this.rnd();
-            console.log("rnd= ", rnd);
             for (var i = 0; i < this.length; i++) {
-                console.log(this[i],rnd );
                 if (this[i] == rnd) {
-                    console.log("rompes ", this[i]);
                     this.splice(i,1);
                     break;
                 }
