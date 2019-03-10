@@ -2,18 +2,20 @@ $(document).ready(function() {
 
     // var altura = $('.imgCard:first').outerHeight();
     var altura = false;
-    let pj1 = cena.o.pj1,
+    let yo  = cena.o.yo, 
+        pj1 = cena.o.pj1,
         pj2 = cena.o.pj2,
         pj3 = cena.o.pj3,
-        pj4 = cena.o.pj4;
-
-    c1 = $("#c1");
-    c2 = $("#c2");
-    c3 = $("#c3");
-    c4 = $("#c4");
+        pj4 = cena.o.pj4,
+    
+        yoPanel = $("#yoComi"),
+        c1 = $("#c1"),
+        c2 = $("#c2"),
+        c3 = $("#c3"),
+        c4 = $("#c4");
 
     var c = cena.o;
-    // console.log(c);
+    console.log(yo);
     // console.log(c.pj1.hablar(2));
     // console.log(c.pj1.hablar(3));
     // c.pj1.seSabe.orden[1] = 'p';
@@ -23,9 +25,8 @@ $(document).ready(function() {
     // console.log(pj1.pizza);
     // console.log(pj1.orden);
 
-    /**
-     * rellena el card con los datos que se saben del pj
-     */
+
+    // rellena el card con los datos que se saben del pj
     $.fn.rellenar = function(pj) {
         // console.log(pj.seSabe);
         this.find('.card-header > h6').html(pj.nombre);
@@ -115,6 +116,25 @@ $(document).ready(function() {
 
         return this;
     }
+
+
+
+    // rellenado de datos
+    yo.orden.forEach( function(tr, i, array) {
+
+    });
+
+    for (let pz in yo.pizza) {
+        if (yo.pizza[pz] != 0) {
+            console.log(yo.pizza[pz]);
+            yoPanel.append($('<li>',{
+                class : 'list-group-item',
+                html  : pizzas[pz] + '<span class="badge badge-danger"> '+yo.pizza[pz]+'</span>',
+            }));
+        }
+    }
+
+    // rellenar mis  datos
     c1.rellenar(pj1);
     c2.rellenar(pj2);
     c3.rellenar(pj3);
@@ -130,7 +150,6 @@ $(document).ready(function() {
         if (altura === false) {
             altura = $('.imgCard:first').outerHeight();
         }
-        console.log(altura);
         card.find('.hueco').css('height', altura);
     });
     
