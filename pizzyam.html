@@ -24,25 +24,22 @@
        <div class="navbar-brand p-md-0">PIZZYAM</div>
     </nav>
     <div class="container-fluid">
-        
-        <div class="d-flex d-none d-md-flex justify-content-center align-items-center">
-            <div class="align-middle mr-1">Comí: </div>
-            <ul id="yoComi" class="list-group list-group-horizontal"> 
-                <!-- <li class="list-group-item ">Piña <span class="howmany01 badge badge-danger">?</span></li>
-                <li class="list-group-item ">Verdura <span class="howmany01 badge badge-danger">?</span></li>
-                <li class="list-group-item ">Ternera <span class="howmany01 badge badge-danger">?</span></li>
-                <li class="list-group-item ">Salmón <span class="howmany01 badge badge-danger">?</span></li> -->
-            </ul>
+        <div class="d-flex d-none d-md-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="mr-1 d-inline-flex align-middle">Comí: </h3>
+                <ul id="yoComi" class="list-group list-group-horizontal d-inline-flex mb-2"></ul>
+            </div>
+            <h1 id="totalPreg"></h1>
         </div>
         <div class="row">
-            <div class="col-md-3 trans ">
+            <div class="col-md-3 trans">
                 <div id="c1" class="card" data-pj="pj1">
                     <div class="card-header">
                         <h6 class= "m-0 float-left"></h6>
                         <a href="#" class="btnChat material-icons badge badge-light float-right p-0">chat</a>
-                        <a href="#" class="material-icons badge badge-light float-right p-0">edit</a>
                     </div>
                     <div class="blockrelative">
+                        <h1 class="nPreg mx-3 mt-1"></h1>
                         <div class="chat-panel text-light list-group-item-dark">
                             <nav id="sidebar">
                                 <ul class="list-unstyled">
@@ -96,11 +93,12 @@
             </div>
             <div class="col-md-3 trans">
                 <div id="c2" class="card" data-pj="pj2">
-                    <div id="cardHeader2" class="card-header">
-                            <h6 class= "m-0 float-left"></h6>
-                            <a href="#" class="btnChat material-icons badge badge-light float-right p-0">chat</a >
-                        </div>
+                    <div class="card-header">
+                        <h6 class= "m-0 float-left"></h6>
+                        <a href="#" class="btnChat material-icons badge badge-light float-right p-0">chat</a>
+                    </div>
                     <div class="blockrelative">
+                        <h1 class="nPreg mx-3 mt-1"></h1>
                         <div class="chat-panel text-light list-group-item-dark">
                             <nav id="sidebar">
                                 <ul class="list-unstyled">
@@ -112,16 +110,17 @@
                                         <a href="#homeSubmenu" data-preg="howmany" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle ">Cuantos trozos te has comido de...</a>
                                         <ul class="collapse list-unstyled" id="homeSubmenu">
                                             <li><a class="preg" href="#" data-preg="howmany01"> Piña</a></li>
-                                            <li><a class="preg" href="#" data-preg="howmany02"> Verduras</a></li>
+                                            <li><a class="preg" href="#" data-preg="howmany02"> Verdura</a></li>
                                             <li><a class="preg" href="#" data-preg="howmany03"> Ternera</a></li>
                                             <li><a class="preg" href="#" data-preg="howmany04"> Salmon</a></li>
                                         </ul>
                                     </li>
+                                    <li class="preg list-group-item list-group-item-dark" data-preg="guilty"><a href="#"><i class="fa fa-star"></i><span> Has sido tú!!!</span></a></li>
                                 </ul>
                             </nav>
                         </div>
                         <div class="hueco" >
-                            <img src="img/m01.png" class="imgCard card-img-top imgCardCircles" alt="...">
+                            <img src="" class="imgCard card-img-top imgCardCircles" alt="...">
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-md-end align-items-center">Se comio
@@ -136,6 +135,16 @@
                             <li class="list-group-item d-flex justify-content-between align-items-md-end align-items-center">Odia
                                 <div class="lOdia d-flex flex-md-column flex-lg-row align-items-center align-items-md-end align-items-lg-center">
                                 </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">Piña <span class="howmany01 badge badge-danger">?</span></div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">Verdura <span class="howmany02 badge badge-danger">?</span></div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">Ternera <span class="howmany03 badge badge-danger">?</span></div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">Salmón <span class="howmany04 badge badge-danger">?</span></div>
+                                </div>
+                                <!-- <div class="lOdia d-flex flex-md-column flex-lg-row align-items-center align-items-md-end align-items-lg-center">
+                                </div> -->
                             </li>
                         </ul>
                     </div>
@@ -143,11 +152,12 @@
             </div>
             <div class="col-md-3 trans">
                 <div id="c3" class="card" data-pj="pj3">
-                    <div id="cardHeader3" class="card-header">
-                            <h6 class= "m-0 float-left"></h6>
-                            <a href="#" class="btnChat material-icons badge badge-light float-right p-0">chat</a >
-                        </div>
+                    <div class="card-header">
+                        <h6 class= "m-0 float-left"></h6>
+                        <a href="#" class="btnChat material-icons badge badge-light float-right p-0">chat</a>
+                    </div>
                     <div class="blockrelative">
+                        <h1 class="nPreg mx-3 mt-1"></h1>
                         <div class="chat-panel text-light list-group-item-dark">
                             <nav id="sidebar">
                                 <ul class="list-unstyled">
@@ -159,17 +169,17 @@
                                         <a href="#homeSubmenu" data-preg="howmany" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle ">Cuantos trozos te has comido de...</a>
                                         <ul class="collapse list-unstyled" id="homeSubmenu">
                                             <li><a class="preg" href="#" data-preg="howmany01"> Piña</a></li>
-                                            <li><a class="preg" href="#" data-preg="howmany02"> Verduras</a></li>
+                                            <li><a class="preg" href="#" data-preg="howmany02"> Verdura</a></li>
                                             <li><a class="preg" href="#" data-preg="howmany03"> Ternera</a></li>
                                             <li><a class="preg" href="#" data-preg="howmany04"> Salmon</a></li>
                                         </ul>
                                     </li>
+                                    <li class="preg list-group-item list-group-item-dark" data-preg="guilty"><a href="#"><i class="fa fa-star"></i><span> Has sido tú!!!</span></a></li>
                                 </ul>
                             </nav>
                         </div>
-                        
                         <div class="hueco" >
-                            <img src="img/h02.png" class="imgCard card-img-top imgCardCircles" alt="...">
+                            <img src="" class="imgCard card-img-top imgCardCircles" alt="...">
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-md-end align-items-center">Se comio
@@ -184,6 +194,16 @@
                             <li class="list-group-item d-flex justify-content-between align-items-md-end align-items-center">Odia
                                 <div class="lOdia d-flex flex-md-column flex-lg-row align-items-center align-items-md-end align-items-lg-center">
                                 </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">Piña <span class="howmany01 badge badge-danger">?</span></div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">Verdura <span class="howmany02 badge badge-danger">?</span></div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">Ternera <span class="howmany03 badge badge-danger">?</span></div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">Salmón <span class="howmany04 badge badge-danger">?</span></div>
+                                </div>
+                                <!-- <div class="lOdia d-flex flex-md-column flex-lg-row align-items-center align-items-md-end align-items-lg-center">
+                                </div> -->
                             </li>
                         </ul>
                     </div>
@@ -191,11 +211,12 @@
             </div>
             <div class="col-md-3 trans">
                 <div id="c4" class="card" data-pj="pj4">
-                    <div id="cardHeader4" class="card-header">
-                            <h6 class= "m-0 float-left"></h6>
-                            <a href="#" class="btnChat material-icons badge badge-light float-right p-0">chat</a >
-                        </div>
+                    <div class="card-header">
+                        <h6 class= "m-0 float-left"></h6>
+                        <a href="#" class="btnChat material-icons badge badge-light float-right p-0">chat</a>
+                    </div>
                     <div class="blockrelative">
+                        <h1 class="nPreg mx-3 mt-1"></h1>
                         <div class="chat-panel text-light list-group-item-dark">
                             <nav id="sidebar">
                                 <ul class="list-unstyled">
@@ -207,16 +228,17 @@
                                         <a href="#homeSubmenu" data-preg="howmany" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle ">Cuantos trozos te has comido de...</a>
                                         <ul class="collapse list-unstyled" id="homeSubmenu">
                                             <li><a class="preg" href="#" data-preg="howmany01"> Piña</a></li>
-                                            <li><a class="preg" href="#" data-preg="howmany02"> Verduras</a></li>
+                                            <li><a class="preg" href="#" data-preg="howmany02"> Verdura</a></li>
                                             <li><a class="preg" href="#" data-preg="howmany03"> Ternera</a></li>
                                             <li><a class="preg" href="#" data-preg="howmany04"> Salmon</a></li>
                                         </ul>
-                                    </li> 
+                                    </li>
+                                    <li class="preg list-group-item list-group-item-dark" data-preg="guilty"><a href="#"><i class="fa fa-star"></i><span> Has sido tú!!!</span></a></li>
                                 </ul>
                             </nav>
                         </div>
                         <div class="hueco" >
-                            <img src="img/m02.png" class="imgCard card-img-top imgCardCircles" alt="...">
+                            <img src="" class="imgCard card-img-top imgCardCircles" alt="...">
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item d-flex justify-content-between align-items-md-end align-items-center">Se comio
@@ -231,6 +253,16 @@
                             <li class="list-group-item d-flex justify-content-between align-items-md-end align-items-center">Odia
                                 <div class="lOdia d-flex flex-md-column flex-lg-row align-items-center align-items-md-end align-items-lg-center">
                                 </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">Piña <span class="howmany01 badge badge-danger">?</span></div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">Verdura <span class="howmany02 badge badge-danger">?</span></div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">Ternera <span class="howmany03 badge badge-danger">?</span></div>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">Salmón <span class="howmany04 badge badge-danger">?</span></div>
+                                </div>
+                                <!-- <div class="lOdia d-flex flex-md-column flex-lg-row align-items-center align-items-md-end align-items-lg-center">
+                                </div> -->
                             </li>
                         </ul>
                     </div>
