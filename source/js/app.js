@@ -16,8 +16,14 @@ $(document).ready(function() {
     var c = cena.o;
     console.log(c);
 
-    // rellena el card con los datos que se saben del pj
-    $.fn.rellenar = function(pj) {
+    /**
+     * rellena el card con los datos que se saben del pj
+     * @param  pj       Personaje
+     * @param  seSabe   true/false si queremos que se muestre la solucion 
+     *                  o lo que sabemos
+     * TAREAS: mejorar para que sea un rellenado más dinamico y codigo más elegante
+     */
+    $.fn.rellenar = function(pj,seSabe) {
         $("#totalPreg").html("<b>"+c.nPreg+"</b>");
         this.find('.nPreg').html("<b>"+pj.nPreg+"</b>")
         this.find('.card-header > h6').html(pj.nombre);
@@ -32,7 +38,10 @@ $(document).ready(function() {
         gusta.html('');
         odia.html('');
 
-        pj.seSabe.orden.forEach( function(tr, i, array) {
+        let pjSeSabe = (seSabe) ? pj :  pj.seSabe;
+        
+
+         pjSeSabe.orden.forEach( function(tr, i, array) {
             let html = '';
             if (tr != 0) {
                html = pizzas[tr];
@@ -47,7 +56,7 @@ $(document).ready(function() {
                 title           : pizzas[tr]
             }));
         });
-        pj.seSabe.encanta.forEach( function(tr, i, array) {
+         pjSeSabe.encanta.forEach( function(tr, i, array) {
             gusta.append($('<span>',{
                 class: 'badge badge-danger',
                 html : (tr != 0) ? pizzas[tr] : '?',
@@ -56,7 +65,7 @@ $(document).ready(function() {
                 title           : pizzas[tr]
             }));
         });
-        pj.seSabe.odia.forEach( function(tr, i, array) {
+         pjSeSabe.odia.forEach( function(tr, i, array) {
             odia.append($('<span>',{
                 class: 'badge badge-danger',
                 html : (tr != 0) ? pizzas[tr] : '?',
@@ -66,43 +75,60 @@ $(document).ready(function() {
             }));
         });
 
-        let pz = pj.seSabe.pizza,
+        let pz =  pjSeSabe.pizza,
             p = pz['p'], 
             v = pz['v'], 
             t = pz['t'], 
             s = pz['s'];
 
+        // TAREA: mejorable esta parte
         if (pz.hasOwnProperty('p')) {
-            if (p.duda === false)
-                pz01.text(p.tr);
-            else if (p.duda === '?')
+            if (p.hasOwnProperty('duda')) {
+                if (p.duda === false)
+                    pz01.text(p.tr);
+                else if (p.duda === '?')
                     pz01.text(p.tr+'?');
-            else
-                pz01.text(p.duda+' '+pz['p'].tr);
-        }
-        if (pz.hasOwnProperty('t')) {
-            if (t.duda === false)
-                pz03.text(t.tr);
-            else if (t.duda === '?')
-                    pz03.text(t.tr+'?');
-            else
-                pz03.text(t.duda+' '+t.tr);
+                else
+                    pz01.text(p.duda+' '+pz['p'].tr);
+            } else {
+                pz01.text(p);
+            }
         }
         if (pz.hasOwnProperty('v')) {
-           if (v.duda === false)
-                pz02.text(v.tr);
-            else if (v.duda === '?')
-                pz02.text(v.tr+'?');
-            else
-                pz02.text(v.duda+' '+v.tr);
+            if (v.hasOwnProperty('duda')) {
+                if (v.duda === false)
+                    pz02.text(v.tr);
+                else if (v.duda === '?')
+                    pz02.text(v.tr+'?');
+                else
+                    pz02.text(v.duda+' '+v.tr);
+             } else {
+                pz02.text(v);
+            }
+        }
+        if (pz.hasOwnProperty('t')) {
+            if (t.hasOwnProperty('duda')) {
+                if (t.duda === false)
+                    pz03.text(t.tr);
+                else if (t.duda === '?')
+                        pz03.text(t.tr+'?');
+                else
+                    pz03.text(t.duda+' '+t.tr);
+             } else {
+                pz03.text(t);
+            }
         }
         if (pz.hasOwnProperty('s')) {
-            if (s.duda === false)
-                pz04.text(s.tr);
-            else if (s.duda === '?')
-                pz04.text(s.tr+'?');
-            else
-                pz04.text(s.duda+' '+s.tr);
+            if (s.hasOwnProperty('duda')) {
+                if (s.duda === false)
+                    pz04.text(s.tr);
+                else if (s.duda === '?')
+                    pz04.text(s.tr+'?');
+                else
+                    pz04.text(s.duda+' '+s.tr);
+            } else {
+                pz04.text(s);
+            }
         }
 
         return this;
@@ -132,10 +158,10 @@ $(document).ready(function() {
         }
     }
 
-    c1.rellenar(pj1);
-    c2.rellenar(pj2);
-    c3.rellenar(pj3);
-    c4.rellenar(pj4);
+    c1.rellenar(pj1,false);
+    c2.rellenar(pj2,false);
+    c3.rellenar(pj3,false);
+    c4.rellenar(pj4,false);
 
     // boton del chat
     $(".btnChat").click(function () {
@@ -167,16 +193,36 @@ $(document).ready(function() {
         } else if (preg === 'howmany04') {
             resp = c[pj].hablar(5,'s');
         } else if (preg === 'guilty') {
-            resp = c[pj].hablar(6);
+            resp = c[pj].culpar();
+            solucionar();
         }
-        if (resp !== false) {
+        console.log(resp);
+        if (resp._p !== false) {
+            console.log("entra");
             card.rellenar(c[pj]);
             card.toggleChat();
         }
-        console.log(card);
-        console.log(pj,resp);
+        // console.log(card);
+        // console.log(pj,resp);
     });
+
     
+    // muestra la solucion de todos los pjs
+    function solucionar() {
+        let card = $(".card");
+        card.addClass('bg-success');
+        $('[data-pj="'+c.pjCulp+'"]').removeClass('bg-success').addClass('bg-danger');
+        let culpable = c.pjCulp;
+        c1.rellenar(pj1,true);
+        c2.rellenar(pj2,true);
+        c3.rellenar(pj3,true);
+        c4.rellenar(pj4,true);
+        $(".card-header").addClass('text-white')
+                         .removeClass('cardHeaderCircle');
+        $(".chat-panel").removeClass('chat-panel-open');
+        $('.imgCard').removeClass('imgCardCircle');
+    }
+
     // imagenes aleatorias
     (function ()  { 
 

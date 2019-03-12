@@ -36,13 +36,13 @@ var respuestas = [
             return "Me gusta mucho la pizza de " + pizzas[p];
             // Me chiflan las pizzas de 
         } else
-            return "Me gustan todas por igual";
+            return "Me gustan todas por igual.";
     },
     (p) => { // 1 
         if (p) {
             return "Siempre he odiado la pizza de " + pizzas[p];
         } else {
-            return "Todo me gusta";
+            return "Todo me gusta.";
         }
     },
     (p) => { // 2 
@@ -63,12 +63,15 @@ var respuestas = [
             return "Me he comido " + trozos + " trozos de " + pizzas[p];
         }            
     },
-    (p, guilty) => { // 6 
+    (guilty) => { // 6 
         if (guilty)
-            return "Me hás pillado, tenia mucha hambre";
+            return "Me hás pillado, tenia mucha hambre.";
         else
-            return "no he sido yo";
+            return "No he sido yo.";
     },
+    // 7
+    "Estoy cansado de responderte."
+
     
 ];
 

@@ -53,6 +53,7 @@ var cena = (function () {
             this.amigo = "";
             this.enemigo = "";
             this.nPreg = 4;
+            this.howLimit = 1;
             this.preg = p.map(a => Object.assign({}, a));
             this.preg[4] = p[4].map(a => Object.assign({}, a));
             this.preg[5] = p[5].map(a => Object.assign({}, a));
@@ -90,6 +91,10 @@ var cena = (function () {
             
             nombre += ' '+this.capFirst(apellidos[rnd(0, apellidos.length -1)])+ ' ' + this.capFirst(apellidos[rnd(0, apellidos.length -1)]);    
             return nombre;
+        }
+
+        culpar() {
+            return { msg: respuestas[6](this.culpable), _p:false  };
         }
 
         hablar(idPreg,subPreg) {
@@ -160,21 +165,22 @@ var cena = (function () {
 
                     case 5: // ¿Cuántos trozos te has comido de...? // return msg: "" 'tipTrozo': int
                             // USO: (5,X) X=letra de la pizza
-                        this.preg[idPreg].usada = false;
-                        let obj = { msg: respuestas[5](subPreg, this.pizza[subPreg]) };
-                        this.seSabe.pizza[subPreg] = {
-                            tr  : this.pizza[subPreg],
-                            duda: false
-                        };
-                        obj[subPreg] = this.pizza[subPreg];
-                        return obj;
-
-                    case 6: // eres el culpable?
-                        return { msg: respuestas[6](p,this.culpable), _p:this.orden  };
+                        if (this.howLimit != 0) {
+                            this.preg[idPreg].usada = false;
+                            let obj = { msg: respuestas[5](subPreg, this.pizza[subPreg]) };
+                            this.seSabe.pizza[subPreg] = {
+                                tr  : this.pizza[subPreg],
+                                duda: false
+                            };
+                            obj[subPreg] = this.pizza[subPreg];
+                            return obj;
+                        } else {
+                            return false;
+                        }
                 }
             } else {
                 console.log("limite preguntas sobrepasado");
-                return false;
+                return { msg: respuestas[7], _p:false  };;
             }
         }
             
@@ -194,7 +200,7 @@ var cena = (function () {
             pj3: { p:1, v:0, t:2, s:1 },
             pj4: { p:0, v:0, t:2, s:3 },
         }
-        let pjCulp = "pj"+rnd(1,4);
+        o.pjCulp = "pj"+rnd(1,4);
 
         // bucle que prueba muchas combinaciones hasta que da con una que cuadra
         for (let pasos = 0; pasos <= 1000; pasos++) {
@@ -204,7 +210,7 @@ var cena = (function () {
                 o.max["pj"+i] = 4;
             }
             
-            o.max[pjCulp] = 5;
+            o.max[o.pjCulp] = 5;
             o.max.yo      = 3;
 
             for (let i = 1; i <= 5; i++) {
@@ -228,7 +234,7 @@ var cena = (function () {
         o.pj4 = new Persona(preguntas,o.m.pj4);
 
         // asiganicion de culpable
-        o[pjCulp].culpable = true;
+        o[o.pjCulp].culpable = true;
 
         // timeline
         o.tl = [];
