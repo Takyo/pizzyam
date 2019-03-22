@@ -171,39 +171,52 @@ $(document).ready(function() {
 
     // preguntas
     $(".preg").click(function() {
-        let preg = this.dataset.preg,
-            resp = false;
-            card = $(this).closest('.card')
+        let tPreg  = this.dataset.preg,
+            resp  = false;
+            card  = $(this).closest('.card'),
+            nPreg = 0,
+            preg  = '';
          var pj   = card[0].dataset.pj;
 
-        if (preg === 'like') {
+        if (tPreg === 'like') {
+            nPreg = 0;
             resp = c[pj].hablar(0);
-        } else if (preg === 'unlike') {
+        } else if (tPreg === 'unlike') {
+            nPreg = 1;
             resp = c[pj].hablar(1);
-        } else if (preg === 'first') {
+        } else if (tPreg === 'first') {
+            nPreg = 2;
             resp = c[pj].hablar(2);
-        } else if (preg === 'last') {
+        } else if (tPreg === 'last') {
+            nPreg = 3;
             resp = c[pj].hablar(3);
-        } else if (preg === 'howmany01') {
+        } else if (tPreg === 'howmany01') {
+            nPreg = 4;
             resp = c[pj].hablar(5,'p');
-        } else if (preg === 'howmany02') {
+        } else if (tPreg === 'howmany02') {
+            nPreg = 5;
             resp = c[pj].hablar(5,'v');
-        } else if (preg === 'howmany03') {
+        } else if (tPreg === 'howmany03') {
+            nPreg = 5;
             resp = c[pj].hablar(5,'t');
-        } else if (preg === 'howmany04') {
+        } else if (tPreg === 'howmany04') {
+            nPreg = 5;
             resp = c[pj].hablar(5,'s');
-        } else if (preg === 'guilty') {
+        } else if (tPreg === 'guilty') {
+            nPreg = 6;
             resp = c[pj].culpar();
             solucionar();
         }
-        console.log(resp);
+        
         if (resp._p !== false) {
-            console.log("entra");
             card.rellenar(c[pj]);
             card.toggleChat();
         }
-        // console.log(card);
-        // console.log(pj,resp);
+        console.log(pj,resp);
+        console.log(preguntas);
+        preg = preguntas[nPreg];
+        card.find('.chat-log').append('<li class="msg-yo"><span class="msg-txt">'+preg.text+'</span></li>'+
+                                      '<li class="msg-el"><span class="msg-txt">'+resp.msg+'</span></li>'  );
     });
 
     
@@ -237,23 +250,24 @@ $(document).ready(function() {
             return rnd;
         }
 
-        let h = [ 
-            "h01.png", "h02.png", "h03.png",
-            "h04.png", "h05.png", "h06.png",
-            "h07.png", "h08.png", "h09.png",
-            "h10.png",
-        ];
-        let m = [ 
-            "m01.png", "m02.png", "m03.png",
-            "m04.png", "m05.png", "m06.png",
-            "m07.png", "m08.png", "m09.png",
-            "m10.png",
-        ];
+        let g = {
+            h:[ "h01.png", "h02.png", "h03.png",
+                "h04.png", "h05.png", "h06.png",
+                "h07.png", "h08.png", "h09.png",
+                "h10.png",
+            ],
+            m:[ "m01.png", "m02.png", "m03.png",
+                "m04.png", "m05.png", "m06.png",
+                "m07.png", "m08.png", "m09.png",
+                "m10.png",
+            ]
+        };
+
         let imgs = 'source/img/';
-        c1.find('img').attr('src', imgs+h.rndRemove());
-        c2.find('img').attr('src', imgs+h.rndRemove());
-        c3.find('img').attr('src', imgs+h.rndRemove());
-        c4.find('img').attr('src', imgs+h.rndRemove());
+        c1.find('img').attr('src', imgs+g[pj1.genero].rndRemove());
+        c2.find('img').attr('src', imgs+g[pj2.genero].rndRemove());
+        c3.find('img').attr('src', imgs+g[pj3.genero].rndRemove());
+        c4.find('img').attr('src', imgs+g[pj4.genero].rndRemove());
     })();
 
 });

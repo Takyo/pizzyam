@@ -22,15 +22,14 @@ otra forma más pro es que sea como la realidad, rnd(persona disponible) y rnd(t
 var cena = (function () {
     
     class Persona {
-        /**
-         * @param  p        preguntas
-         * @param  pizza    pizza
-         */
-        constructor(p,pizza) {
-            this.nombre   = this.generateName();
+
+        // como parametro el objeto de trozos de pizza que se ha comido
+        constructor(trPizzas) {
+            this.genero   = rnd(0,1) ? 'h' : 'm';
+            this.nombre   = this.generateName(this.genero);
             this.edad     = rnd(17,50);
             this.culpable = false;
-            this.pizza    = pizza;
+            this.pizza    = trPizzas;
             let ordenAux  = [] ;
 
             // saca lo que mas le gusta , odia y prepara para el orden de comida
@@ -54,9 +53,9 @@ var cena = (function () {
             this.enemigo = "";
             this.nPreg = 4;
             this.howLimit = 1;
-            this.preg = p.map(a => Object.assign({}, a));
-            this.preg[4] = p[4].map(a => Object.assign({}, a));
-            this.preg[5] = p[5].map(a => Object.assign({}, a));
+            this.preg = preguntas.map(a => Object.assign({}, a));
+            this.preg[4] = preguntas[4].map(a => Object.assign({}, a));
+            this.preg[5] = preguntas[5].map(a => Object.assign({}, a));
             this.seSabe = {
                 pizza: {},
                 pizzaDuda: {},
@@ -73,14 +72,14 @@ var cena = (function () {
             return str.charAt(0).toUpperCase() + str.slice(1);
         }
 
-        generateName(sexo) {
+        generateName(genero) {
             let hombre = ["Antonio","Jose","Manuel","Francisco","David","Juan","Jose","Javier","Daniel","Francisco","Jesus","Carlos","Alejandro","Miguel","Jose","Rafael","Pedro","Angel","Pablo","Fernando","Sergio","Luis","Jorge","Alberto","Alvaro","Diego","Adrian","Raul","Ivan","Enrique","Ruben","Ramon","Vicente","Oscar","Andres","Joaquin","Santiago","Eduardo","Victor","Mario","Roberto","Jaime","Ignacio","Marcos","Alfonso","Jordi","Salvador","Ricardo","Emilio","Hugo","Guillermo","Gabriel","Julian","Julio","Marc","Tomas","Gonzalo","Agustin","Mohamed","Felix","Nicolas","Joan","Martin","Ismael","Cristian","Samuel","Aitor","Josep","Hector","Mariano","Domingo","Alfredo","Sebastian","Iker","Cesar","Felipe","Alex","Lucas","Rodrigo","Gregorio","Xavier","Albert"];
             let mujer = ["Maria","Carmen","Josefa","Isabel","Laura","Teresa","Ana","Cristina","Marta","Antonia","Dolores","Lucia","Sara","Paula","Elena","Pilar","Concepcion","Raquel","Rosa","Manuela","Mercedes",,"Rosario","Beatriz","Juana","Teresa","Julia","Nuria","Silvia","Irene","Alba","Patricia","Montserrat","Andrea","Rosa","Rocio","Monica","Alicia","Angela","Sonia","Sandra","Marina","Susana","Yolanda","Natalia","Margarita","Eva","Inmaculada","Claudia",,"Ana Isabel","Esther","Noelia","Carla","Veronica","Sofia","Angeles","Carolina","Nerea","Eva","Amparo","Miriam","Lorena","Ines","Daniela","Catalina","Consuelo","Lidia","Celia","Alejandra","Olga","Emilia","Gloria","Luisa","Ainhoa","Aurora","Martina","Fatima"];
             let apellidos = ["Garcia","Gonzalez","Rodriguez","Fernandez","Lopez","Martinez","Sanchez","Perez","Gomez","Martin","Jimenez","Ruiz","Hernandez","Diaz","Moreno","Muñoz","Alvarez","Romero","Alonso","Gutierrez","Navarro","Torres","Dominguez","Vazquez","Ramos","Gil","Ramirez","Serrano","Blanco","Molina","Morales","Suarez","Ortega","Delgado","Castro","Ortiz","Rubio","Marin","Sanz","Nuñez","Iglesias","Medina","Garrido","Cortes","Castillo","Santos","Lozano","Guerrero","Cano","Prieto","Mendez","Cruz","Calvo","Gallego","Herrera","Marquez","Leon","Vidal","Peña","Flores","Cabrera","Campos","Vega","Fuentes","Carrasco","Diez","Reyes","Caballero","Nieto","Aguilar","Pascual","Santana","Herrero","Montero","Lorenzo","Hidalgo","Gimenez","Ibañez","Ferrer","Duran","Santiago","Benitez","Vargas","Mora","Vicente","Arias","Carmona","Crespo","Roman","Pastor","Soto","Saez","Velasco","Moya","Soler","Parra","Esteban","Bravo","Gallardo","Rojas"]
             let nombre;
-            if (sexo == 'h')
+            if (genero == 'h')
                 nombre = this.capFirst(hombre[rnd(0, hombre.length -1)]);
-            else if (sexo == 'm')
+            else if (genero == 'm')
                 nombre = this.capFirst(mujer[rnd(0, mujer.length -1)]);
             else {
                 if (rnd(0,2) == 1)
@@ -227,11 +226,11 @@ var cena = (function () {
          }
         
         // creacion de pjs
-        o.yo  = new Persona(preguntas,o.m.yo);
-        o.pj1 = new Persona(preguntas,o.m.pj1);
-        o.pj2 = new Persona(preguntas,o.m.pj2);
-        o.pj3 = new Persona(preguntas,o.m.pj3);
-        o.pj4 = new Persona(preguntas,o.m.pj4);
+        o.yo  = new Persona(o.m.yo);
+        o.pj1 = new Persona(o.m.pj1);
+        o.pj2 = new Persona(o.m.pj2);
+        o.pj3 = new Persona(o.m.pj3);
+        o.pj4 = new Persona(o.m.pj4);
 
         // asiganicion de culpable
         o[o.pjCulp].culpable = true;

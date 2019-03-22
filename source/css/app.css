@@ -1,16 +1,61 @@
+/*--------*/
+/*  chat  */
+/*--------*/
+.chat-container {
+  overflow-y: auto;
+  height: 285px;
+  opacity: 0.6;
+}
+.chat-container:hover {
+  opacity: 0.8;
+}
+ul.chat-log {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+ul.chat-log li {
+  margin: 5px;
+}
+.msg-yo span {
+  background: #5ca6fa;
+  color: #fff;
+}
+.msg-el span {
+  background: #ccc;
+  /*color: #fff;*/
+}
+.msg-txt {
+  display: inline-block;
+  font-size: 14px;
+  padding: 4px 15px;
+  border-radius:30px;
+  /*max-width: calc(100% - 60px);*/
+  max-width: 80%;
+}
+.msg-yo {
+  text-align: right;
+}
+.msg-el {
+  text-align: left;
+}
+
+
+
+
+
+.hueco img {
+  position: absolute;
+  /*z-index: -1;*/
+}
+
+
 .trans , .trans >*>*{
   transition:all 1s;
 }
 .nPreg {
   position: absolute;
   right: 0px;
-}
-.direct-chat-contacts {
-  height: inherit;
-}
-
-.content-wrapper, .main-header .navbar{
-  margin-left: 0px !important;
 }
 
 .user-circle {
@@ -21,10 +66,10 @@
   z-index: 100;
 }
 
-.blockrelative{
+.relative{
    position: relative;
 }
-.blockrelative, .blockrelative .card-img-top {
+.relative, .relative .card-img-top {
   transition:all .4s;
 }
 
