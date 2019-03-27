@@ -31,7 +31,7 @@
             <h1 id="totalPreg"></h1>
         </div>
         <div id="cards" class="row">
-            <div class="col-md-3 trans">
+            <div class="col-md-3 trans px-1">
                 <div id="c1" class="card" data-pj="pj1">
                     <div class="card-header">
                         <h6 class= "m-0 float-left"></h6>
@@ -39,9 +39,21 @@
                     </div>
                     <div class="relative">
                         <h1 class="nPreg mx-3 mt-1"></h1>
-                        <div class="chat-panel text-light list-group-item-dark">
-                            <nav id="sidebar">
-                                <ul class="list-unstyled">
+                        <div class="chat-panel text-light">
+                            <nav class="menuChat nav flex-column">
+                                <!-- <a class="nav-link" href="#">Active<i class="right fa fa-angle-left"></i></a>
+                                <a class="nav-link" href="#">Link</a>
+                                <a class="nav-link" href="#">Link</a> -->
+                                <!-- <a href="#navs" data-preg="howmany" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">Cuantos trozos te has comido de...</a>
+                                <ul class="collapse list-unstyled" id="navs">
+                                    <li><a class="preg" href="#" data-preg="howmany01"> Piña</a></li>
+                                    <li><a class="preg" href="#" data-preg="howmany02"> Verdura</a></li>
+                                    <li><a class="preg" href="#" data-preg="howmany03"> Ternera</a></li>
+                                    <li><a class="preg" href="#" data-preg="howmany04"> Salmon</a></li>
+                                </ul> -->
+                            </nav>
+                            <!-- <nav id="sidebar">
+                                <ul class="list-unstyled menuChat">
                                     <li class="preg list-group-item list-group-item-dark" data-preg="like"><a href="#"><i class="fa fa-pizza-slice fa-flip-horizontal"></i> <span>Que te gusta más</span></a></li>
                                     <li class="preg list-group-item list-group-item-dark" data-preg="unlike"><a href="#"><i class="fa fa-pizza-slice fa-flip-horizontal"></i> <span>Hay algo que no te guste?</span></a></li>
                                     <li class="preg list-group-item list-group-item-dark" data-preg="first"><a href="#"><i class="fa fa-pizza-slice fa-flip-horizontal"></i> <span>cual fué tu primer trozo</span></a></li>
@@ -57,16 +69,12 @@
                                     </li>
                                     <li class="preg list-group-item list-group-item-dark" data-preg="guilty"><a href="#"><i class="fa fa-star"></i><span> Has sido tú!!!</span></a></li>
                                 </ul>
-                            </nav>
+                            </nav> -->
                         </div>
                         <div class="hueco">
                             <img src="" class="imgCard card-img-top imgCardCircles" alt="...">
                             <div class="chat-container">
-                              <ul class="chat-log">
-                                <!-- <li class="msg-yo">
-                                  <span class="msg-txt">Otra cosa mariposa 1 texto muy largo si señor salto de linea</span>
-                                </li> -->
-                              </ul>
+                              <ul class="chat-log"></ul>
                             </div>
                         </div>
                         <ul class="list-group list-group-flush">
@@ -90,14 +98,12 @@
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">Ternera <span class="howmany03 badge badge-danger">?</span></div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">Salmón <span class="howmany04 badge badge-danger">?</span></div>
                                 </div>
-                                <!-- <div class="lOdia d-flex flex-md-column flex-lg-row align-items-center align-items-md-end align-items-lg-center">
-                                </div> -->
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 trans">
+            <div class="col-md-3 px-1 trans">
                 <div id="c2" class="card" data-pj="pj2">
                     <div class="card-header">
                         <h6 class= "m-0 float-left"></h6>
@@ -108,11 +114,11 @@
                         <div class="chat-panel text-light list-group-item-dark">
                             <nav id="sidebar">
                                 <ul class="list-unstyled">
-                                    <li class="preg list-group-item list-group-item-dark" data-preg="like"><a href="#"><i class="fa fa-pizza-slice fa-flip-horizontal"></i> <span>Que te gusta más</span></a></li>
-                                    <li class="preg list-group-item list-group-item-dark" data-preg="unlike"><a href="#"><i class="fa fa-pizza-slice fa-flip-horizontal"></i> <span>Hay algo que no te guste?</span></a></li>
-                                    <li class="preg list-group-item list-group-item-dark" data-preg="first"><a href="#"><i class="fa fa-pizza-slice fa-flip-horizontal"></i> <span>cual fué tu primer trozo</span></a></li>
-                                    <li class="preg list-group-item list-group-item-dark" data-preg="last"><a href="#"><i class="fa fa-pizza-slice fa-flip-horizontal"></i> <span>Echame el aliento</span></a></li>
-                                    <li class="list-group-item list-group-item-dark">
+                                    <li class="preg " data-preg="like"><a href="#"><i class="fa fa-pizza-slice fa-flip-horizontal"></i> <span>Que te gusta más</span></a></li>
+                                    <li class="preg " data-preg="unlike"><a href="#"><i class="fa fa-pizza-slice fa-flip-horizontal"></i> <span>Hay algo que no te guste?</span></a></li>
+                                    <li class="preg " data-preg="first"><a href="#"><i class="fa fa-pizza-slice fa-flip-horizontal"></i> <span>cual fué tu primer trozo</span></a></li>
+                                    <li class="preg " data-preg="last"><a href="#"><i class="fa fa-pizza-slice fa-flip-horizontal"></i> <span>Echame el aliento</span></a></li>
+                                    <li class="">
                                         <a href="#homeSubmenu" data-preg="howmany" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle ">Cuantos trozos te has comido de...</a>
                                         <ul class="collapse list-unstyled" id="homeSubmenu">
                                             <li><a class="preg" href="#" data-preg="howmany01"> Piña</a></li>
@@ -121,9 +127,23 @@
                                             <li><a class="preg" href="#" data-preg="howmany04"> Salmon</a></li>
                                         </ul>
                                     </li>
-                                    <li class="preg list-group-item list-group-item-dark" data-preg="guilty"><a href="#"><i class="fa fa-star"></i><span> Has sido tú!!!</span></a></li>
+                                    
                                 </ul>
                             </nav>
+                            <nav class="nav flex-column">
+  <a class="nav-link active" href="#">Active</a>
+  <a class="nav-link" href="#">Link</a>
+  <a class="nav-link" href="#">Link</a>
+
+    <a href="#nav" data-preg="howmany" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">Cuantos trozos te has comido de...</a>
+    <ul class="collapse list-unstyled" id="nav">
+        <li><a class="preg" href="#" data-preg="howmany01"> Piña</a></li>
+        <li><a class="preg" href="#" data-preg="howmany02"> Verdura</a></li>
+        <li><a class="preg" href="#" data-preg="howmany03"> Ternera</a></li>
+        <li><a class="preg" href="#" data-preg="howmany04"> Salmon</a></li>
+    </ul>
+   
+</nav>
                         </div>
                         <div class="hueco" >
                             <img src="" class="imgCard card-img-top imgCardCircles" alt="...">
@@ -157,7 +177,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 trans">
+            <div class="col-md-3 px-1 trans">
                 <div id="c3" class="card" data-pj="pj3">
                     <div class="card-header">
                         <h6 class= "m-0 float-left"></h6>
@@ -217,7 +237,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 trans">
+            <div class="col-md-3 px-1 trans">
                 <div id="c4" class="card" data-pj="pj4">
                     <div class="card-header">
                         <h6 class= "m-0 float-left"></h6>
@@ -277,7 +297,7 @@
                     </div>
                 </div>
             </div>
-        </div> <!-- row -->
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

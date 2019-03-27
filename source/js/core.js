@@ -11,7 +11,27 @@ Array.prototype.getRnd = function(nRnd){
 };
 
 
+class Faq {
+    constructor(faq) {
+        this.faq = {};
+        for (let v in faq) {
+           
+            this.faq[v] = {
+                usado: false,
+                preg : faq[v].preg[Math.floor(Math.random()*faq[v].preg.length)],
+                resp(t) {
+                    const  r = faq[v].resp(t);
+                    return r[Math.floor(Math.random()*r.length)];                  
+                }
+            }
 
+            if (v == 'howmany') {
+               this.faq[v].subPreg = PIZZAS;
+            } 
+        }
+        return this.faq;
+    }
+}
 
 /*
 mejorar la cena de tal forma que vaya cogiendo un trozo disponible cada vez 
@@ -49,23 +69,16 @@ var cena = (function () {
             }
             // array donde está el orden que se va comiendo las pizzas
             this.orden = ordenAux.sort( () => {return Math.random() - 0.5});
-            this.amigo = "";
-            this.enemigo = "";
             this.nPreg = 4;
             this.howLimit = 1;
-            this.preg = preguntas.map(a => Object.assign({}, a));
-            this.preg[4] = preguntas[4].map(a => Object.assign({}, a));
-            this.preg[5] = preguntas[5].map(a => Object.assign({}, a));
+            this.faq = new Faq(FAQ);
             this.seSabe = {
                 pizza: {},
                 pizzaDuda: {},
                 orden: new Array(this.orden.length).fill(0),
-                amigo: "",
-                enemigo: "",
                 encanta: [],
                 odia: []
             }
-            // this.hola();
         }
 
         capFirst(str) {
@@ -73,37 +86,41 @@ var cena = (function () {
         }
 
         generateName(genero) {
-            let hombre = ["Antonio","Jose","Manuel","Francisco","David","Juan","Jose","Javier","Daniel","Francisco","Jesus","Carlos","Alejandro","Miguel","Jose","Rafael","Pedro","Angel","Pablo","Fernando","Sergio","Luis","Jorge","Alberto","Alvaro","Diego","Adrian","Raul","Ivan","Enrique","Ruben","Ramon","Vicente","Oscar","Andres","Joaquin","Santiago","Eduardo","Victor","Mario","Roberto","Jaime","Ignacio","Marcos","Alfonso","Jordi","Salvador","Ricardo","Emilio","Hugo","Guillermo","Gabriel","Julian","Julio","Marc","Tomas","Gonzalo","Agustin","Mohamed","Felix","Nicolas","Joan","Martin","Ismael","Cristian","Samuel","Aitor","Josep","Hector","Mariano","Domingo","Alfredo","Sebastian","Iker","Cesar","Felipe","Alex","Lucas","Rodrigo","Gregorio","Xavier","Albert"];
-            let mujer = ["Maria","Carmen","Josefa","Isabel","Laura","Teresa","Ana","Cristina","Marta","Antonia","Dolores","Lucia","Sara","Paula","Elena","Pilar","Concepcion","Raquel","Rosa","Manuela","Mercedes",,"Rosario","Beatriz","Juana","Teresa","Julia","Nuria","Silvia","Irene","Alba","Patricia","Montserrat","Andrea","Rosa","Rocio","Monica","Alicia","Angela","Sonia","Sandra","Marina","Susana","Yolanda","Natalia","Margarita","Eva","Inmaculada","Claudia",,"Ana Isabel","Esther","Noelia","Carla","Veronica","Sofia","Angeles","Carolina","Nerea","Eva","Amparo","Miriam","Lorena","Ines","Daniela","Catalina","Consuelo","Lidia","Celia","Alejandra","Olga","Emilia","Gloria","Luisa","Ainhoa","Aurora","Martina","Fatima"];
-            let apellidos = ["Garcia","Gonzalez","Rodriguez","Fernandez","Lopez","Martinez","Sanchez","Perez","Gomez","Martin","Jimenez","Ruiz","Hernandez","Diaz","Moreno","Muñoz","Alvarez","Romero","Alonso","Gutierrez","Navarro","Torres","Dominguez","Vazquez","Ramos","Gil","Ramirez","Serrano","Blanco","Molina","Morales","Suarez","Ortega","Delgado","Castro","Ortiz","Rubio","Marin","Sanz","Nuñez","Iglesias","Medina","Garrido","Cortes","Castillo","Santos","Lozano","Guerrero","Cano","Prieto","Mendez","Cruz","Calvo","Gallego","Herrera","Marquez","Leon","Vidal","Peña","Flores","Cabrera","Campos","Vega","Fuentes","Carrasco","Diez","Reyes","Caballero","Nieto","Aguilar","Pascual","Santana","Herrero","Montero","Lorenzo","Hidalgo","Gimenez","Ibañez","Ferrer","Duran","Santiago","Benitez","Vargas","Mora","Vicente","Arias","Carmona","Crespo","Roman","Pastor","Soto","Saez","Velasco","Moya","Soler","Parra","Esteban","Bravo","Gallardo","Rojas"]
+           
             let nombre;
             if (genero == 'h')
-                nombre = this.capFirst(hombre[rnd(0, hombre.length -1)]);
+                nombre = this.capFirst(HOMBRE[rnd(0, HOMBRE.length -1)]);
             else if (genero == 'm')
-                nombre = this.capFirst(mujer[rnd(0, mujer.length -1)]);
+                nombre = this.capFirst(MUJER[rnd(0, MUJER.length -1)]);
             else {
                 if (rnd(0,2) == 1)
-                    nombre = this.capFirst(hombre[rnd(0, hombre.length -1)]);
+                    nombre = this.capFirst(HOMBRE[rnd(0, HOMBRE.length -1)]);
                 else
-                    nombre = this.capFirst(mujer[rnd(0, mujer.length -1)]);
+                    nombre = this.capFirst(MUJER[rnd(0, MUJER.length -1)]);
             }
+
+            nombre += ' '+this.capFirst(APELLIDOS[rnd(0, APELLIDOS.length -1)])+ ' ' + this.capFirst(APELLIDOS[rnd(0, APELLIDOS.length -1)]);    
             
-            nombre += ' '+this.capFirst(apellidos[rnd(0, apellidos.length -1)])+ ' ' + this.capFirst(apellidos[rnd(0, apellidos.length -1)]);    
             return nombre;
         }
 
         culpar() {
-            return { msg: respuestas[6](this.culpable), _p:false  };
+            return { msg: this.faq['guilty'].resp(this.culpable), _p:false  };
         }
 
         hablar(idPreg,subPreg) {
-            if (this.nPreg > 0 && !this.preg[idPreg].usada && o.nPreg > 0) {
+
+            let f = this.faq[idPreg],
+                p;
+
+            if (this.nPreg > 0 && !f.usado && o.nPreg > 0) {
+                
+                f.usado = true;
                 this.nPreg--;
                 o.nPreg--;
-                this.preg[idPreg].usada = true;
-                let p;
+                
                 switch(idPreg) {
-                    case 0: // ¿Qué te gusta más? // return msg: "", _p:char
+                    case 'like': // return msg: "", _p:char
                         p = this.encanta.rnd();
                         if (this.seSabe.encanta.indexOf(p) == -1) {
                             Object.assign(this.seSabe.encanta, p);
@@ -112,9 +129,10 @@ var cena = (function () {
                                 duda: '>'
                             };
                         } 
-                        return { msg: respuestas[0](p), _p:p }
+                        console.log(f.resp(p));
+                        return { msg: f.resp(p), _p:p }
 
-                    case 1:  // ¿Hay algo que no te guste?" // return msg: "", _p:char
+                    case 'unlike':  // return msg: "", _p:char
                         p = this.odia.rnd();
                         if (this.seSabe.odia.indexOf(p) == -1) {
                             Object.assign(this.seSabe.odia, p);
@@ -123,9 +141,9 @@ var cena = (function () {
                                 duda: false
                             };
                         } 
-                        return { msg: respuestas[1](p), _p:p }
+                        return { msg: f.resp(p), _p:p }
 
-                    case 2:  // ¿Cuál fue tu primer trozo? // return msg: "", _p:char
+                    case 'first':  // return msg: "", _p:char
                         p = this.orden[0];
                         this.seSabe.orden[0] = p;
                         if (typeof this.seSabe.pizza[p] === 'undefined') {
@@ -140,9 +158,9 @@ var cena = (function () {
                                 this.seSabe.pizza[p].tr += 1;
                             }
                         }
-                        return { msg: respuestas[2](p), _p:p};
+                        return { msg: f.resp(p), _p:p};
 
-                    case 3: // Tu último trozo // return msg: "", p:char
+                    case 'last': // return msg: "", _p:char
                         p = this.orden[this.orden.length-1];
                         this.seSabe.orden[this.orden.length-1] = p;
                         if (typeof this.seSabe.pizza[p] === 'undefined') {
@@ -157,16 +175,13 @@ var cena = (function () {
                                 this.seSabe.pizza[p].tr += 1;
                             }
                         }
-                        return { msg: respuestas[3](p), _p:p};
-                    
-                    case 4: // ¿Qué opinas de...? // --------> sin acabar
-                        return { msg: respuestas[4]() }; 
+                        return { msg: f.resp(p), _p:p};
 
-                    case 5: // ¿Cuántos trozos te has comido de...? // return msg: "" 'tipTrozo': int
+                    case 'howmany': // ¿Cuántos trozos te has comido de...? // return msg: "" 'tipTrozo': int
                             // USO: (5,X) X=letra de la pizza
                         if (this.howLimit != 0) {
-                            this.preg[idPreg].usada = false;
-                            let obj = { msg: respuestas[5](subPreg, this.pizza[subPreg]) };
+                            this.faq[idPreg].usada = false;
+                            let obj = { msg: f(subPreg, this.pizza[subPreg]) };
                             this.seSabe.pizza[subPreg] = {
                                 tr  : this.pizza[subPreg],
                                 duda: false
@@ -176,10 +191,12 @@ var cena = (function () {
                         } else {
                             return false;
                         }
+                    case 'guilty':
+                        return this.culpar();
                 }
             } else {
-                console.log("limite preguntas sobrepasado");
-                return { msg: respuestas[7], _p:false  };;
+                console.log("aki");
+                return { msg: f.resp(), _p:false  };;
             }
         }
             
@@ -279,7 +296,8 @@ var cena = (function () {
 
 var o = cena.o;
 // o.pj1.orden =[ "p", "v", "v", "p" ];
-// console.log(o.pj1.hablar(0));
+// console.log(o.pj1.hablar('like'));
+// console.log(o.pj1.hablar('like'));
 // console.log(o.pj1.hablar(1));
 // console.log(o.pj1.hablar(2));
 // console.log(o.pj1.hablar(3));
@@ -289,3 +307,11 @@ var o = cena.o;
 // console.log(cena.o.pj1.orden);
 
 
+    // console.log(faq);
+
+    // let f1 = new Faq(FAQ);
+    // console.log(f1);
+    // console.log(f1[0].preg);
+    // console.log(f1[0].resp());
+    // console.log(f2[0].preg);
+    // console.log(f2[0].resp('t'));

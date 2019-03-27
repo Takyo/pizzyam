@@ -13,8 +13,8 @@ $(document).ready(function() {
         c3 = $("#c3"),
         c4 = $("#c4");
 
-    var c = cena.o;
-    console.log(c);
+    const C = cena.o;
+    // console.log(c);
 
     /**
      * rellena el card con los datos que se saben del pj
@@ -24,7 +24,7 @@ $(document).ready(function() {
      * TAREAS: mejorar para que sea un rellenado más dinamico y codigo más elegante
      */
     $.fn.rellenar = function(pj,seSabe) {
-        $("#totalPreg").html("<b>"+c.nPreg+"</b>");
+        $("#totalPreg").html("<b>"+C.nPreg+"</b>");
         this.find('.nPreg').html("<b>"+pj.nPreg+"</b>")
         this.find('.card-header > h6').html(pj.nombre);
         let comio = this.find('.lComio'),
@@ -44,7 +44,7 @@ $(document).ready(function() {
          pjSeSabe.orden.forEach( function(tr, i, array) {
             let html = '';
             if (tr != 0) {
-               html = pizzas[tr];
+               html = PIZZAS[tr];
             } else  if (array[i-1] !== 0){
                 html = '?'
             }
@@ -53,25 +53,25 @@ $(document).ready(function() {
                 html            : html,
                 'data-toggle'   : 'tooltip',
                 'data-placement': "top",
-                title           : pizzas[tr]
+                title           : PIZZAS[tr]
             }));
         });
          pjSeSabe.encanta.forEach( function(tr, i, array) {
             gusta.append($('<span>',{
-                class: 'badge badge-danger',
-                html : (tr != 0) ? pizzas[tr] : '?',
+                class           : 'badge badge-danger',
+                html            : (tr != 0) ? PIZZAS[tr] : '?',
                 'data-toggle'   : 'tooltip',
                 'data-placement': "top",
-                title           : pizzas[tr]
+                title           : PIZZAS[tr]
             }));
         });
          pjSeSabe.odia.forEach( function(tr, i, array) {
             odia.append($('<span>',{
-                class: 'badge badge-danger',
-                html : (tr != 0) ? pizzas[tr] : '?',
+                class           : 'badge badge-danger',
+                html            : (tr != 0) ? PIZZAS[tr] : '?',
                 'data-toggle'   : 'tooltip',
                 'data-placement': "top",
-                title           : pizzas[tr]
+                title           : PIZZAS[tr]
             }));
         });
 
@@ -143,16 +143,16 @@ $(document).ready(function() {
             altura = $('.imgCard:first').outerHeight();
         }
         this.find('.hueco').css('height', altura);
+        $(".collapse").collapse('hide');
     }
 
     // rellenado de datos
-    $("#totalPreg").html("<b>"+c.nPreg+"</b>");
 
     for (let pz in yo.pizza) {
         if (yo.pizza[pz] != 0) {
             yoPanel.append($('<li>',{
-                class : 'list-group-item',
-                html  : pizzas[pz].charAt(0).toUpperCase() + pizzas[pz].slice(1) +
+                class: 'list-group-item',
+                html : PIZZAS[pz].charAt(0).toUpperCase() + PIZZAS[pz].slice(1) +
                         ' <span class="badge badge-danger">'+yo.pizza[pz]+'</span>',
             }));
         }
@@ -169,63 +169,12 @@ $(document).ready(function() {
         card.toggleChat();
     });
 
-    // preguntas
-    $(".preg").click(function() {
-        let tPreg  = this.dataset.preg,
-            resp  = false;
-            card  = $(this).closest('.card'),
-            nPreg = 0,
-            preg  = '';
-         var pj   = card[0].dataset.pj;
-
-        if (tPreg === 'like') {
-            nPreg = 0;
-            resp = c[pj].hablar(0);
-        } else if (tPreg === 'unlike') {
-            nPreg = 1;
-            resp = c[pj].hablar(1);
-        } else if (tPreg === 'first') {
-            nPreg = 2;
-            resp = c[pj].hablar(2);
-        } else if (tPreg === 'last') {
-            nPreg = 3;
-            resp = c[pj].hablar(3);
-        } else if (tPreg === 'howmany01') {
-            nPreg = 4;
-            resp = c[pj].hablar(5,'p');
-        } else if (tPreg === 'howmany02') {
-            nPreg = 5;
-            resp = c[pj].hablar(5,'v');
-        } else if (tPreg === 'howmany03') {
-            nPreg = 5;
-            resp = c[pj].hablar(5,'t');
-        } else if (tPreg === 'howmany04') {
-            nPreg = 5;
-            resp = c[pj].hablar(5,'s');
-        } else if (tPreg === 'guilty') {
-            nPreg = 6;
-            resp = c[pj].culpar();
-            solucionar();
-        }
-        
-        if (resp._p !== false) {
-            card.rellenar(c[pj]);
-            card.toggleChat();
-        }
-        console.log(pj,resp);
-        console.log(preguntas);
-        preg = preguntas[nPreg];
-        card.find('.chat-log').append('<li class="msg-yo"><span class="msg-txt">'+preg.text+'</span></li>'+
-                                      '<li class="msg-el"><span class="msg-txt">'+resp.msg+'</span></li>'  );
-    });
-
-    
     // muestra la solucion de todos los pjs
     function solucionar() {
         let card = $(".card");
         card.addClass('bg-success');
-        $('[data-pj="'+c.pjCulp+'"]').removeClass('bg-success').addClass('bg-danger');
-        let culpable = c.pjCulp;
+        $('[data-pj="'+C.pjCulp+'"]').removeClass('bg-success').addClass('bg-danger');
+        let culpable = C.pjCulp;
         c1.rellenar(pj1,true);
         c2.rellenar(pj2,true);
         c3.rellenar(pj3,true);
@@ -237,7 +186,7 @@ $(document).ready(function() {
     }
 
     // imagenes aleatorias
-    (function ()  { 
+    (function () { 
 
         Array.prototype.rndRemove = function() {
             let rnd = this.rnd();
@@ -270,4 +219,81 @@ $(document).ready(function() {
         c4.find('img').attr('src', imgs+g[pj4.genero].rndRemove());
     })();
 
+    // carga de preguntas
+    (function ()  { 
+        
+        $.fn.createMenu = function(pj) {
+            let faq = pj.faq,
+                html,_class,
+                menu = this.find('.menuChat');
+            for (let f in pj.faq) {
+                if (f == 'howmany') {
+                    let pj = $(this).closest('.card')[0].dataset.pj;
+                    
+                    html = '<a href="#sub_'+pj+'" data-preg="howmany" data-toggle="collapse" aria-expanded="false"'+
+                               'class="preg nav-link">'+faq[f].preg+'</a>'+
+                           '<ul class="collapse list-unstyled" id="sub_'+pj+'">'; 
+
+                    for (let pz in PIZZAS) {
+                        html += '<li><a class="preg nav-link py-1 pl-4" href="#" data-preg="'+pz+'">'+PIZZAS[pz]+'</a></li>';
+                    }
+                            
+                    html += '</ul>';
+
+                } else {
+                    html = '<a data-preg="'+f+'" class="preg nav-link" href="#">'+faq[f].preg+'</a>';
+                    
+                }
+                /*this.find('.menuChat').append(
+                        $('<a>',{
+                            "data-preg": f,
+                            href       : '#',       
+                            class      : 'preg nav-link',
+                            html       : faq[f].preg,
+                        }).click(fnClick)
+                    );*/
+                // console.log(html);
+                // console.log(f);
+                // this.find('.chat-panel nav ul').append($('<li>',{
+               menu.append(html);
+            }
+
+            menu.on('click', '.preg', function() {
+                let tPreg = this.dataset.preg
+                    card  = $(this).closest('.card')
+                    pj    = card[0].dataset.pj
+                    resp  = C[pj].hablar(tPreg)
+                    preg  = this.textContent;
+
+                if (tPreg === 'guilty') {
+                    solucionar();
+                } else if (tPreg === 'howmany') {
+                    console.log("hola");
+                    $(this).toggleClass('text-white');
+                }
+
+                if (resp._p !== false) {
+                    card.rellenar(C[pj]);
+                    card.toggleChat();
+                }
+
+                card.find('.chat-log').append('<li class="msg-yo"><span class="msg-txt">'+preg+'</span></li>'+
+                                              '<li class="msg-el"><span class="msg-txt">'+resp.msg+'</span></li>'  );
+            });
+            
+            
+        }
+
+        c1.createMenu(pj1);
+        // c2.createMenu(pj2);
+        // c3.createMenu(pj3);
+        // c4.createMenu(pj4);
+
+
+        /*c1.find('.chat-panel nav ul').append($('<li>',{
+                "data-preg": 'asd',
+                class      : 'preg list-group-item list-group-item-dark',
+                html       :  'ok funciona',
+            }));*/
+    })();
 });
