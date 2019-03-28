@@ -62,7 +62,8 @@ const FAQ =
         },
         howmany: {
             preg: ["¿Cuántos trozos te has comido de...?"],
-            resp: (p, trozos) => { 
+            resp: function (p, trozos) { 
+                console.log(p,trozos);
                 if (trozos == 0) {
                     return ["No me he comido ningún trozo de " + PIZZAS[p]];
                 } else if (trozos == 1) {

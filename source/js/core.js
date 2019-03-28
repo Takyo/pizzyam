@@ -19,15 +19,15 @@ class Faq {
             this.faq[v] = {
                 usado: false,
                 preg : faq[v].preg[Math.floor(Math.random()*faq[v].preg.length)],
-                resp(t) {
-                    const  r = faq[v].resp(t);
+                resp : (t,n) => {
+                    const  r = faq[v].resp(t,n);
                     return r[Math.floor(Math.random()*r.length)];                  
                 }
             }
 
             if (v == 'howmany') {
                this.faq[v].subPreg = PIZZAS;
-            } 
+            }
         }
         return this.faq;
     }
@@ -69,7 +69,7 @@ var cena = (function () {
             }
             // array donde está el orden que se va comiendo las pizzas
             this.orden = ordenAux.sort( () => {return Math.random() - 0.5});
-            this.nPreg = 4;
+            this.nPreg = 40;
             this.howLimit = 1;
             this.faq = new Faq(FAQ);
             this.seSabe = {
@@ -88,6 +88,7 @@ var cena = (function () {
         generateName(genero) {
            
             let nombre;
+
             if (genero == 'h')
                 nombre = this.capFirst(HOMBRE[rnd(0, HOMBRE.length -1)]);
             else if (genero == 'm')
@@ -110,6 +111,11 @@ var cena = (function () {
 
         hablar(idPreg,subPreg) {
 
+            if (idPreg.charAt(0) == '_') {
+                subPreg = idPreg.slice(1);
+                idPreg = 'howmany';
+            }
+
             let f = this.faq[idPreg],
                 p;
 
@@ -129,7 +135,6 @@ var cena = (function () {
                                 duda: '>'
                             };
                         } 
-                        console.log(f.resp(p));
                         return { msg: f.resp(p), _p:p }
 
                     case 'unlike':  // return msg: "", _p:char
@@ -177,11 +182,13 @@ var cena = (function () {
                         }
                         return { msg: f.resp(p), _p:p};
 
-                    case 'howmany': // ¿Cuántos trozos te has comido de...? // return msg: "" 'tipTrozo': int
-                            // USO: (5,X) X=letra de la pizza
+                    case 'howmany': // USO1: ('howmany',X) X=letra de la pizza
+                                    // USO2: ('_X')
+                                    // return msg: "" 'tipTrozo': int
+                        
                         if (this.howLimit != 0) {
                             this.faq[idPreg].usada = false;
-                            let obj = { msg: f(subPreg, this.pizza[subPreg]) };
+                            let obj = { msg: f.resp(subPreg, this.pizza[subPreg]) };
                             this.seSabe.pizza[subPreg] = {
                                 tr  : this.pizza[subPreg],
                                 duda: false
@@ -195,7 +202,6 @@ var cena = (function () {
                         return this.culpar();
                 }
             } else {
-                console.log("aki");
                 return { msg: f.resp(), _p:false  };;
             }
         }

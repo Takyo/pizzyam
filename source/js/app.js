@@ -136,9 +136,14 @@ $(document).ready(function() {
 
     // abre cierra chat
     $.fn.toggleChat = function() {
-        this.find('.chat-panel').toggleClass('chat-panel-open');
-        this.find('.imgCard').toggleClass('imgCardCircle');
+        let chatCont = this.find('.chat-container');
+        chatCont.prop('scrollTop',chatCont.prop('scrollHeight'));
+
         this.find('.card-header').toggleClass('cardHeaderCircle');
+        this.find('.imgCard').toggleClass('imgCardCircle');
+        this.find('.chat-panel').toggleClass('chat-panel-open')
+                                .find('a').removeClass('text-white');;;
+
         if (altura === false) {
             altura = $('.imgCard:first').outerHeight();
         }
@@ -153,7 +158,7 @@ $(document).ready(function() {
             yoPanel.append($('<li>',{
                 class: 'list-group-item',
                 html : PIZZAS[pz].charAt(0).toUpperCase() + PIZZAS[pz].slice(1) +
-                        ' <span class="badge badge-danger">'+yo.pizza[pz]+'</span>',
+                       ' <span class="badge badge-danger">'+yo.pizza[pz]+'</span>',
             }));
         }
     }
@@ -172,9 +177,11 @@ $(document).ready(function() {
     // muestra la solucion de todos los pjs
     function solucionar() {
         let card = $(".card");
+
         card.addClass('bg-success');
-        $('[data-pj="'+C.pjCulp+'"]').removeClass('bg-success').addClass('bg-danger');
-        let culpable = C.pjCulp;
+        $('[data-pj="'+C.pjCulp+'"]').removeClass('bg-success')
+                                     .addClass('bg-danger');
+
         c1.rellenar(pj1,true);
         c2.rellenar(pj2,true);
         c3.rellenar(pj3,true);
@@ -234,8 +241,9 @@ $(document).ready(function() {
                                'class="preg nav-link">'+faq[f].preg+'</a>'+
                            '<ul class="collapse list-unstyled" id="sub_'+pj+'">'; 
 
-                    for (let pz in PIZZAS) {
-                        html += '<li><a class="preg nav-link py-1 pl-4" href="#" data-preg="'+pz+'">'+PIZZAS[pz]+'</a></li>';
+                    for (let pz in faq[f].subPreg) {
+                        html += '<li><a class="preg nav-link py-1 pl-4" href="#" data-preg="_'+pz+'">'+
+                        PIZZAS[pz].charAt(0).toUpperCase()+PIZZAS[pz].slice(1)+'</a></li>';
                     }
                             
                     html += '</ul>';
@@ -244,41 +252,37 @@ $(document).ready(function() {
                     html = '<a data-preg="'+f+'" class="preg nav-link" href="#">'+faq[f].preg+'</a>';
                     
                 }
-                /*this.find('.menuChat').append(
-                        $('<a>',{
-                            "data-preg": f,
-                            href       : '#',       
-                            class      : 'preg nav-link',
-                            html       : faq[f].preg,
-                        }).click(fnClick)
-                    );*/
-                // console.log(html);
-                // console.log(f);
-                // this.find('.chat-panel nav ul').append($('<li>',{
-               menu.append(html);
+            
+                if (f != 'exceed') {
+                    menu.append(html);
+                }
             }
 
             menu.on('click', '.preg', function() {
                 let tPreg = this.dataset.preg
                     card  = $(this).closest('.card')
-                    pj    = card[0].dataset.pj
-                    resp  = C[pj].hablar(tPreg)
-                    preg  = this.textContent;
-
-                if (tPreg === 'guilty') {
-                    solucionar();
-                } else if (tPreg === 'howmany') {
-                    console.log("hola");
+                    pj    = card[0].dataset.pj;
+                    
+                if (tPreg === 'howmany') {
                     $(this).toggleClass('text-white');
-                }
+                } else {
 
-                if (resp._p !== false) {
-                    card.rellenar(C[pj]);
-                    card.toggleChat();
-                }
+                    let preg  = this.textContent,
+                        resp  = C[pj].hablar(tPreg);
 
-                card.find('.chat-log').append('<li class="msg-yo"><span class="msg-txt">'+preg+'</span></li>'+
-                                              '<li class="msg-el"><span class="msg-txt">'+resp.msg+'</span></li>'  );
+                    if (tPreg === 'guilty') {
+                        let chatCont = card.find('.chat-container');
+                        chatCont.prop('scrollTop',chatCont.prop('scrollHeight'));
+                        solucionar();
+                    } else
+                    if (resp._p !== false) {
+                        card.rellenar(C[pj]);
+                    }
+                        card.toggleChat();
+
+                    card.find('.chat-log').append('<li class="msg-yo"><span class="msg-txt">'+preg+'</span></li>'+
+                                              '<li class="msg-el"><span class="msg-txt">'+resp.msg+'</span></li>');
+                } 
             });
             
             

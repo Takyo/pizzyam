@@ -4,10 +4,11 @@
 .chat-container {
   overflow-y: auto;
   height: 285px;
-  opacity: 0.6;
+  opacity: 0.7;
+  transition:all 1s;
 }
 .chat-container:hover {
-  opacity: 0.8;
+  opacity: 0.9;
 }
 ul.chat-log {
   list-style: none;
@@ -92,6 +93,7 @@ ul.chat-log li {
   color: #c2c7d0;
   border-radius: .25rem;
   position: relative;
+  outline: none;
 }
 .chat-panel a .right{
   position: absolute;
