@@ -136,13 +136,31 @@ $(document).ready(function() {
 
     // abre cierra chat
     $.fn.toggleChat = function() {
-        let chatCont = this.find('.chat-container');
-        chatCont.prop('scrollTop',chatCont.prop('scrollHeight'));
 
-        this.find('.card-header').toggleClass('cardHeaderCircle');
-        this.find('.imgCard').toggleClass('imgCardCircle');
-        this.find('.chat-panel').toggleClass('chat-panel-open')
-                                .find('a').removeClass('text-white');;;
+        let xaparAll = function() {
+            console.log("xapo");
+            let card = $('.card');
+            card.find('.chat-panel').removeClass('chat-panel-open');
+            card.find('.imgCard').removeClass('imgCardCircle');
+            card.find('.card-header').removeClass('cardHeaderCircle');
+        }
+
+        let chatPanel  = this.find('.chat-panel'),
+            imgCard    = this.find('.imgCard'),
+            cardHeader = this.find('.card-header');
+
+        // close | open
+        if (chatPanel.hasClass('chat-panel-open')) {
+            xaparAll();
+            chatPanel.removeClass('chat-panel-open');
+            imgCard.removeClass('imgCardCircle');
+            cardHeader.removeClass('cardHeaderCircle');
+        } else {
+            xaparAll();
+            chatPanel.addClass('chat-panel-open');
+            imgCard.addClass('imgCardCircle');
+            cardHeader.addClass('cardHeaderCircle');
+        }
 
         if (altura === false) {
             altura = $('.imgCard:first').outerHeight();
@@ -186,10 +204,7 @@ $(document).ready(function() {
         c2.rellenar(pj2,true);
         c3.rellenar(pj3,true);
         c4.rellenar(pj4,true);
-        $(".card-header").addClass('text-white')
-                         .removeClass('cardHeaderCircle');
-        $(".chat-panel").removeClass('chat-panel-open');
-        $('.imgCard').removeClass('imgCardCircle');
+
     }
 
     // imagenes aleatorias
@@ -271,17 +286,20 @@ $(document).ready(function() {
                         resp  = C[pj].hablar(tPreg);
 
                     if (tPreg === 'guilty') {
-                        let chatCont = card.find('.chat-container');
-                        chatCont.prop('scrollTop',chatCont.prop('scrollHeight'));
                         solucionar();
-                    } else
-                    if (resp._p !== false) {
+                    } else if (resp._p !== false) {
                         card.rellenar(C[pj]);
                     }
-                        card.toggleChat();
+                    
+
 
                     card.find('.chat-log').append('<li class="msg-yo"><span class="msg-txt">'+preg+'</span></li>'+
                                               '<li class="msg-el"><span class="msg-txt">'+resp.msg+'</span></li>');
+
+                    let chatCont = card.find('.chat-container');
+                    chatCont.prop('scrollTop',chatCont.prop('scrollHeight'));
+
+                    card.toggleChat();
                 } 
             });
             
