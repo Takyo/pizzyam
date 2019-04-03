@@ -41,8 +41,50 @@ ul.chat-log li {
   text-align: left;
 }
 
+/* menu preguntas */
 
+.chat-panel {
+  position: absolute;
+  top: 0px;
+  width: 0%;
+  height:100%;
+  z-index: 100;
+  white-space: nowrap;
+  transition: width .4s ease-in-out;
+  overflow:hidden;
+  right: 0px;
+  background-color: #222d32;
+  /*background-color: #1e282c;*/
+}
 
+.chat-panel a{
+  color: #c2c7d0;
+  border-radius: .25rem;
+  position: relative;
+  outline: none;
+}
+
+.chat-panel a:hover{
+  color: #fff;
+  background-color: rgba(255,255,255,.1);
+  /*background-color: red;*/
+}
+
+.chat-panel ul {
+  background-color:#2c3b41;
+}
+.chat-panel-open {
+  width: 100%;
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+
+a.preg {
+  padding-left: 0.3rem;
+}
+i.faIc {
+  font-size: small;
+}
 
 
 .hueco img {
@@ -74,45 +116,6 @@ ul.chat-log li {
   transition:all .4s;
 }
 
-.chat-panel {
-  position: absolute;
-  top: 0px;
-  width: 0%;
-  height:100%;
-  z-index: 100;
-  white-space: nowrap;
-  transition: width .4s ease-in-out;
-  overflow:hidden;
-  right: 0px;
-  background-color: #222d32;
-  /*background-color: #1e282c;*/
-
-}
-
-.chat-panel a{
-  color: #c2c7d0;
-  border-radius: .25rem;
-  position: relative;
-  outline: none;
-}
-.chat-panel a .right{
-  position: absolute;
-  right: 1rem;
-  top: 12px;
-}
-.chat-panel a:hover{
-  color: #fff;
-  background-color: rgba(255,255,255,.1);
-}
-
-.chat-panel ul {
-  background-color:#2c3b41;
-}
-.chat-panel-open {
-  width: 100%;
-  padding-left: .5rem;
-  padding-right: .5rem;
-}
 
 .imgCardCircle {
   position: absolute;
@@ -127,12 +130,108 @@ ul.chat-log li {
 }
 
 
+/*  custom card */
+.card-header h4, .card-header h6 {
+  margin: 0px;
+}
+.card-header h4 a {
+  color: #222d32;
+}
+.card-header h4 a:hover {
+  /*color: #e6aa4a;*/
+  color: #75777D;
+}
 
-
+a {
+  outline: none;
+}
 
 /* test */
-
-.right2{
-  float: right;
-  position: absolute;
+.preg  i.rotar315:hover {
+    background-color: transparent;
+    transform: rotate(315deg);
 }
+
+i.rotar315 {
+  transition: color 0.2s ease, background-color 0.2s ease, transform 0.3s ease;
+}
+i.rotar315:hover {
+
+}
+
+.temblor:hover{
+  -webkit-animation: tiembla 0.1s infinite;
+}
+@-webkit-keyframes tiembla{
+  0%  { -webkit-transform:rotateZ(-5deg); }
+  50% { -webkit-transform:rotateZ( 0deg) scale(.8); }
+  100%{ -webkit-transform:rotateZ( 5deg); }
+}
+
+
+
+/*@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic);
+* {
+    font-family: "Roboto", Arial, sans-serif;
+}
+
+.main-wrapper {
+    border-radius: 4px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    position: relative;
+}
+
+i.material-icons {
+    font-size: 1.5rem;
+    color: white;
+    position: relative;
+    border-radius: 50%;
+    padding: 5px;
+    margin: 3px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.3s ease;
+}
+
+i.material-icons:after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    border: solid 2px;
+    transform: scale(0.8);
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+i.material-icons:hover:after {
+    transform: scale(1);
+    box-shadow: 10px 0 20px rgba(0, 0, 0, 0.19), 6px 0 6px rgba(0, 0, 0, 0.23);
+}
+
+i.material-icons:nth-of-type(1) {
+    background-color: #cd8484;
+}
+
+i.material-icons:nth-of-type(1):hover {
+    color: #cd8484;
+}
+
+i.material-icons:nth-of-type(1):after {
+    border-color: #cd8484;
+}
+
+
+
+i.material-icons:hover {
+    background-color: transparent;
+    transform: rotate(90deg);
+    cursor: pointer;
+    box-shadow: none;
+}
+
+
+*/

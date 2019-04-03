@@ -26,7 +26,7 @@ $(document).ready(function() {
     $.fn.rellenar = function(pj,seSabe) {
         $("#totalPreg").html("<b>"+C.nPreg+"</b>");
         this.find('.nPreg').html("<b>"+pj.nPreg+"</b>")
-        this.find('.card-header > h6').html(pj.nombre);
+        this.find('.card-header > h6:first').html(pj.nombre);
         let comio = this.find('.lComio'),
             gusta = this.find('.lGusta'),
             odia  = this.find('.lOdia'),
@@ -138,11 +138,11 @@ $(document).ready(function() {
     $.fn.toggleChat = function() {
 
         let xaparAll = function() {
-            console.log("xapo");
             let card = $('.card');
             card.find('.chat-panel').removeClass('chat-panel-open');
             card.find('.imgCard').removeClass('imgCardCircle');
             card.find('.card-header').removeClass('cardHeaderCircle');
+            card.find('.preg').removeClass('text-white');
         }
 
         let chatPanel  = this.find('.chat-panel'),
@@ -246,25 +246,31 @@ $(document).ready(function() {
         
         $.fn.createMenu = function(pj) {
             let faq = pj.faq,
+                fa = '<i class="faIc rotar315 fas fa-chevron-circle-right text-white"></i> ',
+                // fa = '<i class="faIc fas fa-check-circle text-success"></i> ',
+                // fa = '<i class="faIc far fa-circle text-white"></i> ',
+                faAdd = '<i class="faIc rotar315 fas fa-plus-circle text-white"></i> ',
                 html,_class,
                 menu = this.find('.menuChat');
             for (let f in pj.faq) {
                 if (f == 'howmany') {
                     let pj = $(this).closest('.card')[0].dataset.pj;
+
                     
                     html = '<a href="#sub_'+pj+'" data-preg="howmany" data-toggle="collapse" aria-expanded="false"'+
-                               'class="preg nav-link">'+faq[f].preg+'</a>'+
+                               'class="preg nav-link">'+faAdd+faq[f].preg+'</a>'+
                            '<ul class="collapse list-unstyled" id="sub_'+pj+'">'; 
 
                     for (let pz in faq[f].subPreg) {
                         html += '<li><a class="preg nav-link py-1 pl-4" href="#" data-preg="_'+pz+'">'+
-                        PIZZAS[pz].charAt(0).toUpperCase()+PIZZAS[pz].slice(1)+'</a></li>';
+                        fa+PIZZAS[pz].charAt(0).toUpperCase()+PIZZAS[pz].slice(1)+'</a></li>';
                     }
                             
                     html += '</ul>';
 
                 } else {
-                    html = '<a data-preg="'+f+'" class="preg nav-link" href="#">'+faq[f].preg+'</a>';
+                    html = '<a data-preg="'+f+'" class="preg nav-link" href="#">'+fa+faq[f].preg+'</a>';
+                    // html = '<a data-preg="'+f+'" class="preg nav-link" href="#">'+faq[f].preg+'</a>';
                     
                 }
             
@@ -290,8 +296,6 @@ $(document).ready(function() {
                     } else if (resp._p !== false) {
                         card.rellenar(C[pj]);
                     }
-                    
-
 
                     card.find('.chat-log').append('<li class="msg-yo"><span class="msg-txt">'+preg+'</span></li>'+
                                               '<li class="msg-el"><span class="msg-txt">'+resp.msg+'</span></li>');
