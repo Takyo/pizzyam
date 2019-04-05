@@ -143,6 +143,7 @@ $(document).ready(function() {
             card.find('.imgCard').removeClass('imgCardCircle');
             card.find('.card-header').removeClass('cardHeaderCircle');
             card.find('.preg').removeClass('text-white');
+            card.find('i.rotar315').removeClass('rotar315');
         }
 
         let chatPanel  = this.find('.chat-panel'),
@@ -246,10 +247,11 @@ $(document).ready(function() {
         
         $.fn.createMenu = function(pj) {
             let faq = pj.faq,
-                fa = '<i class="faIc rotar315 fas fa-chevron-circle-right text-white"></i> ',
-                // fa = '<i class="faIc fas fa-check-circle text-success"></i> ',
-                // fa = '<i class="faIc far fa-circle text-white"></i> ',
-                faAdd = '<i class="faIc rotar315 fas fa-plus-circle text-white"></i> ',
+                // fa = '<i class="faIc fas fa-chevron-circle-right"></i> ',
+                // fa = '<i class="faIc fas fa-chevron-circle-right"></i> ',
+                // faCheck = '<i class="faIc fas fa-check-circle text-success"></i> ',
+                fa = '<i class="faIc far fa-circle"></i> ',
+                faAdd = '<i class="faIc fas fa-plus-circle"></i> ',
                 html,_class,
                 menu = this.find('.menuChat');
             for (let f in pj.faq) {
@@ -278,14 +280,19 @@ $(document).ready(function() {
                     menu.append(html);
                 }
             }
-
             menu.on('click', '.preg', function() {
-                let tPreg = this.dataset.preg
-                    card  = $(this).closest('.card')
-                    pj    = card[0].dataset.pj;
-                    
+
+                let tPreg = this.dataset.preg,
+                    card  = $(this).closest('.card'),
+                    pj    = card[0].dataset.pj,
+                    a     = this;
+                    fa    = a.childNodes[0];
+
                 if (tPreg === 'howmany') {
-                    $(this).toggleClass('text-white');
+
+                    a.classList.toggle('text-white');
+                    fa.classList.toggle('rotar315');
+
                 } else {
 
                     let preg  = this.textContent,
@@ -297,13 +304,27 @@ $(document).ready(function() {
                         card.rellenar(C[pj]);
                     }
 
-                    card.find('.chat-log').append('<li class="msg-yo"><span class="msg-txt">'+preg+'</span></li>'+
-                                              '<li class="msg-el"><span class="msg-txt">'+resp.msg+'</span></li>');
+                    card.find('.chat-log')
+                        .append('<li class="msg-yo"><span class="msg-txt">'+preg+'</span></li>'+
+                                '<li class="msg-el"><span class="msg-txt">'+resp.msg+'</span></li>');
 
                     let chatCont = card.find('.chat-container');
                     chatCont.prop('scrollTop',chatCont.prop('scrollHeight'));
 
                     card.toggleChat();
+
+                    setTimeout( function() {
+                        a.classList.add("disabled");
+                        fa.classList.add("fas","fa-check-circle");
+                        fa.classList.remove("far","fa-circle");
+
+                        if (C[pj].howLimit == 0) {
+                            let ul = $(a).closest('ul');
+                            ul.addClass('limite');
+                            console.log(ul)
+                        }
+                    }, 400);
+                    
                 } 
             });
             

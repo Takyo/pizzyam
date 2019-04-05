@@ -91,6 +91,12 @@ const FAQ =
             resp: ["Estoy cansado de responderte.", // cambiar segun genero
                    "Paso de contarte más", 
                    "Me estás rallando, dejame en paz!"]
-            }
+        },
+        repite: {
+            preg: "",
+            resp: ["Te repites",
+                   "Eso ya me lo has preguntado",
+                   "Me acojo a la 5ª enmienda"]
+        }
     }
 

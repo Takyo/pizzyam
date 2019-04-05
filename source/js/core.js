@@ -69,8 +69,8 @@ var cena = (function () {
             }
             // array donde está el orden que se va comiendo las pizzas
             this.orden = ordenAux.sort( () => {return Math.random() - 0.5});
-            this.nPreg = 40;
-            this.howLimit = 1;
+            this.nPreg = 4;
+            this.howLimit = 2;
             this.faq = new Faq(FAQ);
             this.seSabe = {
                 pizza: {},
@@ -185,9 +185,9 @@ var cena = (function () {
                     case 'howmany': // USO1: ('howmany',X) X=letra de la pizza
                                     // USO2: ('_X')
                                     // return msg: "" 'tipTrozo': int
-                        
-                        if (this.howLimit != 0) {
-                            this.faq[idPreg].usada = false;
+                        if (this.howLimit > 0) {
+                            this.howLimit--;
+                            f.usado = false;
                             let obj = { msg: f.resp(subPreg, this.pizza[subPreg]) };
                             this.seSabe.pizza[subPreg] = {
                                 tr  : this.pizza[subPreg],
@@ -196,6 +196,7 @@ var cena = (function () {
                             obj[subPreg] = this.pizza[subPreg];
                             return obj;
                         } else {
+                            console.log("sobrepasado");
                             return false;
                         }
                     case 'guilty':
