@@ -69,8 +69,8 @@ var cena = (function () {
             }
             // array donde está el orden que se va comiendo las pizzas
             this.orden = ordenAux.sort( () => {return Math.random() - 0.5});
-            this.nPreg = 4;
-            this.howLimit = 2;
+            this.nPreg = 2;
+            this.howLimit = 1;
             this.faq = new Faq(FAQ);
             this.seSabe = {
                 pizza: {},

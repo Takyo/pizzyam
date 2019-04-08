@@ -1,4 +1,4 @@
-/*--------*/
+--------*/
 /*  chat  */
 /*--------*/
 .chat-container {
@@ -63,39 +63,30 @@ ul.chat-log li {
   position: relative;
   outline: none;
 }
-.chat-panel a i, .chat-panel.limite a i{
-  color: #75dfe3;
-}
-
-
-.limite a {
-  color: #6c757d !important;
-  background-color: #222d32 !important;
-  pointer-events: none;
-  cursor: default;
-}
-.limite a[data-preg='howmany'].limite ul li a,
-.limite a[data-preg='howmany']{
-  /*color: red ;*/
-  pointer-events: initial;
-  cursor: pointer;
-}
-
 .chat-panel a:hover{
   color: #fff;
   background-color: rgba(255,255,255,.1);
 }
 
-.chat-panel a.tachado {
-  text-decoration: line-through;
+.chat-panel a i, .chat-panel.limite a i{
+  color: #75dfe3;
 }
-.chat-panel a.usado,.chat-panel i.usado {
-  color:#999;
-  background-color: #222d32;
+
+.limite a:not([data-preg='guilty']){
+  color: #6c757d !important;
 }
-.chat-panel a.usado:hover{
-  color:#999;
+
+.limite a:hover:not([data-preg='guilty']):not([data-preg='howmany']) {
+  background-color: inherit;
 }
+.limite a:not([data-preg='guilty']):not([data-preg='howmany']) {
+  background-color: inherit;
+  pointer-events: none;
+  cursor: default;
+}
+
+
+
 .chat-panel ul {
   background-color:#2c3b41;
 }
@@ -260,4 +251,3 @@ i.material-icons:hover {
 }
 
 
-*/

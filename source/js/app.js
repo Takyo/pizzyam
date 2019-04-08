@@ -247,13 +247,12 @@ $(document).ready(function() {
         
         $.fn.createMenu = function(pj) {
             let faq = pj.faq,
-                // fa = '<i class="faIc fas fa-chevron-circle-right"></i> ',
-                // fa = '<i class="faIc fas fa-chevron-circle-right"></i> ',
-                // faCheck = '<i class="faIc fas fa-check-circle text-success"></i> ',
                 fa = '<i class="faIc far fa-circle"></i> ',
                 faAdd = '<i class="faIc fas fa-plus-circle"></i> ',
+                faGuilty = '<i class="faIc far fa-star"></i> ',
                 html,_class,
                 menu = this.find('.menuChat');
+
             for (let f in pj.faq) {
                 if (f == 'howmany') {
                     let pj = $(this).closest('.card')[0].dataset.pj;
@@ -272,14 +271,17 @@ $(document).ready(function() {
 
                 } else {
                     html = '<a data-preg="'+f+'" class="preg nav-link" href="#">'+fa+faq[f].preg+'</a>';
-                    // html = '<a data-preg="'+f+'" class="preg nav-link" href="#">'+faq[f].preg+'</a>';
-                    
                 }
             
-                if (f != 'exceed') {
+                if (f != 'guilty' && f != 'exceed' && f != 'repite') {
                     menu.append(html);
                 }
             }
+
+            menu.append('<a data-preg="guilty" class="preg nav-link" href="#">'+
+                        faGuilty+faq['guilty'].preg+'</a>');
+
+            // click preguntas
             menu.on('click', '.preg', function() {
 
                 let tPreg = this.dataset.preg,
@@ -287,7 +289,7 @@ $(document).ready(function() {
                     pj    = card[0].dataset.pj,
                     a     = this;
                     fa    = a.childNodes[0];
-
+                
                 if (tPreg === 'howmany') {
 
                     a.classList.toggle('text-white');
@@ -314,14 +316,18 @@ $(document).ready(function() {
                     card.toggleChat();
 
                     setTimeout( function() {
+                        let nav = a.parentNode;
                         a.classList.add("disabled");
                         fa.classList.add("fas","fa-check-circle");
                         fa.classList.remove("far","fa-circle");
 
-                        if (C[pj].howLimit == 0) {
-                            let ul = $(a).closest('ul');
-                            ul.addClass('limite');
-                            console.log(ul)
+                        if (C[pj].nPreg == 0) {
+                            nav = $(a).closest('.menuChat');
+                                nav.addClass('limite')
+                        } else if (C[pj].howLimit == 0) {
+                            let ul = a.parentNode.parentNode;
+                            ul.classList.add('limite');
+                            ul.previousSibling.classList.add('limite');
                         }
                     }, 400);
                     
