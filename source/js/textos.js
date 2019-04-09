@@ -32,7 +32,7 @@ const FAQ =
             ],
             resp: (p) => {
                 if (p) {
-                    return ["Siempre he odiado la pizza de" + PIZZAS[p],
+                    return ["Siempre he odiado la pizza de " + PIZZAS[p],
                             "Odio las pizzas de " + PIZZAS[p],
                             "Las pizzas de " + PIZZAS[p] + " son asquerosas"];  
                 } else {
