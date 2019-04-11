@@ -16,6 +16,7 @@ $(document).ready(function() {
     const C = cena.o;
     // console.log(c);
 
+
     /**
      * rellena el card con los datos que se saben del pj
      * @param  pj       Personaje
@@ -38,40 +39,32 @@ $(document).ready(function() {
         gusta.html('');
         odia.html('');
 
-        let pjSeSabe = (seSabe) ? pj :  pj.seSabe;
+        let pjSeSabe = (seSabe) ? pj : pj.seSabe;
         
-
-         pjSeSabe.orden.forEach( function(tr, i, array) {
-            let html = '';
-            if (tr != 0) {
-               html = PIZZAS[tr];
-            } else  if (array[i-1] !== 0){
-                html = '?'
-            }
+        pjSeSabe.orden.forEach( function(tr, i, array) {
             comio.append($('<span>',{
-                class           : 'badge badge-danger',
-                html            : html,
+                // class           : 'badge badge-danger',
+                // class           : 'text-danger font-weight-bold',
+                class           : 'tr',
+                html            : (tr != 0) ? fnCapital(PIZZAS[tr]) : '_',
                 'data-toggle'   : 'tooltip',
                 'data-placement': "top",
-                title           : PIZZAS[tr]
             }));
         });
-         pjSeSabe.encanta.forEach( function(tr, i, array) {
+        pjSeSabe.encanta.forEach( function(tr, i, array) {
             gusta.append($('<span>',{
-                class           : 'badge badge-danger',
-                html            : (tr != 0) ? PIZZAS[tr] : '?',
+                // class           : 'badge badge-danger',
+                html            : (tr != 0) ? fnCapital(PIZZAS[tr]) : '?',
                 'data-toggle'   : 'tooltip',
                 'data-placement': "top",
-                title           : PIZZAS[tr]
             }));
         });
-         pjSeSabe.odia.forEach( function(tr, i, array) {
+        pjSeSabe.odia.forEach( function(tr, i, array) {
             odia.append($('<span>',{
-                class           : 'badge badge-danger',
-                html            : (tr != 0) ? PIZZAS[tr] : '?',
+                // class           : 'badge badge-danger',
+                html            : (tr != 0) ? fnCapital(PIZZAS[tr]) : '?',
                 'data-toggle'   : 'tooltip',
                 'data-placement': "top",
-                title           : PIZZAS[tr]
             }));
         });
 
@@ -166,6 +159,7 @@ $(document).ready(function() {
         if (altura === false) {
             altura = $('.imgCard:first').outerHeight();
         }
+        console.log(altura);
         this.find('.hueco').css('height', altura);
         $(".collapse").collapse('hide');
     }
@@ -176,8 +170,9 @@ $(document).ready(function() {
         if (yo.pizza[pz] != 0) {
             yoPanel.append($('<li>',{
                 class: 'list-group-item',
-                html : PIZZAS[pz].charAt(0).toUpperCase() + PIZZAS[pz].slice(1) +
-                       ' <span class="badge badge-danger">'+yo.pizza[pz]+'</span>',
+                html : fnCapital(PIZZAS[pz]) +
+                       // ' <span class="badge badge-danger">'+yo.pizza[pz]+'</span>',
+                       ' <span class="">'+yo.pizza[pz]+'</span>',
             }));
         }
     }
@@ -221,6 +216,15 @@ $(document).ready(function() {
             }
             return rnd;
         }
+        var fnRedmim = function() {
+            let hueco = $(this).parent();
+            altura = this.height;
+            hueco.css('height', altura);
+            setTimeout(function(t) {
+                altura = t.height;
+                hueco.css('height', altura);
+            }(this), 10);
+        }; 
 
         let g = {
             h:[ "h01.png", "h02.png", "h03.png",
@@ -236,10 +240,15 @@ $(document).ready(function() {
         };
 
         let imgs = 'source/img/';
-        c1.find('img').attr('src', imgs+g[pj1.genero].rndRemove());
-        c2.find('img').attr('src', imgs+g[pj2.genero].rndRemove());
-        c3.find('img').attr('src', imgs+g[pj3.genero].rndRemove());
-        c4.find('img').attr('src', imgs+g[pj4.genero].rndRemove());
+
+        c1.find('img').attr('src', imgs+g[pj1.genero].rndRemove())
+                      .on('load', fnRedmim);
+        c2.find('img').attr('src', imgs+g[pj2.genero].rndRemove())
+                      .on('load', fnRedmim);
+        c3.find('img').attr('src', imgs+g[pj3.genero].rndRemove())
+                      .on('load', fnRedmim);
+        c4.find('img').attr('src', imgs+g[pj4.genero].rndRemove())
+                      .on('load', fnRedmim);
     })();
 
     // carga de preguntas
@@ -256,7 +265,6 @@ $(document).ready(function() {
             for (let f in pj.faq) {
                 if (f == 'howmany') {
                     let pj = $(this).closest('.card')[0].dataset.pj;
-
                     
                     html = '<a href="#sub_'+pj+'" data-preg="howmany" data-toggle="collapse" aria-expanded="false"'+
                                'class="preg nav-link">'+faAdd+faq[f].preg+'</a>'+
@@ -264,7 +272,7 @@ $(document).ready(function() {
 
                     for (let pz in faq[f].subPreg) {
                         html += '<li><a class="preg nav-link py-1 pl-4" href="#" data-preg="_'+pz+'">'+
-                        fa+PIZZAS[pz].charAt(0).toUpperCase()+PIZZAS[pz].slice(1)+'</a></li>';
+                        fnCapital(PIZZAS[pz])+'?</a></li>';
                     }
                             
                     html += '</ul>';
@@ -297,8 +305,17 @@ $(document).ready(function() {
 
                 } else {
 
-                    let preg  = this.textContent,
-                        resp  = C[pj].hablar(tPreg);
+                    let preg,
+                        resp = C[pj].hablar(tPreg),
+                        subPreg = (tPreg.charAt(0) == '_') ? true : false;
+
+                    if (subPreg) {
+                        let p = this.textContent;
+                        preg = a.parentNode.parentNode.previousSibling.textContent+' '+p;
+                    }
+                    else {
+                        preg = this.textContent
+                    }
 
                     if (tPreg === 'guilty') {
                         solucionar();
@@ -324,7 +341,7 @@ $(document).ready(function() {
                         if (C[pj].nPreg == 0) {
                             nav = $(a).closest('.menuChat');
                                 nav.addClass('limite')
-                        } else if (C[pj].howLimit == 0) {
+                        } else if (subPreg && C[pj].howLimit == 0) {
                             let ul = a.parentNode.parentNode;
                             ul.classList.add('limite');
                             ul.previousSibling.classList.add('limite');
@@ -333,8 +350,6 @@ $(document).ready(function() {
                     
                 } 
             });
-            
-            
         }
 
         c1.createMenu(pj1);

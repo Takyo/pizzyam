@@ -10,6 +10,9 @@ Array.prototype.getRnd = function(nRnd){
     return list.splice(0,nRnd);
 };
 
+function fnCapital(str) {
+    return str[0].toUpperCase() + str.slice(1);
+}
 
 class Faq {
     constructor(faq) {
@@ -80,30 +83,30 @@ var cena = (function () {
                 odia: []
             }
         }
-
+/*
         capFirst(str) {
             return str.charAt(0).toUpperCase() + str.slice(1);
-        }
+        }*/
 
         generateName(genero) {
            
             let nombre;
 
             if (genero == 'h')
-                nombre = this.capFirst(HOMBRE[rnd(0, HOMBRE.length -1)]);
+                nombre = fnCapital(HOMBRE[rnd(0, HOMBRE.length -1)]);
             else if (genero == 'm')
-                nombre = this.capFirst(MUJER[rnd(0, MUJER.length -1)]);
+                nombre = fnCapital(MUJER[rnd(0, MUJER.length -1)]);
             else {
                 if (rnd(0,2) == 1)
-                    nombre = this.capFirst(HOMBRE[rnd(0, HOMBRE.length -1)]);
+                    nombre = fnCapital(HOMBRE[rnd(0, HOMBRE.length -1)]);
                 else
-                    nombre = this.capFirst(MUJER[rnd(0, MUJER.length -1)]);
+                    nombre = fnCapital(MUJER[rnd(0, MUJER.length -1)]);
             }
 
             if (nombre == 'Takyo')
                 nombre = 'Takyo Best Developer';
             else
-                nombre += ' '+this.capFirst(APELLIDOS[rnd(0, APELLIDOS.length -1)])+ ' ' + this.capFirst(APELLIDOS[rnd(0, APELLIDOS.length -1)]);    
+                nombre += ' '+fnCapital(APELLIDOS[rnd(0, APELLIDOS.length -1)])+ ' ' + fnCapital(APELLIDOS[rnd(0, APELLIDOS.length -1)]);    
             
             return nombre;
         }
@@ -304,24 +307,3 @@ var cena = (function () {
     };
 })();
 
-var o = cena.o;
-// o.pj1.orden =[ "p", "v", "v", "p" ];
-// console.log(o.pj1.hablar('like'));
-// console.log(o.pj1.hablar('like'));
-// console.log(o.pj1.hablar(1));
-// console.log(o.pj1.hablar(2));
-// console.log(o.pj1.hablar(3));
-// // console.log(o.pj1.hablar(3));
-// // console.log(o.pj1.hablar(6));
-// console.log(o.pj1.queSe());
-// console.log(cena.o.pj1.orden);
-
-
-    // console.log(faq);
-
-    // let f1 = new Faq(FAQ);
-    // console.log(f1);
-    // console.log(f1[0].preg);
-    // console.log(f1[0].resp());
-    // console.log(f2[0].preg);
-    // console.log(f2[0].resp('t'));
