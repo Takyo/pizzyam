@@ -40,39 +40,71 @@ $(document).ready(function() {
         odia.html('');
 
         let pjSeSabe = (seSabe) ? pj : pj.seSabe;
-        
-        pjSeSabe.orden.forEach( function(tr, i, array) {
-            comio.append($('<span>',{
-                // class           : 'badge badge-danger',
-                // class           : 'text-danger font-weight-bold',
-                class           : 'tr',
-                html            : (tr != 0) ? fnCapital(PIZZAS[tr]) : '_',
-                'data-toggle'   : 'tooltip',
-                'data-placement': "top",
+
+        if (pjSeSabe.orden.every((tr) => {return tr==0})) {
+            comio.html($('<span>',{
+                class: 'tr',
+                html : '?'
             }));
-        });
+        } else {
+            let primeraVez = true;
+
+            pjSeSabe.orden.forEach( function(tr, i, array) {
+                let html,
+                    escribio = false;
+
+                if (tr != 0) {
+                    primeraVez = true;
+                    comio.append($('<span>',{
+                        class: 'tr',
+                        html : fnCapital(PIZZAS[tr])
+                    }));
+                    if (i != array.length-1) {
+                        comio.append($('<i>',{
+                            class: 'fas fa-angle-double-right'
+                        }));
+                    }
+                } else if(primeraVez) {
+                    primeraVez = false;
+                    html = '?';
+                    comio.append($('<span>',{
+                        class: 'tr',
+                        html : '?'
+                    }));
+                    if (i != array.length-1) {
+                        comio.append($('<i>',{
+                            class: 'fas fa-angle-double-right'
+                        }));
+                    }
+                } 
+                
+            });
+
+
+            console.log(comio.find(':last-child'));
+            console.log(comio);
+            // if (comio.last())
+            // comio.last().remove();
+        }
+
         pjSeSabe.encanta.forEach( function(tr, i, array) {
             gusta.append($('<span>',{
-                // class           : 'badge badge-danger',
-                html            : (tr != 0) ? fnCapital(PIZZAS[tr]) : '?',
-                'data-toggle'   : 'tooltip',
-                'data-placement': "top",
+                class: 'tr',
+                html : (tr != 0) ? fnCapital(PIZZAS[tr]) : '?'
             }));
         });
         pjSeSabe.odia.forEach( function(tr, i, array) {
             odia.append($('<span>',{
-                // class           : 'badge badge-danger',
-                html            : (tr != 0) ? fnCapital(PIZZAS[tr]) : '?',
-                'data-toggle'   : 'tooltip',
-                'data-placement': "top",
+                class: 'tr',
+                html : (tr != 0) ? fnCapital(PIZZAS[tr]) : '?'
             }));
         });
 
-        let pz =  pjSeSabe.pizza,
-            p = pz['p'], 
-            v = pz['v'], 
-            t = pz['t'], 
-            s = pz['s'];
+        let pz = pjSeSabe.pizza,
+            p  = pz['p'], 
+            v  = pz['v'], 
+            t  = pz['t'], 
+            s  = pz['s'];
 
         // TAREA: mejorable esta parte
         if (pz.hasOwnProperty('p')) {
@@ -160,7 +192,7 @@ $(document).ready(function() {
             altura = $('.imgCard:first').outerHeight();
         }
         console.log(altura);
-        this.find('.hueco').css('height', altura);
+        this.find('.hueco,.chat-container').css('height', altura);
         $(".collapse").collapse('hide');
     }
 
@@ -171,7 +203,6 @@ $(document).ready(function() {
             yoPanel.append($('<li>',{
                 class: 'list-group-item',
                 html : fnCapital(PIZZAS[pz]) +
-                       // ' <span class="badge badge-danger">'+yo.pizza[pz]+'</span>',
                        ' <span class="">'+yo.pizza[pz]+'</span>',
             }));
         }
@@ -200,6 +231,8 @@ $(document).ready(function() {
         c2.rellenar(pj2,true);
         c3.rellenar(pj3,true);
         c4.rellenar(pj4,true);
+
+        card.find('.menuChat').addClass('limite');
 
     }
 
