@@ -1,7 +1,8 @@
 $(document).ready(function() {
 
     var altura = false;
-    let yo  = cena.o.yo, 
+    let ocupao = false,
+        yo  = cena.o.yo, 
         pj1 = cena.o.pj1,
         pj2 = cena.o.pj2,
         pj3 = cena.o.pj3,
@@ -47,14 +48,13 @@ $(document).ready(function() {
                 html : '?'
             }));
         } else {
-            let primeraVez = true;
+            let escribio = true;
 
             pjSeSabe.orden.forEach( function(tr, i, array) {
-                let html,
-                    escribio = false;
+                let html;
 
                 if (tr != 0) {
-                    primeraVez = true;
+                    escribio = true;
                     comio.append($('<span>',{
                         class: 'tr',
                         html : fnCapital(PIZZAS[tr])
@@ -64,8 +64,8 @@ $(document).ready(function() {
                             class: 'fas fa-angle-double-right'
                         }));
                     }
-                } else if(primeraVez) {
-                    primeraVez = false;
+                } else if(escribio) {
+                    escribio = false;
                     html = '?';
                     comio.append($('<span>',{
                         class: 'tr',
@@ -80,11 +80,11 @@ $(document).ready(function() {
                 
             });
 
-
-            console.log(comio.find(':last-child'));
-            console.log(comio);
-            // if (comio.last())
-            // comio.last().remove();
+            let last = comio.find(':last-child');
+            if (last.is('i')) {
+                console.log("iii");
+                last.remove();
+            }
         }
 
         pjSeSabe.encanta.forEach( function(tr, i, array) {
@@ -159,9 +159,10 @@ $(document).ready(function() {
         return this;
     }
 
-    // abre cierra chat
+    // abre o cierra el chat
     $.fn.toggleChat = function() {
-
+        
+        // cierra todos los chats abiertos
         let xaparAll = function() {
             let card = $('.card');
             card.find('.chat-panel').removeClass('chat-panel-open');
@@ -191,13 +192,12 @@ $(document).ready(function() {
         if (altura === false) {
             altura = $('.imgCard:first').outerHeight();
         }
-        console.log(altura);
+
         this.find('.hueco,.chat-container').css('height', altura);
         $(".collapse").collapse('hide');
     }
 
     // rellenado de datos
-
     for (let pz in yo.pizza) {
         if (yo.pizza[pz] != 0) {
             yoPanel.append($('<li>',{
@@ -215,6 +215,11 @@ $(document).ready(function() {
 
     // boton del chat
     $(".btnChat").click(function () {
+        if (ocupao) {
+            this.parentNode.classList.add('animated','wobble');
+            setTimeout( ()=> { this.parentNode.classList.remove('animated','wobble'); }, 800);
+            return;
+        }
         let card = $(this).closest('.card');
         card.toggleChat();
     });
@@ -305,7 +310,7 @@ $(document).ready(function() {
 
                     for (let pz in faq[f].subPreg) {
                         html += '<li><a class="preg nav-link py-1 pl-4" href="#" data-preg="_'+pz+'">'+
-                        fnCapital(PIZZAS[pz])+'?</a></li>';
+                        fa + fnCapital(PIZZAS[pz])+'?</a></li>';
                     }
                             
                     html += '</ul>';
@@ -325,11 +330,12 @@ $(document).ready(function() {
             // click preguntas
             menu.on('click', '.preg', function() {
 
-                let tPreg = this.dataset.preg,
-                    card  = $(this).closest('.card'),
-                    pj    = card[0].dataset.pj,
-                    a     = this;
-                    fa    = a.childNodes[0];
+                let tPreg   = this.dataset.preg,
+                    card    = $(this).closest('.card'),
+                    chatLog = card.find('.chat-log'),
+                    pj      = card[0].dataset.pj,
+                    a       = this;
+                    fa      = a.childNodes[0];
                 
                 if (tPreg === 'howmany') {
 
@@ -350,15 +356,37 @@ $(document).ready(function() {
                         preg = this.textContent
                     }
 
+                    let thinker = '<span class="thinker"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></span>';
+                    
+                    chatLog.append('<li class="msg-yo"><span class="msg-txt animated bounceInLeft">'+preg+'</span></li>');
+                    
+                    // animacion de "escribiendo" para que se retrase despues de "msg-yo"
+                    setTimeout(function() {
+                        chatLog.append('<li class="msg-el">'+thinker+'<span class="msg-txt c-hidden">'+resp.msg+'</span></li>');
+                    },1500);
+
+                    ocupao = true;
+
+                    let delay = rnd(2500,5000);
+
+                    // animacion de espera para escribir
+                    setTimeout(function() {
+                        let el = card.find('.msg-el:last')[0],
+                            thinker = el.childNodes[0],
+                            msg = el.childNodes[1];
+
+                        thinker.classList.add('c-hidden');
+                        msg.classList.remove('c-hidden')
+                        msg.classList.add('animated', 'bounceInRight');
+                        ocupao = false;
+                    }, delay );
+
+                    
                     if (tPreg === 'guilty') {
                         solucionar();
                     } else if (resp._p !== false) {
                         card.rellenar(C[pj]);
                     }
-
-                    card.find('.chat-log')
-                        .append('<li class="msg-yo"><span class="msg-txt">'+preg+'</span></li>'+
-                                '<li class="msg-el"><span class="msg-txt">'+resp.msg+'</span></li>');
 
                     let chatCont = card.find('.chat-container');
                     chatCont.prop('scrollTop',chatCont.prop('scrollHeight'));
@@ -370,11 +398,13 @@ $(document).ready(function() {
                         a.classList.add("disabled");
                         fa.classList.add("fas","fa-check-circle");
                         fa.classList.remove("far","fa-circle");
-
+                        console.log(C[pj].nPreg);
                         if (C[pj].nPreg == 0) {
+                            console.log("a cero");
                             nav = $(a).closest('.menuChat');
-                                nav.addClass('limite')
+                            nav.addClass('limite');
                         } else if (subPreg && C[pj].howLimit == 0) {
+                            console.log("sub a cero");
                             let ul = a.parentNode.parentNode;
                             ul.classList.add('limite');
                             ul.previousSibling.classList.add('limite');

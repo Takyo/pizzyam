@@ -1,7 +1,7 @@
 // nombres y apellidos 
 const HOMBRE = ["Arturo","Takyo","Lorenzo","Neo","Ambrosio","Eulogio","Amancio","Aniceto","Bartolo","Calisto","Ceferino","Conrado","Custodio","Eliseo","Feliciano","Inocente","Liberto","Licerio","Natalio","Nemesio","Niceto","Perfecto","Proto","Sabas","Tranquilino","Agapito","link","Ganondorf","Ganon"];
 const MUJER  = ["Aria","Lucrecia","Xena","Adelfa","Áurea","Bonifacia","Demetria","Eulogia","Evarista","Hermila","Loreta","Nicasia","Petra","Rufa","Úrsula","Inocencia","Aminta","Débora","Elvira","Elma","Zelda","Navi","Zoila","Yola","Paca","Rufina","Tecla","Kepa"];
-const APELLIDOS = ["Penas","Audaz","Bonachera","Culpable","Lázaro","Vital","Inocente","Difícil","Flores","Campo","Culasso","Delano","de Loyo","Fuertes","Día Rea","Saludo","Roto","Bueno","Siempre","Deltodo","Luz","Luna","Delgado","Deotro","Lelo","Cuesta","Caro","Pinto","Flores","Flor","Valle","Coronado","Gomia","Ábaro","Gracia"];
+const APELLIDOS = ["Penas","Audaz","Culpable","Lázaro","Vital","Inocente","Difícil","Flores","Campo","Culasso","Delano","de Loyo","Fuertes","Día Rea","Saludo","Roto","Bueno","Siempre","Deltodo","Luz","Luna","Delgado","Deotro","Lelo","Cuesta","Caro","Pinto","Flores","Flor","Valle","Coronado","Gomia","Ábaro","Gracia"];
 
 // sabores de las pizzas
 const PIZZAS = { p:"piña", v:"verdura", t:"ternera", s:"salmón" };
@@ -80,7 +80,7 @@ const FAQ =
             ],
             resp: (guilty) => { 
                 if (guilty)
-                    return ["Me hás pillado, tenia mucha hambre."];
+                    return ["Me hás pillado, tenía mucha hambre."];
                 else
                     return ["No he sido yo."];
             },
