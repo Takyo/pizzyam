@@ -152,9 +152,6 @@
 /********************/
 /*    delay chat    */
 /********************/
-  .spin {
-
-  }
   .thinker {
     margin: 0;
     text-align: center;
@@ -174,7 +171,8 @@
     display: inline-block;
     -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
     animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-    background: rgba(0,0,0,1);
+    /*background: rgba(0,0,0,1);*/
+    background: #d4c6bd;
   }
   .thinker .bounce1 {
     -webkit-animation-delay: -0.32s;

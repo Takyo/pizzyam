@@ -37,8 +37,6 @@ $(document).ready(function() {
             pz03  = this.find('.howmany03'),
             pz04  = this.find('.howmany04');
         comio.html('');
-        gusta.html('');
-        odia.html('');
 
         let pjSeSabe = (seSabe) ? pj : pj.seSabe;
 
@@ -82,23 +80,27 @@ $(document).ready(function() {
 
             let last = comio.find(':last-child');
             if (last.is('i')) {
-                console.log("iii");
                 last.remove();
             }
         }
 
-        pjSeSabe.encanta.forEach( function(tr, i, array) {
-            gusta.append($('<span>',{
-                class: 'tr',
-                html : (tr != 0) ? fnCapital(PIZZAS[tr]) : '?'
-            }));
-        });
-        pjSeSabe.odia.forEach( function(tr, i, array) {
-            odia.append($('<span>',{
-                class: 'tr',
-                html : (tr != 0) ? fnCapital(PIZZAS[tr]) : '?'
-            }));
-        });
+        if (gusta.children().length == 0){
+            pjSeSabe.encanta.forEach( function(tr, i, array) {
+                gusta.append($('<span>',{
+                    class: 'tr animated tada slow',
+                    html : (tr != 0) ? fnCapital(PIZZAS[tr]) : '?'
+                }));
+            });
+        }
+        if (odia.children().length == 0){
+            pjSeSabe.odia.forEach( function(tr, i, array) {
+                odia.append($('<span>',{
+                    class: 'tr animated tada slow',
+                    html : (tr != 0) ? fnCapital(PIZZAS[tr]) : '?'
+                }));
+            });
+        }
+
 
         let pz = pjSeSabe.pizza,
             p  = pz['p'], 
@@ -106,53 +108,52 @@ $(document).ready(function() {
             t  = pz['t'], 
             s  = pz['s'];
 
-        // TAREA: mejorable esta parte
         if (pz.hasOwnProperty('p')) {
             if (p.hasOwnProperty('duda')) {
                 if (p.duda === false)
-                    pz01.text(p.tr);
+                    pz01.html('<div class="animated fadeIn">'+p.tr+'<div>');
                 else if (p.duda === '?')
-                    pz01.text(p.tr+'?');
+                    pz01.html('<div class="animated fadeIn">'+p.tr+'?'+'<div>');
                 else
-                    pz01.text(p.duda+' '+pz['p'].tr);
+                    pz01.html('<div class="animated fadeIn">'+p.duda+' '+pz['p'].tr+'<div>');
             } else {
-                pz01.text(p);
+                pz01.html('<div class="animated fadeIn">'+p+'<div>');
             }
         }
         if (pz.hasOwnProperty('v')) {
             if (v.hasOwnProperty('duda')) {
                 if (v.duda === false)
-                    pz02.text(v.tr);
+                    pz02.html('<div class="animated fadeIn">'+v.tr+'<div>');
                 else if (v.duda === '?')
-                    pz02.text(v.tr+'?');
+                    pz02.html('<div class="animated fadeIn">'+v.tr+'?'+'<div>');
                 else
-                    pz02.text(v.duda+' '+v.tr);
+                    pz02.html('<div class="animated fadeIn">'+v.duda+' '+v.tr+'<div>');
              } else {
-                pz02.text(v);
+                pz02.html('<div class="animated fadeIn">'+v+'<div>');
             }
         }
         if (pz.hasOwnProperty('t')) {
             if (t.hasOwnProperty('duda')) {
                 if (t.duda === false)
-                    pz03.text(t.tr);
+                    pz03.html('<div class="animated fadeIn">'+t.tr+'<div>');
                 else if (t.duda === '?')
-                        pz03.text(t.tr+'?');
+                        pz03.html('<div class="animated fadeIn">'+t.tr+'?'+'<div>');
                 else
-                    pz03.text(t.duda+' '+t.tr);
+                    pz03.html('<div class="animated fadeIn">'+t.duda+' '+t.tr+'<div>');
              } else {
-                pz03.text(t);
+                pz03.html('<div class="animated fadeIn">'+t+'<div>');
             }
         }
         if (pz.hasOwnProperty('s')) {
             if (s.hasOwnProperty('duda')) {
                 if (s.duda === false)
-                    pz04.text(s.tr);
+                    pz04.html('<div class="animated fadeIn">'+s.tr+'<div>');
                 else if (s.duda === '?')
-                    pz04.text(s.tr+'?');
+                    pz04.html('<div class="animated fadeIn">'+s.tr+'?'+'<div>');
                 else
-                    pz04.text(s.duda+' '+s.tr);
+                    pz04.html('<div class="animated fadeIn">'+s.duda+' '+s.tr+'<div>');
             } else {
-                pz04.text(s);
+                pz04.html('<div class="animated fadeIn">'+s+'<div>');
             }
         }
 
@@ -203,7 +204,7 @@ $(document).ready(function() {
             yoPanel.append($('<li>',{
                 class: 'list-group-item',
                 html : fnCapital(PIZZAS[pz]) +
-                       ' <span class="">'+yo.pizza[pz]+'</span>',
+                       ' <span class="tr animated fadeIn slow">'+yo.pizza[pz]+'</span>',
             }));
         }
     }
@@ -292,6 +293,12 @@ $(document).ready(function() {
     // carga de preguntas
     (function ()  { 
         
+        // hace scroll al final del chatlog
+        $.fn.endChat = function() {
+            let chatCont = $(this).parent();
+            chatCont.prop('scrollTop',chatCont.prop('scrollHeight'));
+        }
+
         $.fn.createMenu = function(pj) {
             let faq = pj.faq,
                 fa = '<i class="faIc far fa-circle"></i> ',
@@ -327,6 +334,9 @@ $(document).ready(function() {
             menu.append('<a data-preg="guilty" class="preg nav-link" href="#">'+
                         faGuilty+faq['guilty'].preg+'</a>');
 
+
+
+
             // click preguntas
             menu.on('click', '.preg', function() {
 
@@ -356,18 +366,21 @@ $(document).ready(function() {
                         preg = this.textContent
                     }
 
-                    let thinker = '<span class="thinker"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></span>';
+                    let thinker = '<span class="thinker animated fadeIn"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></span>';
                     
-                    chatLog.append('<li class="msg-yo"><span class="msg-txt animated bounceInLeft">'+preg+'</span></li>');
+                    chatLog.append('<li class="msg-yo"><span class="msg-txt animated bounceInLeft">'+preg+'</span></li>')
+                           .endChat();
                     
                     // animacion de "escribiendo" para que se retrase despues de "msg-yo"
                     setTimeout(function() {
-                        chatLog.append('<li class="msg-el">'+thinker+'<span class="msg-txt c-hidden">'+resp.msg+'</span></li>');
-                    },1500);
+                        chatLog.append('<li class="msg-el">'+thinker+'<span class="msg-txt c-hidden">'+resp.msg+'</span></li>')
+                               .endChat();
+                    },1000);
 
                     ocupao = true;
 
-                    let delay = rnd(2500,5000);
+                    // let delay = rnd(2500,5000);
+                    let delay = 1200;
 
                     // animacion de espera para escribir
                     setTimeout(function() {
@@ -378,37 +391,40 @@ $(document).ready(function() {
                         thinker.classList.add('c-hidden');
                         msg.classList.remove('c-hidden')
                         msg.classList.add('animated', 'bounceInRight');
+
+                        if (tPreg === 'guilty') {
+                            solucionar();
+                        } else if (resp._p !== false) {
+                            card.rellenar(C[pj]);
+                        }
+
+                        chatLog.endChat();
+
                         ocupao = false;
                     }, delay );
 
                     
-                    if (tPreg === 'guilty') {
-                        solucionar();
-                    } else if (resp._p !== false) {
-                        card.rellenar(C[pj]);
-                    }
+                    
 
-                    let chatCont = card.find('.chat-container');
-                    chatCont.prop('scrollTop',chatCont.prop('scrollHeight'));
 
                     card.toggleChat();
 
                     setTimeout( function() {
                         let nav = a.parentNode;
+                        
                         a.classList.add("disabled");
                         fa.classList.add("fas","fa-check-circle");
                         fa.classList.remove("far","fa-circle");
-                        console.log(C[pj].nPreg);
+                        
                         if (C[pj].nPreg == 0) {
-                            console.log("a cero");
                             nav = $(a).closest('.menuChat');
                             nav.addClass('limite');
                         } else if (subPreg && C[pj].howLimit == 0) {
-                            console.log("sub a cero");
                             let ul = a.parentNode.parentNode;
                             ul.classList.add('limite');
                             ul.previousSibling.classList.add('limite');
                         }
+
                     }, 400);
                     
                 } 
@@ -416,9 +432,9 @@ $(document).ready(function() {
         }
 
         c1.createMenu(pj1);
-        // c2.createMenu(pj2);
-        // c3.createMenu(pj3);
-        // c4.createMenu(pj4);
+        c2.createMenu(pj2);
+        c3.createMenu(pj3);
+        c4.createMenu(pj4);
 
 
         /*c1.find('.chat-panel nav ul').append($('<li>',{

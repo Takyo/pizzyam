@@ -72,7 +72,7 @@ var cena = (function () {
             }
             // array donde está el orden que se va comiendo las pizzas
             this.orden = ordenAux.sort( () => {return Math.random() - 0.5});
-            this.nPreg = 3;
+            this.nPreg = 4;
             this.howLimit = 1;
             this.faq = new Faq(FAQ);
             this.seSabe = {
@@ -83,10 +83,6 @@ var cena = (function () {
                 odia: []
             }
         }
-/*
-        capFirst(str) {
-            return str.charAt(0).toUpperCase() + str.slice(1);
-        }*/
 
         generateName(genero) {
            
