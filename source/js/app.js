@@ -357,7 +357,9 @@ $(document).ready(function() {
                     let preg,
                         resp = C[pj].hablar(tPreg),
                         subPreg = (tPreg.charAt(0) == '_') ? true : false;
-
+                    console.log(resp);
+                    console.log(pj);
+                    console.log("card",card);
                     if (subPreg) {
                         let p = this.textContent;
                         preg = a.parentNode.parentNode.previousSibling.textContent+' '+p;
