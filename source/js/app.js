@@ -1,3 +1,9 @@
+let pj = cena.o.pj1.seSabe;
+let orden = cena.o.pj1.orden
+console.log(cena.o.pj1.pizza);
+console.log(cena.o.pj1.orden);
+
+
 $(document).ready(function() {
 
     var altura = false;
@@ -15,7 +21,7 @@ $(document).ready(function() {
         c4 = $("#c4");
 
     const C = cena.o;
-    // console.log(c);
+    // console.log(pj1.seSabe);
 
 
     /**
@@ -110,7 +116,7 @@ $(document).ready(function() {
 
         if (pz.hasOwnProperty('p')) {
             if (p.hasOwnProperty('duda')) {
-                if (p.duda === false)
+                if (p.duda === true)
                     pz01.html('<div class="animated fadeIn">'+p.tr+'<div>');
                 else if (p.duda === '?')
                     pz01.html('<div class="animated fadeIn">'+p.tr+'?'+'<div>');
@@ -122,7 +128,7 @@ $(document).ready(function() {
         }
         if (pz.hasOwnProperty('v')) {
             if (v.hasOwnProperty('duda')) {
-                if (v.duda === false)
+                if (v.duda === true)
                     pz02.html('<div class="animated fadeIn">'+v.tr+'<div>');
                 else if (v.duda === '?')
                     pz02.html('<div class="animated fadeIn">'+v.tr+'?'+'<div>');
@@ -134,7 +140,7 @@ $(document).ready(function() {
         }
         if (pz.hasOwnProperty('t')) {
             if (t.hasOwnProperty('duda')) {
-                if (t.duda === false)
+                if (t.duda === true)
                     pz03.html('<div class="animated fadeIn">'+t.tr+'<div>');
                 else if (t.duda === '?')
                         pz03.html('<div class="animated fadeIn">'+t.tr+'?'+'<div>');
@@ -146,7 +152,7 @@ $(document).ready(function() {
         }
         if (pz.hasOwnProperty('s')) {
             if (s.hasOwnProperty('duda')) {
-                if (s.duda === false)
+                if (s.duda === true)
                     pz04.html('<div class="animated fadeIn">'+s.tr+'<div>');
                 else if (s.duda === '?')
                     pz04.html('<div class="animated fadeIn">'+s.tr+'?'+'<div>');
@@ -226,8 +232,24 @@ $(document).ready(function() {
     });
 
     // muestra la solucion de todos los pjs
-    function solucionar() {
-        let card = $(".card");
+    function solucionar(pj) {
+        let card = $(".card"),
+            nombre = C[pj].nombre,
+            header,
+            msg;
+
+        if (pj == C.pjCulp) {
+            header = "Acertaste";
+            msg = "<b>"+nombre+"</b> es el culpable";
+        } else {
+            header = "Error 418";
+            msg = "<b>"+nombre+"</b> es inocente, el culpable es <b>"+C[C.pjCulp].nombre+"</b>"
+            // $("#dialogoMsg").text('Fallaste ' + nombre + " es inocente \nfue "+C[C.pjCulp].nombre);
+        }
+
+        $("#dialogoHeader").html(header);
+        $("#dialogoMsg").html(msg);
+        $('#dialogo').modal('show').delay(1000).modal('hide');
 
         card.addClass('bg-success');
         $('[data-pj="'+C.pjCulp+'"]').removeClass('bg-success')
@@ -238,8 +260,18 @@ $(document).ready(function() {
         c3.rellenar(pj3,true);
         c4.rellenar(pj4,true);
 
+        bloquearChat(true);
+    }
+
+    // bloquea todos las preguntas de los cards por completo o dejando solo el resolver
+    function bloquearChat(fin) {
+        let card = $(".card");
+
         card.find('.menuChat').addClass('limite');
 
+        if (fin) {
+            card.find('a[data-preg="guilty"]').addClass('limite disabled');
+        }
     }
 
     // imagenes aleatorias
@@ -257,11 +289,14 @@ $(document).ready(function() {
         }
         var fnRedmim = function() {
             let hueco = $(this).parent();
+
+            hueco.parent().collapse('show');
             altura = this.height;
             hueco.css('height', altura);
             setTimeout(function(t) {
                 altura = t.height;
                 hueco.css('height', altura);
+
             }(this), 10);
         }; 
 
@@ -335,114 +370,227 @@ $(document).ready(function() {
                         faGuilty+faq['guilty'].preg+'</a>');
 
 
-
-
-            // click preguntas
-            menu.on('click', '.preg', function() {
-
-                let tPreg   = this.dataset.preg,
-                    card    = $(this).closest('.card'),
-                    chatLog = card.find('.chat-log'),
-                    pj      = card[0].dataset.pj,
-                    a       = this;
-                    fa      = a.childNodes[0];
-                
-                if (tPreg === 'howmany') {
-
-                    a.classList.toggle('text-white');
-                    fa.classList.toggle('rotar315');
-
-                } else {
-
-                    let preg,
-                        resp = C[pj].hablar(tPreg),
-                        subPreg = (tPreg.charAt(0) == '_') ? true : false;
-                    console.log(resp);
-                    console.log(pj);
-                    console.log("card",card);
-                    if (subPreg) {
-                        let p = this.textContent;
-                        preg = a.parentNode.parentNode.previousSibling.textContent+' '+p;
-                    }
-                    else {
-                        preg = this.textContent
-                    }
-
-                    let thinker = '<span class="thinker animated fadeIn"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></span>';
-                    
-                    chatLog.append('<li class="msg-yo"><span class="msg-txt animated bounceInLeft">'+preg+'</span></li>')
-                           .endChat();
-                    
-                    // animacion de "escribiendo" para que se retrase despues de "msg-yo"
-                    setTimeout(function() {
-                        chatLog.append('<li class="msg-el">'+thinker+'<span class="msg-txt c-hidden">'+resp.msg+'</span></li>')
-                               .endChat();
-                    },1000);
-
-                    ocupao = true;
-
-                    // let delay = rnd(2500,5000);
-                    let delay = 1200;
-
-                    // animacion de espera para escribir
-                    setTimeout(function() {
-                        let el = card.find('.msg-el:last')[0],
-                            thinker = el.childNodes[0],
-                            msg = el.childNodes[1];
-
-                        thinker.classList.add('c-hidden');
-                        msg.classList.remove('c-hidden')
-                        msg.classList.add('animated', 'bounceInRight');
-
-                        if (tPreg === 'guilty') {
-                            solucionar();
-                        } else if (resp._p !== false) {
-                            card.rellenar(C[pj]);
-                        }
-
-                        chatLog.endChat();
-
-                        ocupao = false;
-                    }, delay );
-
-                    
-                    
-
-
-                    card.toggleChat();
-
-                    setTimeout( function() {
-                        let nav = a.parentNode;
-                        
-                        a.classList.add("disabled");
-                        fa.classList.add("fas","fa-check-circle");
-                        fa.classList.remove("far","fa-circle");
-                        
-                        if (C[pj].nPreg == 0) {
-                            nav = $(a).closest('.menuChat');
-                            nav.addClass('limite');
-                        } else if (subPreg && C[pj].howLimit == 0) {
-                            let ul = a.parentNode.parentNode;
-                            ul.classList.add('limite');
-                            ul.previousSibling.classList.add('limite');
-                        }
-
-                    }, 400);
-                    
-                } 
-            });
+            menu.on('click', '.preg', clickPreg);
         }
 
+        // click preguntas
+        let clickPreg = function() {
+
+            let tPreg   = this.dataset.preg,
+                card    = $(this).closest('.card'),
+                chatLog = card.find('.chat-log'),
+                pj      = card[0].dataset.pj,
+                a       = this;
+                fa      = a.childNodes[0];
+
+            if (tPreg === 'howmany') {
+
+                a.classList.toggle('text-white');
+                fa.classList.toggle('rotar315');
+
+            } else {
+
+                let preg,
+                    resp = C[pj].hablar(tPreg),
+                    subPreg = (tPreg.charAt(0) == '_') ? true : false;
+
+                if (subPreg) {
+                    let p = this.textContent;
+                    preg = a.parentNode.parentNode.previousSibling.textContent+' '+p;
+                }
+                else {
+                    preg = this.textContent
+                }
+
+                let thinker = '<span class="thinker animated fadeIn"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></span>';
+
+                chatLog.append('<li class="msg-yo"><span class="msg-txt animated bounceInLeft">'+preg+'</span></li>')
+                .endChat();
+
+                // animacion de "escribiendo" para que se retrase despues de "msg-yo"
+                setTimeout(function() {
+                    chatLog.append('<li class="msg-el">'+thinker+'<span class="msg-txt c-hidden">'+resp.msg+'</span></li>')
+                    .endChat();
+                },1000);
+
+                ocupao = true;
+
+                // let delay = rnd(2500,5000);
+                let delay = 1200;
+
+                // animacion de espera para escribir
+                setTimeout(function() {
+                    let el = card.find('.msg-el:last')[0],
+                    thinker = el.childNodes[0],
+                    msg = el.childNodes[1];
+
+                    thinker.classList.add('c-hidden');
+                    msg.classList.remove('c-hidden')
+                    msg.classList.add('animated', 'bounceInRight');
+
+                    if (tPreg === 'guilty') {
+                        solucionar(pj);
+                    } else if (resp._p !== false) {
+                        card.rellenar(C[pj]);
+                    }
+
+                    chatLog.endChat();
+
+                    ocupao = false;
+                }, delay );
+
+                
+                card.toggleChat();
+
+                setTimeout( function() {
+                    let nav = a.parentNode;
+                    
+                    a.classList.add("disabled");
+                    fa.classList.add("fas","fa-check-circle");
+                    fa.classList.remove("far","fa-circle");
+                    if (C.nPreg == 0) {
+                        bloquearChat(false);
+                    }
+                    if (C[pj].nPreg == 0 ) {
+                        nav = $(a).closest('.menuChat');
+                        nav.addClass('limite');
+                    } else if (subPreg && C[pj].howLimit == 0) {
+                        let ul = a.parentNode.parentNode;
+                        ul.classList.add('limite');
+                        ul.previousSibling.classList.add('limite');
+                    }
+
+                }, 400);
+            } 
+        }
         c1.createMenu(pj1);
         c2.createMenu(pj2);
         c3.createMenu(pj3);
         c4.createMenu(pj4);
 
-
-        /*c1.find('.chat-panel nav ul').append($('<li>',{
-                "data-preg": 'asd',
-                class      : 'preg list-group-item list-group-item-dark',
-                html       :  'ok funciona',
-            }));*/
     })();
+
+
+    /*function initCard(element,animation) {
+        // const element =  document.getElementById(e);
+        element.classList.add('bounceInLeft');
+        // console.log("okokok");
+    }*/
+    // const element = document.querySelector('.my-element')
+    // const element =  document.getElementClassName('card');
+    // element.classList.add('bounceInLeft');
+
+    
+    // let c1 = document.getElementById('c1').
+    // let ccc = document.querySelector('.card')
+    /*let ccc = document.getElementsByClassName('card')
+
+
+    for(let i=0; i < ccc.length; i++) { 
+        // console.log("entra");
+
+         hola('bounceInLeft', ccc[i], 1000)
+            .then(function (aaa) {
+              // console.log('funciona bien', aaa);
+            })
+        
+    }
+    async function hola(efect, element, delay) {
+        // console.log('hola');
+        // element.classList.add(efect);
+        const promise =  new Promise(function (resolve, reject) {
+                // setTimeout(function() {
+                  // array.push(data)
+                  resolve(element,delay)
+                // }, 1000);
+              });
+        
+        setTimeout(function() { console.log("aki"); 
+        }, 0);
+
+        // delay(delay)
+        return  promise;
+        // setTimeout(function() {}, 1000);
+    }*/
+    /*for(let i=0; i < ccc.length; i++) { 
+        // hola()
+    }*/
+/*    let ccc1 = document.getElementsById('card').
+            addEventListener('animationend', function() { 
+                console.log("ccc1"); }
+            )*/
+
+
+            // console.log(ccc);
+
+            /*const array = [1, 2, 3]
+            hola('bounceInLeft', array).then(function () {
+              console.log(array)
+            })*/
+
+
 });
+
+/*
+// const delay = ms => new Promise(res => setTimeout(res, ms))
+const delay = function(ms) { new Promise(res => setTimeout(res, ms))}
+
+const apiCall = function(url) {
+    // fetch(url).then(function(res) {res.json()})
+    new Promise( n => resolve('okmakey'));
+}
+
+async function infiniteApiCalls(url, ms) {
+  // Request (Tiempo Aleatorio)
+  const result = await apiCall(url)
+  // Haz lo que sea con el resultado
+  console.log(url)
+  console.log(result)
+  console.log(this);
+  // ...
+  // Esperar x segundos
+  await delay(ms)
+  
+  // Request otra vez
+  //infiniteApiCalls(url, ms)
+
+  const fn = infiniteApiCalls.bind(null, url, ms)
+  
+  setTimeout(fn, 0)
+}*/
+
+// infiniteApiCalls('texto', 5000)
+
+
+/*var promise = new Promise(function(resolve, reject) {
+  
+  function sayHello() {
+    // resolve('Hello World!')
+  }
+  // console.log("por aqui");
+  setTimeout(sayHello, 1000)
+
+})*/
+
+/*let testmio = new Promise((resolve, reject) => {
+    setTimeout(function(){
+        resolve("¡Éxito!"); // ¡Todo salió bien!
+    }, 1000);
+    // reject("fracaso extrepitoso");
+});
+
+testmio.then((successMessage) => {
+  // console.log("¡respuesta! " + successMessage);
+});
+*/
+// console.log(promise.then(()=>{console.log("termino");}))
+// delay(1000)
+
+/*new Promise(function(resolve) {
+  console.log('first');
+  resolve();
+  console.log('second');
+}).then(function() {
+  console.log('third');
+});*/
+

@@ -73,11 +73,10 @@ var cena = (function () {
             // array donde está el orden que se va comiendo las pizzas
             this.orden = ordenAux.sort( () => {return Math.random() - 0.5});
             this.nPreg = 4;
-            this.howLimit = 1;
+            this.howLimit = 2;
             this.faq = new Faq(FAQ);
             this.seSabe = {
                 pizza: {},
-                pizzaDuda: {},
                 orden: new Array(this.orden.length).fill(0),
                 encanta: [],
                 odia: []
@@ -119,7 +118,7 @@ var cena = (function () {
             }
 
             let f = this.faq[idPreg],
-                p;
+                sabor;
 
             if (this.nPreg > 0 && !f.usado && o.nPreg > 0) {
                 
@@ -128,61 +127,78 @@ var cena = (function () {
                 o.nPreg--;
                 
                 switch(idPreg) {
+
                     case 'like': // return msg: "", _p:char
-                        p = this.encanta.rnd();
-                        if (this.seSabe.encanta.indexOf(p) == -1) {
-                            Object.assign(this.seSabe.encanta, p);
-                            this.seSabe.pizza[p] = {
-                                tr  : 1,
-                                duda: '>'
-                            };
-                        } 
-                        return { msg: f.resp(p), _p:p }
+
+                        sabor = this.encanta.rnd();
+
+                        if (this.seSabe.encanta.indexOf(sabor) == -1) {
+                            Object.assign(this.seSabe.encanta, sabor);
+
+                            if (!this.seSabe.pizza.hasOwnProperty(sabor) || 
+                                (this.seSabe.pizza.hasOwnProperty(sabor) && !this.seSabe.pizza[sabor].duda)) {
+                                
+                                this.seSabe.pizza[sabor] = {
+                                    tr  : 1,
+                                    duda: '>'
+                                };
+                            }
+                        }
+
+                        return { msg: f.resp(sabor), _p:sabor }
 
                     case 'unlike':  // return msg: "", _p:char
-                        p = this.odia.rnd();
-                        if (this.seSabe.odia.indexOf(p) == -1) {
-                            Object.assign(this.seSabe.odia, p);
-                            this.seSabe.pizza[p] = {
+                        
+                        sabor = this.odia.rnd();
+
+                        if (this.seSabe.odia.indexOf(sabor) == -1) {
+
+                            Object.assign(this.seSabe.odia, sabor);
+                            this.seSabe.pizza[sabor] = {
                                 tr  : 0,
-                                duda: false
+                                duda: true
                             };
                         } 
-                        return { msg: f.resp(p), _p:p }
+
+                        return { msg: f.resp(sabor), _p:sabor }
 
                     case 'first':  // return msg: "", _p:char
-                        p = this.orden[0];
-                        this.seSabe.orden[0] = p;
-                        if (typeof this.seSabe.pizza[p] === 'undefined') {
-                            this.seSabe.pizza[p] = {
+                        sabor = this.orden[0];
+                        this.seSabe.orden[0] = sabor;
+                        
+                        if (!this.seSabe.pizza.hasOwnProperty(sabor)) {
+                            this.seSabe.pizza[sabor] = {
                                 tr  : 1,
                                 duda: '?'
                             };
-                        } else {
-                            if (this.seSabe.pizza[p].duda != '?') {
-                                this.seSabe.pizza[p].duda = '?';
+                        } else if (this.seSabe.pizza[sabor].duda !== true) {
+                            if (this.seSabe.pizza[sabor].duda != '?') {
+                                this.seSabe.pizza[sabor].duda = '?';
                             } else {
-                                this.seSabe.pizza[p].tr += 1;
+                                this.seSabe.pizza[sabor].tr += 1;
                             }
                         }
-                        return { msg: f.resp(p), _p:p};
+
+                        return { msg: f.resp(sabor), _p:sabor};
 
                     case 'last': // return msg: "", _p:char
-                        p = this.orden[this.orden.length-1];
-                        this.seSabe.orden[this.orden.length-1] = p;
-                        if (typeof this.seSabe.pizza[p] === 'undefined') {
-                            this.seSabe.pizza[p] = {
+                        sabor = this.orden[this.orden.length-1];
+                        this.seSabe.orden[this.orden.length-1] = sabor;
+
+                        if (!this.seSabe.pizza.hasOwnProperty(sabor)) {
+                            this.seSabe.pizza[sabor] = {
                                 tr  : 1,
                                 duda: '?'
                             };
-                        } else {
-                            if (this.seSabe.pizza[p].duda != '?') {
-                                this.seSabe.pizza[p].duda = '?';
+                        } else if (this.seSabe.pizza[sabor].duda !== true) {
+                            if (this.seSabe.pizza[sabor].duda != '?') {
+                                this.seSabe.pizza[sabor].duda = '?';
                             } else {
-                                this.seSabe.pizza[p].tr += 1;
+                                this.seSabe.pizza[sabor].tr += 1;
                             }
                         }
-                        return { msg: f.resp(p), _p:p};
+
+                        return { msg: f.resp(sabor), _p:sabor};
 
                     case 'howmany': // USO1: ('howmany',X) X=letra de la pizza
                                     // USO2: ('_X')
@@ -193,16 +209,18 @@ var cena = (function () {
                             let obj = { msg: f.resp(subPreg, this.pizza[subPreg]) };
                             this.seSabe.pizza[subPreg] = {
                                 tr  : this.pizza[subPreg],
-                                duda: false
+                                duda: true
                             };
                             obj[subPreg] = this.pizza[subPreg];
                             return obj;
                         } else {
-                            console.log("sobrepasado");
                             return false;
                         }
-                    case 'guilty':
+                    case 'guilty':{
+                        this.nPreg++;
+                        o.nPreg++;
                         return this.culpar();
+                    }
                 }
             } else {
                 return { msg: f.resp(), _p:false  };;
@@ -217,7 +235,7 @@ var cena = (function () {
     let o = {};
 
     (function () { 
-        o.nPreg = 13;
+        o.nPreg = 13; // numero de preguntas totales
         o.m = {
             yo : { p:0, v:1, t:1, s:1 },
             pj1: { p:2, v:2, t:0, s:0 },
@@ -303,3 +321,9 @@ var cena = (function () {
     };
 })();
 
+setTimeout(function() {
+    $('.hhh').addClass('hidden');
+    setTimeout(function() {
+        // $('.hhh').addClass('none');
+    }, 1000);
+}, 2000);
