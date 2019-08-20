@@ -8,12 +8,12 @@ $(document).ready(function() {
 
     var altura = false;
     let ocupao = false,
-        yo  = cena.o.yo, 
+        yo  = cena.o.yo,
         pj1 = cena.o.pj1,
         pj2 = cena.o.pj2,
         pj3 = cena.o.pj3,
         pj4 = cena.o.pj4,
-    
+
         yoPanel = $("#yoComi"),
         c1 = $("#c1"),
         c2 = $("#c2"),
@@ -27,9 +27,9 @@ $(document).ready(function() {
     /**
      * rellena el card con los datos que se saben del pj
      * @param  pj       Personaje
-     * @param  seSabe   true/false si queremos que se muestre la solucion 
+     * @param  seSabe   true/false si queremos que se muestre la solucion
      *                  o lo que sabemos
-     * TAREAS: mejorar para que sea un rellenado más dinamico y codigo más elegante
+     * TODO: mejorar para que sea un rellenado más dinamico y codigo más elegante
      */
     $.fn.rellenar = function(pj,seSabe) {
         $("#totalPreg").html("<b>"+C.nPreg+"</b>");
@@ -80,8 +80,8 @@ $(document).ready(function() {
                             class: 'fas fa-angle-double-right'
                         }));
                     }
-                } 
-                
+                }
+
             });
 
             let last = comio.find(':last-child');
@@ -109,9 +109,9 @@ $(document).ready(function() {
 
 
         let pz = pjSeSabe.pizza,
-            p  = pz['p'], 
-            v  = pz['v'], 
-            t  = pz['t'], 
+            p  = pz['p'],
+            v  = pz['v'],
+            t  = pz['t'],
             s  = pz['s'];
 
         if (pz.hasOwnProperty('p')) {
@@ -168,7 +168,7 @@ $(document).ready(function() {
 
     // abre o cierra el chat
     $.fn.toggleChat = function() {
-        
+
         // cierra todos los chats abiertos
         let xaparAll = function() {
             let card = $('.card');
@@ -178,6 +178,7 @@ $(document).ready(function() {
             card.find('.preg').removeClass('text-white');
             card.find('i.rotar315').removeClass('rotar315');
         }
+
 
         let chatPanel  = this.find('.chat-panel'),
             imgCard    = this.find('.imgCard'),
@@ -201,7 +202,7 @@ $(document).ready(function() {
         }
 
         this.find('.hueco,.chat-container').css('height', altura);
-        $(".collapse").collapse('hide');
+        //$(".collapse").collapse('hide');
     }
 
     // rellenado de datos
@@ -275,7 +276,7 @@ $(document).ready(function() {
     }
 
     // imagenes aleatorias
-    (function () { 
+    (function () {
 
         Array.prototype.rndRemove = function() {
             let rnd = this.rnd();
@@ -298,7 +299,7 @@ $(document).ready(function() {
                 hueco.css('height', altura);
 
             }(this), 10);
-        }; 
+        };
 
         let g = {
             h:[ "h01.png", "h02.png", "h03.png",
@@ -326,8 +327,8 @@ $(document).ready(function() {
     })();
 
     // carga de preguntas
-    (function ()  { 
-        
+    (function ()  {
+
         // hace scroll al final del chatlog
         $.fn.endChat = function() {
             let chatCont = $(this).parent();
@@ -345,22 +346,22 @@ $(document).ready(function() {
             for (let f in pj.faq) {
                 if (f == 'howmany') {
                     let pj = $(this).closest('.card')[0].dataset.pj;
-                    
+
                     html = '<a href="#sub_'+pj+'" data-preg="howmany" data-toggle="collapse" aria-expanded="false"'+
                                'class="preg nav-link">'+faAdd+faq[f].preg+'</a>'+
-                           '<ul class="collapse list-unstyled" id="sub_'+pj+'">'; 
+                           '<ul class="collapse list-unstyled" id="sub_'+pj+'">';
 
                     for (let pz in faq[f].subPreg) {
                         html += '<li><a class="preg nav-link py-1 pl-4" href="#" data-preg="_'+pz+'">'+
                         fa + fnCapital(PIZZAS[pz])+'?</a></li>';
                     }
-                            
+
                     html += '</ul>';
 
                 } else {
                     html = '<a data-preg="'+f+'" class="preg nav-link" href="#">'+fa+faq[f].preg+'</a>';
                 }
-            
+
                 if (f != 'guilty' && f != 'exceed' && f != 'repite') {
                     menu.append(html);
                 }
@@ -439,12 +440,12 @@ $(document).ready(function() {
                     ocupao = false;
                 }, delay );
 
-                
+
                 card.toggleChat();
 
                 setTimeout( function() {
                     let nav = a.parentNode;
-                    
+
                     a.classList.add("disabled");
                     fa.classList.add("fas","fa-check-circle");
                     fa.classList.remove("far","fa-circle");
@@ -461,7 +462,7 @@ $(document).ready(function() {
                     }
 
                 }, 400);
-            } 
+            }
         }
         c1.createMenu(pj1);
         c2.createMenu(pj2);
@@ -480,20 +481,20 @@ $(document).ready(function() {
     // const element =  document.getElementClassName('card');
     // element.classList.add('bounceInLeft');
 
-    
+
     // let c1 = document.getElementById('c1').
     // let ccc = document.querySelector('.card')
     /*let ccc = document.getElementsByClassName('card')
 
 
-    for(let i=0; i < ccc.length; i++) { 
+    for(let i=0; i < ccc.length; i++) {
         // console.log("entra");
 
          hola('bounceInLeft', ccc[i], 1000)
             .then(function (aaa) {
               // console.log('funciona bien', aaa);
             })
-        
+
     }
     async function hola(efect, element, delay) {
         // console.log('hola');
@@ -504,19 +505,19 @@ $(document).ready(function() {
                   resolve(element,delay)
                 // }, 1000);
               });
-        
-        setTimeout(function() { console.log("aki"); 
+
+        setTimeout(function() { console.log("aki");
         }, 0);
 
         // delay(delay)
         return  promise;
         // setTimeout(function() {}, 1000);
     }*/
-    /*for(let i=0; i < ccc.length; i++) { 
+    /*for(let i=0; i < ccc.length; i++) {
         // hola()
     }*/
 /*    let ccc1 = document.getElementsById('card').
-            addEventListener('animationend', function() { 
+            addEventListener('animationend', function() {
                 console.log("ccc1"); }
             )*/
 
@@ -550,12 +551,12 @@ async function infiniteApiCalls(url, ms) {
   // ...
   // Esperar x segundos
   await delay(ms)
-  
+
   // Request otra vez
   //infiniteApiCalls(url, ms)
 
   const fn = infiniteApiCalls.bind(null, url, ms)
-  
+
   setTimeout(fn, 0)
 }*/
 
@@ -563,7 +564,7 @@ async function infiniteApiCalls(url, ms) {
 
 
 /*var promise = new Promise(function(resolve, reject) {
-  
+
   function sayHello() {
     // resolve('Hello World!')
   }

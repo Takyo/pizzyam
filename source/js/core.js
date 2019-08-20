@@ -18,13 +18,13 @@ class Faq {
     constructor(faq) {
         this.faq = {};
         for (let v in faq) {
-           
+
             this.faq[v] = {
                 usado: false,
                 preg : faq[v].preg[Math.floor(Math.random()*faq[v].preg.length)],
                 resp : (t,n) => {
                     const  r = faq[v].resp(t,n);
-                    return r[Math.floor(Math.random()*r.length)];                  
+                    return r[Math.floor(Math.random()*r.length)];
                 }
             }
 
@@ -37,13 +37,13 @@ class Faq {
 }
 
 /*
-mejorar la cena de tal forma que vaya cogiendo un trozo disponible cada vez 
+TODO: mejorar la cena de tal forma que vaya cogiendo un trozo disponible cada vez
 en vez de elegir pizza y coger trozos disponibles
 asi se hacerca más a la realidad
 otra forma más pro es que sea como la realidad, rnd(persona disponible) y rnd(trozo disponible)
- */
+*/
 var cena = (function () {
-    
+
     class Persona {
 
         // como parametro el objeto de trozos de pizza que se ha comido
@@ -84,7 +84,7 @@ var cena = (function () {
         }
 
         generateName(genero) {
-           
+
             let nombre;
 
             if (genero == 'h')
@@ -101,8 +101,8 @@ var cena = (function () {
             if (nombre == 'Takyo')
                 nombre = 'Takyo Best Developer';
             else
-                nombre += ' '+fnCapital(APELLIDOS[rnd(0, APELLIDOS.length -1)])+ ' ' + fnCapital(APELLIDOS[rnd(0, APELLIDOS.length -1)]);    
-            
+                nombre += ' '+fnCapital(APELLIDOS[rnd(0, APELLIDOS.length -1)])+ ' ' + fnCapital(APELLIDOS[rnd(0, APELLIDOS.length -1)]);
+
             return nombre;
         }
 
@@ -121,11 +121,11 @@ var cena = (function () {
                 sabor;
 
             if (this.nPreg > 0 && !f.usado && o.nPreg > 0) {
-                
+
                 f.usado = true;
                 this.nPreg--;
                 o.nPreg--;
-                
+
                 switch(idPreg) {
 
                     case 'like': // return msg: "", _p:char
@@ -135,9 +135,9 @@ var cena = (function () {
                         if (this.seSabe.encanta.indexOf(sabor) == -1) {
                             Object.assign(this.seSabe.encanta, sabor);
 
-                            if (!this.seSabe.pizza.hasOwnProperty(sabor) || 
+                            if (!this.seSabe.pizza.hasOwnProperty(sabor) ||
                                 (this.seSabe.pizza.hasOwnProperty(sabor) && !this.seSabe.pizza[sabor].duda)) {
-                                
+
                                 this.seSabe.pizza[sabor] = {
                                     tr  : 1,
                                     duda: '>'
@@ -148,7 +148,7 @@ var cena = (function () {
                         return { msg: f.resp(sabor), _p:sabor }
 
                     case 'unlike':  // return msg: "", _p:char
-                        
+
                         sabor = this.odia.rnd();
 
                         if (this.seSabe.odia.indexOf(sabor) == -1) {
@@ -158,14 +158,14 @@ var cena = (function () {
                                 tr  : 0,
                                 duda: true
                             };
-                        } 
+                        }
 
                         return { msg: f.resp(sabor), _p:sabor }
 
                     case 'first':  // return msg: "", _p:char
                         sabor = this.orden[0];
                         this.seSabe.orden[0] = sabor;
-                        
+
                         if (!this.seSabe.pizza.hasOwnProperty(sabor)) {
                             this.seSabe.pizza[sabor] = {
                                 tr  : 1,
@@ -226,7 +226,7 @@ var cena = (function () {
                 return { msg: f.resp(), _p:false  };;
             }
         }
-            
+
         queSe() {
             return this.seSabe;
         }
@@ -234,7 +234,7 @@ var cena = (function () {
 
     let o = {};
 
-    (function () { 
+    (function () {
         o.nPreg = 13; // numero de preguntas totales
         o.m = {
             yo : { p:0, v:1, t:1, s:1 },
@@ -248,11 +248,11 @@ var cena = (function () {
         // bucle que prueba muchas combinaciones hasta que da con una que cuadra
         for (let pasos = 0; pasos <= 1000; pasos++) {
             o.max = { p:5, v:5, t:5, s:5};
-            
+
             for (let i = 1; i <= 4; i++) {
                 o.max["pj"+i] = 4;
             }
-            
+
             o.max[o.pjCulp] = 5;
             o.max.yo      = 3;
 
@@ -263,12 +263,12 @@ var cena = (function () {
                 o.m[pj].t = pizzaRnd(pj,"t");
                 o.m[pj].s = pizzaRnd(pj,"s");
             }
-            if ((o.max.p==0) && (o.max.v==0) && (o.max.t==0) && (o.max.s==0) && 
+            if ((o.max.p==0) && (o.max.v==0) && (o.max.t==0) && (o.max.s==0) &&
                 (o.max.pj1==0) && (o.max.pj2==0) && (o.max.pj3==0) && (o.max.pj4==0) && (o.max.yo==0)) {
                 break;
             }
          }
-        
+
         // creacion de pjs
         o.yo  = new Persona(o.m.yo);
         o.pj1 = new Persona(o.m.pj1);
@@ -300,7 +300,7 @@ var cena = (function () {
 
     })();
 
-    function pizzaRnd(fila,col) { 
+    function pizzaRnd(fila,col) {
         let maximo = (o.max[fila] > o.max[col]) ? o.max[col] : o.max[fila];
         let dato = Math.floor(Math.random() * (maximo + 1));
 

@@ -75,7 +75,7 @@
   .tr:first-child {
      padding-left: 0px;
   }
-  
+
   .lComio i {
     font-size: x-small;
   }
@@ -184,8 +184,8 @@
   }
 
   @-webkit-keyframes sk-bouncedelay {
-    0%, 
-    80%, 
+    0%,
+    80%,
     100% {
       -webkit-transform: scale(0)
     }
@@ -205,7 +205,7 @@
       transform: scale(1.0);
     }
   }
-  
+
   .c-hidden {
     display: none;
     opacity: 0;
@@ -268,7 +268,7 @@
     color: #fff;
     background-color: rgba(255,255,255,.1);
   }
-  
+
   .chat-panel a i{
     color: #75dfe3;
   }
@@ -277,7 +277,7 @@
   .limite a:not([data-preg='guilty']) {
     color: #6c757d !important;
   }
-  
+
   .limite a:hover:not([data-preg='guilty']):not([data-preg='howmany']) {
     background-color: inherit;
   }
