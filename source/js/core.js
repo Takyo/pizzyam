@@ -13,7 +13,17 @@ Array.prototype.getRnd = function(nRnd){
 function fnCapital(str) {
     return str[0].toUpperCase() + str.slice(1);
 }
-
+// extrae del array el elemento aleatorio
+Array.prototype.rndRemove = function () {
+    let rnd = this.rnd();
+    for (let i = 0; i < this.length; i++) {
+        if (this[i] == rnd) {
+            this.splice(i, 1);
+            break;
+        }
+    }
+    return rnd;
+}
 class Faq {
     constructor(faq) {
         this.faq = {};
@@ -29,7 +39,14 @@ class Faq {
             }
 
             if (v == 'howmany') {
-               this.faq[v].subPreg = PIZZAS;
+                this.faq[v].subPreg = {};
+                for (const p in PIZZAS) {
+                    this.faq[v].subPreg[p] = {
+                        usado: false,
+                        name: PIZZAS[p]
+                    }
+                }
+            //    this.faq[v].subPreg = PIZZAS;
             }
         }
         return this.faq;
@@ -73,6 +90,7 @@ var cena = (function () {
             // array donde está el orden que se va comiendo las pizzas
             this.orden = ordenAux.sort( () => {return Math.random() - 0.5});
             this.nPreg = 4;
+            this.freePreg = 2;
             this.howLimit = 2;
             this.faq = new Faq(FAQ);
             this.seSabe = {
@@ -81,6 +99,8 @@ var cena = (function () {
                 encanta: [],
                 odia: []
             }
+
+            this.regaloPreg(this.freePreg);
         }
 
         generateName(genero) {
@@ -109,22 +129,29 @@ var cena = (function () {
         culpar() {
             return { msg: this.faq['guilty'].resp(this.culpable), _p:false  };
         }
+        // TODO:
+        // probar un culpable que se haya comido los 4 sabores y preguntarle que odia
+        // probar v p p t s y buscar el caso que saque salmon 1 a la primera
+        hablar(idPreg, noContar = false) {
 
-        hablar(idPreg,subPreg) {
+            let subPreg,
+                sabor;
 
             if (idPreg.charAt(0) == '_') {
                 subPreg = idPreg.slice(1);
                 idPreg = 'howmany';
             }
 
-            let f = this.faq[idPreg],
-                sabor;
+            let f = this.faq[idPreg];
 
-            if (this.nPreg > 0 && !f.usado && o.nPreg > 0) {
+            if (((this.nPreg > 0 && !f.usado && o.nPreg > 0)) || noContar === true) {
 
                 f.usado = true;
-                this.nPreg--;
-                o.nPreg--;
+
+                if (!noContar) {
+                    this.nPreg--;
+                    o.nPreg--;
+                }
 
                 switch(idPreg) {
 
@@ -200,22 +227,28 @@ var cena = (function () {
 
                         return { msg: f.resp(sabor), _p:sabor};
 
-                    case 'howmany': // USO1: ('howmany',X) X=letra de la pizza
-                                    // USO2: ('_X')
+                    case 'howmany': // USO: ('_X') X=letra de la pizza
                                     // return msg: "" 'tipTrozo': int
-                        if (this.howLimit > 0) {
+
+                        if (this.howLimit > 0 || noContar) {
+                            // if (!noContar) {
                             this.howLimit--;
+                            // }
                             f.usado = false;
+                            f.subPreg[subPreg].usado = true;
+
                             let obj = { msg: f.resp(subPreg, this.pizza[subPreg]) };
                             this.seSabe.pizza[subPreg] = {
                                 tr  : this.pizza[subPreg],
                                 duda: true
                             };
                             obj[subPreg] = this.pizza[subPreg];
+
                             return obj;
                         } else {
                             return false;
                         }
+
                     case 'guilty':{
                         this.nPreg++;
                         o.nPreg++;
@@ -227,9 +260,23 @@ var cena = (function () {
             }
         }
 
+
+        regaloPreg(freePreg) {
+            if (freePreg === null) {
+                freePreg = this.freePreg;
+            }
+
+            let tipos = ['like', 'unlike', 'first', 'last', '_p', '_v', '_t', '_s'];
+
+            for (let n = 0; n < freePreg; n++) {
+                this.hablar(tipos.rndRemove(), true);
+            }
+        }
         queSe() {
             return this.seSabe;
         }
+
+
     }
 
     let o = {};
@@ -320,10 +367,3 @@ var cena = (function () {
         o:    o
     };
 })();
-
-setTimeout(function() {
-    $('.hhh').addClass('hidden');
-    setTimeout(function() {
-        // $('.hhh').addClass('none');
-    }, 1000);
-}, 2000);

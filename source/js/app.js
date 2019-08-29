@@ -1,9 +1,3 @@
-let pj = cena.o.pj1.seSabe;
-let orden = cena.o.pj1.orden
-console.log(cena.o.pj1.pizza);
-console.log(cena.o.pj1.orden);
-
-
 $(document).ready(function() {
 
     var altura = false;
@@ -21,7 +15,6 @@ $(document).ready(function() {
         c4 = $("#c4");
 
     const C = cena.o;
-    // console.log(pj1.seSabe);
 
 
     /**
@@ -30,6 +23,7 @@ $(document).ready(function() {
      * @param  seSabe   true/false si queremos que se muestre la solucion
      *                  o lo que sabemos
      * TODO: mejorar para que sea un rellenado más dinamico y codigo más elegante
+     *       cuando se saben todos los trozos mostrar el orden
      */
     $.fn.rellenar = function(pj,seSabe) {
         $("#totalPreg").html("<b>"+C.nPreg+"</b>");
@@ -55,7 +49,6 @@ $(document).ready(function() {
             let escribio = true;
 
             pjSeSabe.orden.forEach( function(tr, i, array) {
-                let html;
 
                 if (tr != 0) {
                     escribio = true;
@@ -70,7 +63,6 @@ $(document).ready(function() {
                     }
                 } else if(escribio) {
                     escribio = false;
-                    html = '?';
                     comio.append($('<span>',{
                         class: 'tr',
                         html : '?'
@@ -91,7 +83,7 @@ $(document).ready(function() {
         }
 
         if (gusta.children().length == 0){
-            pjSeSabe.encanta.forEach( function(tr, i, array) {
+            pjSeSabe.encanta.forEach( function(tr) {
                 gusta.append($('<span>',{
                     class: 'tr animated tada slow',
                     html : (tr != 0) ? fnCapital(PIZZAS[tr]) : '?'
@@ -99,7 +91,7 @@ $(document).ready(function() {
             });
         }
         if (odia.children().length == 0){
-            pjSeSabe.odia.forEach( function(tr, i, array) {
+            pjSeSabe.odia.forEach( function(tr) {
                 odia.append($('<span>',{
                     class: 'tr animated tada slow',
                     html : (tr != 0) ? fnCapital(PIZZAS[tr]) : '?'
@@ -177,8 +169,8 @@ $(document).ready(function() {
             card.find('.card-header').removeClass('cardHeaderCircle');
             card.find('.preg').removeClass('text-white');
             card.find('i.rotar315').removeClass('rotar315');
+            card.find('ul.howmany').collapse('hide');
         }
-
 
         let chatPanel  = this.find('.chat-panel'),
             imgCard    = this.find('.imgCard'),
@@ -278,16 +270,6 @@ $(document).ready(function() {
     // imagenes aleatorias
     (function () {
 
-        Array.prototype.rndRemove = function() {
-            let rnd = this.rnd();
-            for (var i = 0; i < this.length; i++) {
-                if (this[i] == rnd) {
-                    this.splice(i,1);
-                    break;
-                }
-            }
-            return rnd;
-        }
         var fnRedmim = function() {
             let hueco = $(this).parent();
 
@@ -337,29 +319,51 @@ $(document).ready(function() {
 
         $.fn.createMenu = function(pj) {
             let faq = pj.faq,
-                fa = '<i class="faIc far fa-circle"></i> ',
+                faNormal  = '<i class="faIc far fa-circle"></i> ',
+                faUsado = '<i class="faIc far fa-dot-circle"></i> ',
                 faAdd = '<i class="faIc fas fa-plus-circle"></i> ',
                 faGuilty = '<i class="faIc far fa-star"></i> ',
-                html,_class,
+                html,
                 menu = this.find('.menuChat');
 
             for (let f in pj.faq) {
+                let usado;
+
+                if (faq[f].usado) {
+                    usado = "disabled";
+                    fa = faUsado;
+                } else {
+                    usado = "";
+                    fa = faNormal;
+                }
+
                 if (f == 'howmany') {
-                    let pj = $(this).closest('.card')[0].dataset.pj;
 
-                    html = '<a href="#sub_'+pj+'" data-preg="howmany" data-toggle="collapse" aria-expanded="false"'+
-                               'class="preg nav-link">'+faAdd+faq[f].preg+'</a>'+
-                           '<ul class="collapse list-unstyled" id="sub_'+pj+'">';
+                    let pjn = $(this).closest('.card')[0].dataset.pj,
+                    limite = (pj.howLimit == 0) ? 'limite' : '';
 
+                    html = '<a href="#sub_' + pjn +'" data-preg="howmany" data-toggle="collapse" aria-expanded="false"'+
+                               `class="preg nav-link ${limite}">`+faAdd+faq[f].preg+'</a>'+
+                           '<ul class="collapse list-unstyled howmany" id="sub_'+pjn+'">';
                     for (let pz in faq[f].subPreg) {
-                        html += '<li><a class="preg nav-link py-1 pl-4" href="#" data-preg="_'+pz+'">'+
-                        fa + fnCapital(PIZZAS[pz])+'?</a></li>';
+
+                        usado = (pj.howLimit == 0 || faq[f].subPreg[pz].usado) ? "disabled": '';
+
+                        if (faq[f].subPreg[pz].usado) {
+                            // usado = "disabled";
+                            fa = faUsado;
+                        } else {
+                            fa = faNormal;
+                        }
+
+                        html += `<li><a class="preg nav-link py-1 pl-4 ${usado}" href="#" data-preg="_`+pz+'">'+
+                                fa + fnCapital(PIZZAS[pz])+'?</a></li>';
                     }
 
                     html += '</ul>';
 
                 } else {
-                    html = '<a data-preg="'+f+'" class="preg nav-link" href="#">'+fa+faq[f].preg+'</a>';
+                    html = '<a data-preg="'+f+`" class="preg nav-link ${usado}" href="#">`+fa+faq[f].preg+'</a>';
                 }
 
                 if (f != 'guilty' && f != 'exceed' && f != 'repite') {
@@ -369,7 +373,6 @@ $(document).ready(function() {
 
             menu.append('<a data-preg="guilty" class="preg nav-link" href="#">'+
                         faGuilty+faq['guilty'].preg+'</a>');
-
 
             menu.on('click', '.preg', clickPreg);
         }
@@ -406,18 +409,18 @@ $(document).ready(function() {
                 let thinker = '<span class="thinker animated fadeIn"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></span>';
 
                 chatLog.append('<li class="msg-yo"><span class="msg-txt animated bounceInLeft">'+preg+'</span></li>')
-                .endChat();
+                       .endChat();
 
                 // animacion de "escribiendo" para que se retrase despues de "msg-yo"
                 setTimeout(function() {
                     chatLog.append('<li class="msg-el">'+thinker+'<span class="msg-txt c-hidden">'+resp.msg+'</span></li>')
-                    .endChat();
+                           .endChat();
                 },1000);
 
                 ocupao = true;
 
-                // let delay = rnd(2500,5000);
-                let delay = 1200;
+                let delay = rnd(2200,5000);
+                // let delay = 1000;
 
                 // animacion de espera para escribir
                 setTimeout(function() {
@@ -446,9 +449,8 @@ $(document).ready(function() {
                 setTimeout( function() {
                     let nav = a.parentNode;
 
-                    a.classList.add("disabled");
-                    fa.classList.add("fas","fa-check-circle");
-                    fa.classList.remove("far","fa-circle");
+                    disableLink(a, ["fas", "fa-check-circle"]);
+
                     if (C.nPreg == 0) {
                         bloquearChat(false);
                     }
@@ -464,134 +466,21 @@ $(document).ready(function() {
                 }, 400);
             }
         }
-        c1.createMenu(pj1);
+
+        c1.createMenu(pj1)
         c2.createMenu(pj2);
         c3.createMenu(pj3);
         c4.createMenu(pj4);
 
     })();
 
+    // deshabilita una pregunta
+    function disableLink(a, fas) {
+        let fa = a.childNodes[0];
 
-    /*function initCard(element,animation) {
-        // const element =  document.getElementById(e);
-        element.classList.add('bounceInLeft');
-        // console.log("okokok");
-    }*/
-    // const element = document.querySelector('.my-element')
-    // const element =  document.getElementClassName('card');
-    // element.classList.add('bounceInLeft');
-
-
-    // let c1 = document.getElementById('c1').
-    // let ccc = document.querySelector('.card')
-    /*let ccc = document.getElementsByClassName('card')
-
-
-    for(let i=0; i < ccc.length; i++) {
-        // console.log("entra");
-
-         hola('bounceInLeft', ccc[i], 1000)
-            .then(function (aaa) {
-              // console.log('funciona bien', aaa);
-            })
-
+        a.classList.add("disabled");
+        fa.classList.add(fas[0], fas[1]);
+        fa.classList.remove("far", "fa-circle");
     }
-    async function hola(efect, element, delay) {
-        // console.log('hola');
-        // element.classList.add(efect);
-        const promise =  new Promise(function (resolve, reject) {
-                // setTimeout(function() {
-                  // array.push(data)
-                  resolve(element,delay)
-                // }, 1000);
-              });
-
-        setTimeout(function() { console.log("aki");
-        }, 0);
-
-        // delay(delay)
-        return  promise;
-        // setTimeout(function() {}, 1000);
-    }*/
-    /*for(let i=0; i < ccc.length; i++) {
-        // hola()
-    }*/
-/*    let ccc1 = document.getElementsById('card').
-            addEventListener('animationend', function() {
-                console.log("ccc1"); }
-            )*/
-
-
-            // console.log(ccc);
-
-            /*const array = [1, 2, 3]
-            hola('bounceInLeft', array).then(function () {
-              console.log(array)
-            })*/
-
 
 });
-
-/*
-// const delay = ms => new Promise(res => setTimeout(res, ms))
-const delay = function(ms) { new Promise(res => setTimeout(res, ms))}
-
-const apiCall = function(url) {
-    // fetch(url).then(function(res) {res.json()})
-    new Promise( n => resolve('okmakey'));
-}
-
-async function infiniteApiCalls(url, ms) {
-  // Request (Tiempo Aleatorio)
-  const result = await apiCall(url)
-  // Haz lo que sea con el resultado
-  console.log(url)
-  console.log(result)
-  console.log(this);
-  // ...
-  // Esperar x segundos
-  await delay(ms)
-
-  // Request otra vez
-  //infiniteApiCalls(url, ms)
-
-  const fn = infiniteApiCalls.bind(null, url, ms)
-
-  setTimeout(fn, 0)
-}*/
-
-// infiniteApiCalls('texto', 5000)
-
-
-/*var promise = new Promise(function(resolve, reject) {
-
-  function sayHello() {
-    // resolve('Hello World!')
-  }
-  // console.log("por aqui");
-  setTimeout(sayHello, 1000)
-
-})*/
-
-/*let testmio = new Promise((resolve, reject) => {
-    setTimeout(function(){
-        resolve("¡Éxito!"); // ¡Todo salió bien!
-    }, 1000);
-    // reject("fracaso extrepitoso");
-});
-
-testmio.then((successMessage) => {
-  // console.log("¡respuesta! " + successMessage);
-});
-*/
-// console.log(promise.then(()=>{console.log("termino");}))
-// delay(1000)
-
-/*new Promise(function(resolve) {
-  console.log('first');
-  resolve();
-  console.log('second');
-}).then(function() {
-  console.log('third');
-});*/
-
