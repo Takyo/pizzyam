@@ -16,7 +16,6 @@ $(document).ready(function() {
 
     const C = cena.o;
 
-
     /**
      * rellena el card con los datos que se saben del pj
      * @param  pj       Personaje
@@ -356,14 +355,14 @@ $(document).ready(function() {
                             fa = faNormal;
                         }
 
-                        html += `<li><a class="preg nav-link py-1 pl-4 ${usado}" href="#" data-preg="_`+pz+'">'+
+                        html += `<li><a class="preg nav-link py-1 pl-4 ${usado}" href="javascript:void(0)" data-preg="_` + pz + '" >'+
                                 fa + fnCapital(PIZZAS[pz])+'?</a></li>';
                     }
 
                     html += '</ul>';
 
                 } else {
-                    html = '<a data-preg="'+f+`" class="preg nav-link ${usado}" href="#">`+fa+faq[f].preg+'</a>';
+                    html = `<a data-preg="${f}" class="preg nav-link ${usado}" href="javascript:void(0)">`+fa+faq[f].preg+'</a>';
                 }
 
                 if (f != 'guilty' && f != 'exceed' && f != 'repite') {
@@ -482,5 +481,15 @@ $(document).ready(function() {
         fa.classList.add(fas[0], fas[1]);
         fa.classList.remove("far", "fa-circle");
     }
+
+    let start = function (e) {
+        e.preventDefault();
+        let present = $("#presentacion");
+        present.children().addClass('persiana');
+        present.addClass('abre');
+
+    }
+
+    $("#btnStart").click(start);
 
 });

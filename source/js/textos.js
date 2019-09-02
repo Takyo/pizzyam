@@ -92,7 +92,8 @@ const FAQ = {
             "¿Has sido tú?",
             "Te pillé!",
             "Te cazé gomia",
-            "Mi instinto no falla y sé que fuiste tú"
+            "Mi instinto no falla y sé que fuiste tú",
+            "Por el poder que me he otorgado, yo te acuso",
         ],
         resp: (guilty) => {
             if (guilty)

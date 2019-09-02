@@ -3,6 +3,53 @@ body {
   background-color: #839eb62f;
 }
 
+  .presentacion {
+    background-color: #e8edf1;
+    position: fixed;
+    height: 100%;
+    min-width: 100%;
+    z-index: 1000;
+    top:0px;
+    left:0px;
+    overflow-y: scroll;
+  }
+
+  .contentScroller {
+    overflow-y: auto;
+    visibility: hidden;
+    height: 400px;
+    width: 400px;
+}
+.content {
+    visibility: visible;
+}
+  .persiana {
+    animation: persiana 0.3s ease-out;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+  .abre {
+    animation: abre 1.5s ease-in-out;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-delay: 0.5s;
+  }
+  @keyframes abre{
+    0%{
+      transform: translateY(0%);
+    }
+    100%{
+      transform: translateY(-100%);
+    }
+  }
+  @keyframes persiana{
+    0%{
+      transform: translateY(0%);
+    }
+    100%{
+       transform: translateY(4%);
+    }
+  }
 
 /*******************/
 /*       card      */
@@ -337,65 +384,70 @@ body {
     100% { transform: rotate(360deg); }
   }
 
+/*********************/
+/*      parpadeo     */
+/*********************/
 
+  .parpadea {
+    animation-name: parpadeo;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
+    -webkit-animation-name:parpadeo;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+  }
+
+  @-moz-keyframes parpadeo{
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+  }
+
+  @-webkit-keyframes parpadeo {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+  }
+
+  @keyframes parpadeo {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+  }
+
+  .mano {
+    animation: dedo 40s infinite;
+    transform-origin: center;
+  }
+
+  @keyframes dedo{
+    0% {
+      transform: scale(1.05) rotate(-5deg);
+    }
+    20%{
+      transform:  scale(0.9) rotate(20deg);
+    }
+    35%{
+      transform: scale(1) rotate(-15deg);
+    }
+    60%{
+      transform: rotate(10deg);
+    }
+    70%{
+      transform: scale(0.9) rotate(-5deg);
+    }
+    90%{
+      transform: scale(1) rotate(0deg);
+    }
+    100%{
+      transform: scale(1.05) rotate(-5deg);
+    }
+  }
 
 /****************/
 /*     test     */
 /****************/
 
-    .timer {
-      transition:all 1s;
-    }
-
-  .none {
-    /*width: 0px;*/
-    display: none;
-  }
-
-  .fadeMe {
-  animation:fadeIn 1s linear;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity:0
-  }
-  100% {
-    opacity:1;
-  }
-}
-
-.fadeMe.none {
-  display:none
-}
-
-.visible {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 2s linear;
-}
-.hidden {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s 2s, opacity 2s linear;
-}
-
-.delayNone {
-  transition-delay: 1s;
-  display: none;
-}
-.tam {
-  height: 24px
-}
-.out {
-  /*opacity:0;*/
-  transition-delay: 1s;
-}
-.in {
-  opacity:1;
-  display: block;
-}
-.afterFadeOut {
-  transition-delay: 1s;
-  display: none;
-}

@@ -282,7 +282,7 @@ var cena = (function () {
     let o = {};
 
     (function () {
-        o.nPreg = 13; // numero de preguntas totales
+        o.nPreg = 9; // numero de preguntas totales
         o.m = {
             yo : { p:0, v:1, t:1, s:1 },
             pj1: { p:2, v:2, t:0, s:0 },
