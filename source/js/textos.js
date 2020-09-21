@@ -23,7 +23,7 @@ const FAQ = {
             } else {
                 return [
                     "Me gustan todas por igual.",
-                    "No sabria decirte"
+                    "No sabría decirte"
                 ];
             }
         }
@@ -45,7 +45,7 @@ const FAQ = {
             } else {
                 return [
                     "Me gustan todas por igual.",
-                    "No sabria decirte"
+                    "No sabría decirte"
                 ];
             }
         }
@@ -53,12 +53,12 @@ const FAQ = {
     first: {
         preg: [
             "¿Cuál fue tu primer trozo?",
-            "¿Por cual empezaste?",
+            "¿Por cuál empezaste?",
             "¿Te acuerdas de tu primer trozo?",
         ],
         resp: (p) => {
             return [
-                "Empezé comiendome un trozo de " + PIZZAS[p],
+                "Empezé comiéndome un trozo de " + PIZZAS[p],
                 "Mi cena empezó con un trozo de " + PIZZAS[p],
             ]
         }
@@ -99,7 +99,7 @@ const FAQ = {
             if (guilty)
                 return [
                     "Me hás pillado, tenía mucha hambre.",
-                    "Eres un gran detectective, mejor persona, por eso sé que me vas a perdonar",
+                    "Eres un gran detective, mejor persona, por eso sé que me vas a perdonar",
                     "Sí fui yo, ¿Voy a ir a la carcel?"
                 ];
             else

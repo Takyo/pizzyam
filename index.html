@@ -44,6 +44,13 @@
         <a href="https://github.com/Takyo/pizzyam"><i class="fab fa-github text-white"></i></a>
     </nav>
 
+    <ol class="fa-ul">
+        <li><span class="fa-li"><i class="far fa-circle"></i></span>List icons can</li>
+        <li><span class="fa-li"><i class="fas fa-check-circle"></i></span>be used to</li>
+        <li><span class="fa-li"><i class="fas fa-spinner fa-pulse"></i></span>replace bullets</li>
+        <li><span class="fa-li"><i class="far fa-square"></i></span>in lists</li>
+    </ol>
+
     <div class="container-fluid">
 
         <div id="presentacion" class="presentacion">
@@ -51,8 +58,8 @@
                 <div class="text-monospace text-justify pt-5">
                     <h1>PIZZYAM</h1>
                     <p>
-                        Estás de cena con amigos, hoy toca ver eurovisión y como siempre, pedís pizza para cenar. Sois 5 para 4 pizzas, por lo que tocais a 4 trozos cada uno.
-                        Maldita la hora que te fuiste al baño ya que al volver te encontraste con una grata sorpresa, se habian terminado las pizzas y solo te dio tiempo a comer 3 porciones, por lo que algún abaricioso se ha comido 4+1 trozos. <b>¡Tu porción!</b>
+                        Estás de cena con amigos, hoy toca ver eurovisión y como siempre, pedís pizza para cenar. Sois 5 para 4 pizzas, por lo que tocáis a 4 trozos cada uno.
+                        Maldita la hora que te fuiste al baño ya que al volver te encontraste con una grata sorpresa, se habían terminado las pizzas y solo te dio tiempo a comer 3 porciones, por lo que algún abaricioso se ha comido 4+1 trozos. <b>¡Tu porción!</b>
                     </p>
                     <p>
                         ¿Quién ha sido el miserable que te ha traicionado a tus espaldas?. Estas cosas no se hacen, porque ya sabemos que no
@@ -60,7 +67,7 @@
                     </p>
                     <p>
                         Recuerdas vagamente que ha comido cada uno pero no del todo, el resto tendrás que averiguarlo.<br>
-                        Por suerte para ti, el culpable no sabe de tus grandes dotes detectivescas por lo que sacas tu libreta y lapiz de investigador y
+                        Por suerte para ti, el culpable no sabe de tus grandes dotes detectivescas por lo que sacas tu libreta y lápiz de investigador y
                         empiezas a interrogar. Vas a cazarlo para poder apuntarle con el dedo acusador y darte el gusto de decirle a la cara...
                     </p>
                 </div>
@@ -89,75 +96,96 @@
                     <div class="card-header d-flex justify-content-between">
                         <h6 class="align-self-center"></h6>
                         <h4>
-                            <a href="#" class="btnChat align-self-center" data-toggle="collapse"
-                                aria-expanded="collapse">
+                            <a href="javascript:void(0)" class="btnChat align-self-center" >
                                 <span class="nPreg">4</span>
                                 <span class="far fa fa-comment-dots"></span>
                             </a>
                         </h4>
                     </div>
-                    <div id="collapseC1" class="relative collapse" data-toggle="collapse" aria-expanded="collapse">
+                    <div class="relative">
                         <div class="chat-panel">
                             <nav class="menuChat nav flex-column">
                             </nav>
                         </div>
                         <div class="hueco">
-                            <img src="" class="imgCard card-img-top" alt="...">
+                            <img src="" class="imgCard card-img-top img-fluid" alt="...">
                             <div class="chat-container">
                                 <ul class="chat-log"></ul>
                             </div>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li
-                                class="list-group-item d-flex justify-content-between align-items-md-end align-items-center">
-                                <div class="dato">Orden</div>
-                                <div
-                                    class="lComio d-flex flex-md-column flex-lg-row align-items-center align-items-md-end align-items-lg-center">
-                                </div>
-                            </li>
-                            <li
-                                class="list-group-item d-flex justify-content-between align-items-md-end align-items-center">
-                                <div class="dato">Prefiere</div>
-                                <div
-                                    class="lGusta d-flex flex-md-column flex-lg-row align-items-center align-items-md-end align-items-lg-center">
-                                </div>
-                            </li>
-                            <li
-                                class="list-group-item d-flex justify-content-between align-items-md-end align-items-center">
-                                <div class="dato">Odia</div>
-                                <div
-                                    class="lOdia d-flex flex-md-column flex-lg-row align-items-center align-items-md-end align-items-lg-center">
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="row">
-                                            <div class="col">Piña </div>
-                                            <div class="howmany01 tr col">?</div>
-                                        </div>
+
+                        <div class="card-info d-flex align-content-stretch">
+                            <div class="flex-fill">
+                                <div class="info-pref d-flex justify-content-between">
+                                    <div class="flex-like flex-fill invisible">
+                                        <i class="fas fa-thumbs-up"></i>
                                     </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="row">
-                                            <div class="col">Verdura </div>
-                                            <div class="howmany02 tr col">?</div>
-                                        </div>
+                                    <div class="flex-dislike flex-fill invisible">
+                                        <i class="fas fa-thumbs-down"></i>
                                     </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="row">
-                                            <div class="col">Ternera </div>
-                                            <div class="howmany03 tr col">?</div>
+                                </div>
+
+                                <div class="info-cantidad">
+                                    <div class="row align-items-center h-100">
+                                        <div class="col-6 col-sm-6 col-lg-12 col-xl-6">
+                                            <div class="ml-1 d-inline font-weight-bold">Piña</div>
+                                            <div class="float-right mr-1 howPina"></div>
                                         </div>
-                                    </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="row">
-                                            <div class="col">Salmón </div>
-                                            <div class="howmany04 tr col">?</div>
+                                        <div class="col-6 col-sm-6 col-lg-12 col-xl-6 ">
+                                            <div class="ml-1 d-inline font-weight-bold">Verdura</div>
+                                            <div class="float-right  mr-1 howVerdura"></div>
+                                        </div>
+                                        <div class="col-6 col-sm-6 col-lg-12 col-xl-6">
+                                            <div class="ml-1 d-inline font-weight-bold">Ternera</div>
+                                            <div class="float-right mr-1 howTernera"></div>
+                                        </div>
+                                        <div class="col-6 col-sm-6 col-lg-12 col-xl-6">
+                                            <div class="ml-1 d-inline font-weight-bold">Salmón</div>
+                                            <div class="float-right mr-1 howSalmon"></div>
                                         </div>
                                     </div>
                                 </div>
-                            </li>
-                        </ul>
+                            </div>
+
+                            <div class="pr-2 mr-1ss mb-0ss info-time">
+                                <!-- <ul class="fa-ul timelined">
+                                    <li>
+                                        <span class="fa-li"><i class="far fa-circle"></i>
+                                        <div><b>Piña</b></div>
+                                    </li>
+                                    <li>
+                                        <span class="fa-li"><i class="far fa-circle"></i>
+                                        <div><b>Verdura</b></div>
+                                    </li>
+                                    <li>
+                                        <span class="fa-li"><i class="far fa-circle"></i>
+                                        <div><b>Ternera</b></div>
+                                    </li>
+                                    <li class="">
+                                        <span class="fa-li"><i class="far fa-circle"></i>
+                                        <div><b>Salmón</b></div>
+                                    </li>
+                                </ul> -->
+                                <ul class="fa-ul timelines tm ">
+                                    <li>
+                                        <span class="fa-li"><i class="fas fa-check-circle"></i></span>
+                                        <div><b>Ternera</b></div>
+                                    </li>
+                                    <li>
+                                        <span class="fa-li"><i class="fas fa-circle"></i></span>
+                                        <div><b>Ternera</b></div>
+                                    </li>
+                                    <li>
+                                        <span class="fa-li"><i class="fas fa-circle"></i></span>
+                                        <div><b>Salmón</b></div>
+                                    </li>
+                                    <li>
+                                        <span class="fa-li"><i class="fas fa-circle"></i></span>
+                                        <div><b>Salmón</b></div>
+                                </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -167,14 +195,13 @@
                     <div class="card-header d-flex justify-content-between">
                         <h6 class="align-self-center"></h6>
                         <h4>
-                            <a href="#collapseC22" class="btnChat align-self-center" data-toggle="collapse"
-                                aria-expanded="collapse">
+                            <a href="javascript:void(0)" class="btnChat align-self-center">
                                 <span class="nPreg">4</span>
                                 <span class="far fa fa-comment-dots"></span>
                             </a>
                         </h4>
                     </div>
-                    <div id="collapseC2" class="relative collapse" data-toggle="collapse" aria-expanded="collapse">
+                    <div class="relative">
                         <div class="chat-panel">
                             <nav class="menuChat nav flex-column">
                             </nav>
@@ -185,57 +212,57 @@
                                 <ul class="chat-log"></ul>
                             </div>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li
-                                class="list-group-item d-flex justify-content-between align-items-md-end align-items-center">
-                                <div class="dato">Orden</div>
-                                <div
-                                    class="lComio d-flex flex-md-column flex-lg-row align-items-center align-items-md-end align-items-lg-center">
-                                </div>
-                            </li>
-                            <li
-                                class="list-group-item d-flex justify-content-between align-items-md-end align-items-center">
-                                <div class="dato">Prefiere</div>
-                                <div
-                                    class="lGusta d-flex flex-md-column flex-lg-row align-items-center align-items-md-end align-items-lg-center">
-                                </div>
-                            </li>
-                            <li
-                                class="list-group-item d-flex justify-content-between align-items-md-end align-items-center">
-                                <div class="dato">Odia</div>
-                                <div
-                                    class="lOdia d-flex flex-md-column flex-lg-row align-items-center align-items-md-end align-items-lg-center">
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="row">
-                                            <div class="col">Piña </div>
-                                            <div class="howmany01 tr col">?</div>
-                                        </div>
+                        <div class="card-info d-flex align-content-stretch">
+                            <div class="flex-fill">
+                                <div class="info-pref d-flex justify-content-between">
+                                    <div class="flex-like flex-fill invisible">
+                                        <i class="fas fa-thumbs-up"></i>
                                     </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="row">
-                                            <div class="col">Verdura </div>
-                                            <div class="howmany02 tr col">?</div>
-                                        </div>
+                                    <div class="flex-dislike flex-fill invisible">
+                                        <i class="fas fa-thumbs-down"></i>
                                     </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="row">
-                                            <div class="col">Ternera </div>
-                                            <div class="howmany03 tr col">?</div>
+                                </div>
+
+                                <div class="info-cantidad">
+                                    <div class="row align-items-center h-100">
+                                        <div class="col-6 col-sm-6 col-lg-12 col-xl-6">
+                                            <div class="ml-1 d-inline font-weight-bold">Piña</div>
+                                            <div class="float-right mr-1 howPina"></div>
                                         </div>
-                                    </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="row">
-                                            <div class="col">Salmón </div>
-                                            <div class="howmany04 tr col">?</div>
+                                        <div class="col-6 col-sm-6 col-lg-12 col-xl-6 ">
+                                            <div class="ml-1 d-inline font-weight-bold">Verdura</div>
+                                            <div class="float-right  mr-1 howVerdura"></div>
+                                        </div>
+                                        <div class="col-6 col-sm-6 col-lg-12 col-xl-6">
+                                            <div class="ml-1 d-inline font-weight-bold">Ternera</div>
+                                            <div class="float-right mr-1 howTernera"></div>
+                                        </div>
+                                        <div class="col-6 col-sm-6 col-lg-12 col-xl-6">
+                                            <div class="ml-1 d-inline font-weight-bold">Salmón</div>
+                                            <div class="float-right mr-1 howSalmon"></div>
                                         </div>
                                     </div>
                                 </div>
-                            </li>
-                        </ul>
+                            </div>
+
+                            <ul class="timeline mr-1 mb-0">
+                                <li class="mt-1">
+                                    <div><b>Ternera</b></div>
+                                </li>
+                                <li>
+                                    <div><b>Ternera</b></div>
+                                </li>
+                                <li>
+                                    <div><b>Ternera</b></div>
+                                </li>
+                                <li class="mb-1">
+                                    <div><b>Ternera</b></div>
+                                </li>
+                                <li class="mb-1">
+                                    <div><b>Ternera</b></div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -245,14 +272,13 @@
                     <div class="card-header d-flex justify-content-between">
                         <h6 class="align-self-center"></h6>
                         <h4>
-                            <a href="#" class="btnChat align-self-center" data-toggle="collapse"
-                                aria-expanded="collapse">
+                            <a href="javascript:void(0)" class="btnChat align-self-center">
                                 <span class="nPreg">4</span>
                                 <span class="far fa fa-comment-dots"></span>
                             </a>
                         </h4>
                     </div>
-                    <div id="collapseC3" class="relative collapse" data-toggle="collapse" aria-expanded="collapse">
+                    <div class="relative">
                         <div class="chat-panel">
                             <nav class="menuChat nav flex-column">
                             </nav>
@@ -263,57 +289,55 @@
                                 <ul class="chat-log"></ul>
                             </div>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li
-                                class="list-group-item d-flex justify-content-between align-items-md-end align-items-center">
-                                <div class="dato">Orden</div>
-                                <div
-                                    class="lComio d-flex flex-md-column flex-lg-row align-items-center align-items-md-end align-items-lg-center">
-                                </div>
-                            </li>
-                            <li
-                                class="list-group-item d-flex justify-content-between align-items-md-end align-items-center">
-                                <div class="dato">Prefiere</div>
-                                <div
-                                    class="lGusta d-flex flex-md-column flex-lg-row align-items-center align-items-md-end align-items-lg-center">
-                                </div>
-                            </li>
-                            <li
-                                class="list-group-item d-flex justify-content-between align-items-md-end align-items-center">
-                                <div class="dato">Odia</div>
-                                <div
-                                    class="lOdia d-flex flex-md-column flex-lg-row align-items-center align-items-md-end align-items-lg-center">
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="row">
-                                            <div class="col">Piña </div>
-                                            <div class="howmany01 tr col">?</div>
-                                        </div>
+
+                        <div class="card-info d-flex align-content-stretch">
+                            <div class="flex-fill">
+                                <div class="info-pref d-flex justify-content-between">
+                                    <div class="flex-like flex-fill invisible">
+                                        <i class="fas fa-thumbs-up"></i>
                                     </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="row">
-                                            <div class="col">Verdura </div>
-                                            <div class="howmany02 tr col">?</div>
-                                        </div>
+                                    <div class="flex-dislike flex-fill invisible">
+                                        <i class="fas fa-thumbs-down"></i>
                                     </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="row">
-                                            <div class="col">Ternera </div>
-                                            <div class="howmany03 tr col">?</div>
+                                </div>
+
+                                <div class="info-cantidad">
+                                    <div class="row align-items-center h-100">
+                                        <div class="col-6 col-sm-6 col-lg-12 col-xl-6">
+                                            <div class="ml-1 d-inline font-weight-bold">Piña</div>
+                                            <div class="float-right mr-1 howPina"></div>
                                         </div>
-                                    </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="row">
-                                            <div class="col">Salmón </div>
-                                            <div class="howmany04 tr col">?</div>
+                                        <div class="col-6 col-sm-6 col-lg-12 col-xl-6 ">
+                                            <div class="ml-1 d-inline font-weight-bold">Verdura</div>
+                                            <div class="float-right  mr-1 howVerdura"></div>
+                                        </div>
+                                        <div class="col-6 col-sm-6 col-lg-12 col-xl-6">
+                                            <div class="ml-1 d-inline font-weight-bold">Ternera</div>
+                                            <div class="float-right mr-1 howTernera"></div>
+                                        </div>
+                                        <div class="col-6 col-sm-6 col-lg-12 col-xl-6">
+                                            <div class="ml-1 d-inline font-weight-bold">Salmón</div>
+                                            <div class="float-right mr-1 howSalmon"></div>
                                         </div>
                                     </div>
                                 </div>
-                            </li>
-                        </ul>
+                            </div>
+
+                            <ul class="timeline mr-1 mb-0">
+                                <li class="mt-1">
+                                    <div><b>Ternera</b></div>
+                                </li>
+                                <li>
+                                    <div><b>Ternera</b></div>
+                                </li>
+                                <li>
+                                    <div><b>Ternera</b></div>
+                                </li>
+                                <li class="mb-1">
+                                    <div><b>Ternera</b></div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -323,14 +347,13 @@
                     <div class="card-header d-flex justify-content-between">
                         <h6 class="align-self-center"></h6>
                         <h4>
-                            <a href="#" class="btnChat align-self-center" data-toggle="collapse"
-                                aria-expanded="collapse">
+                            <a href="javascript:void(0)" class="btnChat align-self-center" >
                                 <span class="nPreg">4</span>
                                 <span class="far fa fa-comment-dots"></span>
                             </a>
                         </h4>
                     </div>
-                    <div id="collapseC4" class="relative collapse" data-toggle="collapse" aria-expanded="collapse">
+                    <div id="collapseC4" class="relative">
                         <div class="chat-panel">
                             <nav class="menuChat nav flex-column">
                             </nav>
@@ -341,7 +364,56 @@
                                 <ul class="chat-log"></ul>
                             </div>
                         </div>
-                        <ul class="list-group list-group-flush">
+
+                        <div class="card-info d-flex align-content-stretch">
+                            <div class="flex-fill">
+                                <div class="info-pref d-flex justify-content-between">
+                                    <div class="flex-like flex-fill invisible">
+                                        <i class="fas fa-thumbs-up"></i>
+                                    </div>
+                                    <div class="flex-dislike flex-fill invisible">
+                                        <i class="fas fa-thumbs-down"></i>
+                                    </div>
+                                </div>
+
+                                <div class="info-cantidad">
+                                    <div class="row align-items-center h-100">
+                                        <div class="col-6 col-sm-6 col-lg-12 col-xl-6">
+                                            <div class="ml-1 d-inline font-weight-bold">Piña</div>
+                                            <div class="float-right mr-1 howPina"></div>
+                                        </div>
+                                        <div class="col-6 col-sm-6 col-lg-12 col-xl-6 ">
+                                            <div class="ml-1 d-inline font-weight-bold">Verdura</div>
+                                            <div class="float-right  mr-1 howVerdura"></div>
+                                        </div>
+                                        <div class="col-6 col-sm-6 col-lg-12 col-xl-6">
+                                            <div class="ml-1 d-inline font-weight-bold">Ternera</div>
+                                            <div class="float-right mr-1 howTernera"></div>
+                                        </div>
+                                        <div class="col-6 col-sm-6 col-lg-12 col-xl-6">
+                                            <div class="ml-1 d-inline font-weight-bold">Salmón</div>
+                                            <div class="float-right mr-1 howSalmon"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ul class="timeline mr-1 mb-0">
+                                <li class="mt-1">
+                                    <div><b>Ternera</b></div>
+                                </li>
+                                <li>
+                                    <div><b>Ternera</b></div>
+                                </li>
+                                <li>
+                                    <div><b>Ternera</b></div>
+                                </li>
+                                <li class="mb-1">
+                                    <div><b>Ternera</b></div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- <ul class="list-group list-group-flush">
                             <li
                                 class="list-group-item d-flex justify-content-between align-items-md-end align-items-center">
                                 <div class="dato">Orden</div>
@@ -368,18 +440,18 @@
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="row">
                                             <div class="col">Piña </div>
-                                            <div class="howmany01 tr col">?</div>
+                                            <div cl howPinaass="howmany01 tr col">?</div>
                                         </div>
                                     </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="row">
+                                    <div class="col-xl-6 co howVe-lg-6 col-md-6 col-sm-6 col-12">
+                                        <div clas durals="row">
                                             <div class="col">Verdura </div>
                                             <div class="howmany02 tr col">?</div>
-                                        </div>
-                                    </div>
+                                   howTernera      </di                                    </v>
+div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                         <div class="row">
-                                            <div class="col">Ternera </div>
+          <div class="col">Ternera                                 howSalmon </div>
                                             <div class="howmany03 tr col">?</div>
                                         </div>
                                     </div>
@@ -391,7 +463,7 @@
                                     </div>
                                 </div>
                             </li>
-                        </ul>
+                        </ul> -->
                     </div>
                 </div>
             </div>

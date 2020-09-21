@@ -28,14 +28,16 @@ $(document).ready(function() {
         $("#totalPreg").html("<b>"+C.nPreg+"</b>");
         this.find('.nPreg').html("<b>"+pj.nPreg+"</b>")
         this.find('.card-header > h6:first').html(pj.nombre);
-        let comio = this.find('.lComio'),
-            gusta = this.find('.lGusta'),
-            odia  = this.find('.lOdia'),
-            pz01  = this.find('.howmany01'),
-            pz02  = this.find('.howmany02'),
-            pz03  = this.find('.howmany03'),
-            pz04  = this.find('.howmany04');
+        let comio    = this.find('.lComio'),
+            timeLine = this.find('.timeline'),
+            gusta    = this.find('.flex-like'),
+            odia     = this.find('.flex-dislike'),
+            pzPn     = this.find('.howPina'),
+            pzVd     = this.find('.howVerdura'),
+            pzTr     = this.find('.howTernera'),
+            pzSl     = this.find('.howSalmon');
         comio.html('');
+        timeLine.html('');
 
         let pjSeSabe = (seSabe) ? pj : pj.seSabe;
 
@@ -48,7 +50,23 @@ $(document).ready(function() {
             let escribio = true;
 
             pjSeSabe.orden.forEach( function(tr, i, array) {
+                console.log(tr, array, i);
+                if (tr != 0) {
+                    let cl = '';
+                    if (i === 0){
+                        cl = "LiFirst";
+                    } else if (i === array.length - 1) {
+                        cl = "LiLast";
+                    }
+                    timeLine.append($('<li>',{
+                        class: cl,
+                        html: `<div><b>${fnCapital(PIZZAS[tr])}</b></div>`
+                    }))
+                } else if (escribio) {
 
+                }
+
+                /*
                 if (tr != 0) {
                     escribio = true;
                     comio.append($('<span>',{
@@ -72,7 +90,7 @@ $(document).ready(function() {
                         }));
                     }
                 }
-
+                */
             });
 
             let last = comio.find(':last-child');
@@ -81,18 +99,22 @@ $(document).ready(function() {
             }
         }
 
-        if (gusta.children().length == 0){
+
+        if (pjSeSabe.encanta.length > 0 && gusta.hasClass('invisible')) {
+            gusta.removeClass('invisible');
             pjSeSabe.encanta.forEach( function(tr) {
-                gusta.append($('<span>',{
-                    class: 'tr animated tada slow',
+                gusta.append($('<div>',{
+                    class: 'ml-1 animated tada slow',
                     html : (tr != 0) ? fnCapital(PIZZAS[tr]) : '?'
                 }));
             });
         }
-        if (odia.children().length == 0){
+
+        if (pjSeSabe.odia.length > 0 && odia.hasClass('invisible')) {
+            odia.removeClass('invisible');
             pjSeSabe.odia.forEach( function(tr) {
-                odia.append($('<span>',{
-                    class: 'tr animated tada slow',
+                odia.append($('<div>',{
+                    class: 'ml-1 animated tada slow',
                     html : (tr != 0) ? fnCapital(PIZZAS[tr]) : '?'
                 }));
             });
@@ -108,49 +130,49 @@ $(document).ready(function() {
         if (pz.hasOwnProperty('p')) {
             if (p.hasOwnProperty('duda')) {
                 if (p.duda === true)
-                    pz01.html('<div class="animated fadeIn">'+p.tr+'<div>');
+                    pzPn.html('<div class="animated fadeIn">'+p.tr+'<div>');
                 else if (p.duda === '?')
-                    pz01.html('<div class="animated fadeIn">'+p.tr+'?'+'<div>');
+                    pzPn.html('<div class="animated fadeIn">'+p.tr+'?'+'<div>');
                 else
-                    pz01.html('<div class="animated fadeIn">'+p.duda+' '+pz['p'].tr+'<div>');
+                    pzPn.html('<div class="animated fadeIn">'+p.duda+' '+pz['p'].tr+'<div>');
             } else {
-                pz01.html('<div class="animated fadeIn">'+p+'<div>');
+                pzPn.html('<div class="animated fadeIn">'+p+'<div>');
             }
         }
         if (pz.hasOwnProperty('v')) {
             if (v.hasOwnProperty('duda')) {
                 if (v.duda === true)
-                    pz02.html('<div class="animated fadeIn">'+v.tr+'<div>');
+                    pzVd.html('<div class="animated fadeIn">'+v.tr+'<div>');
                 else if (v.duda === '?')
-                    pz02.html('<div class="animated fadeIn">'+v.tr+'?'+'<div>');
+                    pzVd.html('<div class="animated fadeIn">'+v.tr+'?'+'<div>');
                 else
-                    pz02.html('<div class="animated fadeIn">'+v.duda+' '+v.tr+'<div>');
+                    pzVd.html('<div class="animated fadeIn">'+v.duda+' '+v.tr+'<div>');
              } else {
-                pz02.html('<div class="animated fadeIn">'+v+'<div>');
+                pzVd.html('<div class="animated fadeIn">'+v+'<div>');
             }
         }
         if (pz.hasOwnProperty('t')) {
             if (t.hasOwnProperty('duda')) {
                 if (t.duda === true)
-                    pz03.html('<div class="animated fadeIn">'+t.tr+'<div>');
+                    pzTr.html('<div class="animated fadeIn">'+t.tr+'<div>');
                 else if (t.duda === '?')
-                        pz03.html('<div class="animated fadeIn">'+t.tr+'?'+'<div>');
+                        pzTr.html('<div class="animated fadeIn">'+t.tr+'?'+'<div>');
                 else
-                    pz03.html('<div class="animated fadeIn">'+t.duda+' '+t.tr+'<div>');
+                    pzTr.html('<div class="animated fadeIn">'+t.duda+' '+t.tr+'<div>');
              } else {
-                pz03.html('<div class="animated fadeIn">'+t+'<div>');
+                pzTr.html('<div class="animated fadeIn">'+t+'<div>');
             }
         }
         if (pz.hasOwnProperty('s')) {
             if (s.hasOwnProperty('duda')) {
                 if (s.duda === true)
-                    pz04.html('<div class="animated fadeIn">'+s.tr+'<div>');
+                    pzSl.html('<div class="animated fadeIn">'+s.tr+'<div>');
                 else if (s.duda === '?')
-                    pz04.html('<div class="animated fadeIn">'+s.tr+'?'+'<div>');
+                    pzSl.html('<div class="animated fadeIn">'+s.tr+'?'+'<div>');
                 else
-                    pz04.html('<div class="animated fadeIn">'+s.duda+' '+s.tr+'<div>');
+                    pzSl.html('<div class="animated fadeIn">'+s.duda+' '+s.tr+'<div>');
             } else {
-                pz04.html('<div class="animated fadeIn">'+s+'<div>');
+                pzSl.html('<div class="animated fadeIn">'+s+'<div>');
             }
         }
 
@@ -191,7 +213,7 @@ $(document).ready(function() {
         if (altura === false) {
             altura = $('.imgCard:first').outerHeight();
         }
-
+        console.log(altura)
         this.find('.hueco,.chat-container').css('height', altura);
         //$(".collapse").collapse('hide');
     }
@@ -272,7 +294,8 @@ $(document).ready(function() {
         var fnRedmim = function() {
             let hueco = $(this).parent();
 
-            hueco.parent().collapse('show');
+            // hueco.parent().collapse('show');
+            hueco.parent().show();
             altura = this.height;
             hueco.css('height', altura);
             setTimeout(function(t) {
